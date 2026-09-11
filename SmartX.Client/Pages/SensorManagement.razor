@@ -1,0 +1,116 @@
+﻿@page "/sensors"
+@using SmartX.Shared.Models
+@using Microsoft.AspNetCore.Components.Forms
+
+<div class="container py-4">
+    <h2 class="fw-bold mb-4">Sensor Payload & Hardware Management</h2>
+
+    <div class="row g-4">
+        <!-- Sensor Registration Form -->
+        <div class="col-md-6">
+            <div class="card p-4 shadow-sm h-100">
+                <h5 class="card-title mb-3">Register Custom Sensor Profile</h5>
+                <EditForm Model="sensorModel" OnValidSubmit="HandleSensorRegistration">
+                    <div class="mb-3">
+                        <label class="form-label">Device MAC Address</label>
+                        <input type="text" class="form-control" @bind="sensorModel.MacAddress" placeholder="00:1B:44:11:3A:B7" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Deployment Zone / Node ID</label>
+                        <input type="text" class="form-control" @bind="sensorModel.ZoneId" placeholder="Sub-Zone B -> Zone 1" required />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Sensor Category</label>
+                        <select class="form-select" @bind="sensorModel.Category">
+                            <option value="Environmental">Environmental (Temp, Humidity)</option>
+                            <option value="Power">Power Consumption (Smart Meter)</option>
+                            <option value="Actuator">Actuator / Smart Switch</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Attach Hardware Log / Config File</label>
+                        <InputFile OnChange="HandleFileSelected" class="form-control" />
+                        @if (!string.IsNullOrEmpty(uploadedFileName))
+                        {
+                            <small class="text-success">Attached: @uploadedFileName</small>
+                        }
+                    </div>
+                    <button type="submit" class="btn btn-primary w-100">Register Sensor</button>
+                </EditForm>
+            </div>
+        </div>
+
+        <!-- Recursive Topology Tree Validation -->
+        <div class="col-md-6">
+            <div class="card p-4 shadow-sm h-100">
+                <h5 class="card-title mb-3">Deployment Tree Topology Validation</h5>
+                <p class="text-muted">Recursive check across nested deployment sub-zones.</p>
+
+                <div class="border rounded p-3 mb-3 bg-light">
+                    <h6>Facility A Tree Structure</h6>
+                    <ul>
+                        <li>
+                            Zone 1
+                            <ul>
+                                <li>Sub-Zone B (Status: @(rootNode.SubNodes[0].SubNodes[0].IsSecurelyConfigured ? "Configured" : "Misconfigured"))</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+                <button class="btn btn-outline-info w-100 mb-3" @onclick="RunRecursiveValidation">Run Recursive Check</button>
+
+                @if (validationExecuted)
+                {
+                    <div class="alert @(isValidTopology ? "alert-success" : "alert-danger")">
+                        <strong>Result:</strong> @(isValidTopology ? "Topology safely configured." : "Configuration error detected in nested nodes.")
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private class SensorFormModel
+    {
+        public string MacAddress { get; set; } = string.Empty;
+        public string ZoneId { get; set; } = string.Empty;
+        public string Category { get; set; } = "Environmental";
+    }
+
+    private SensorFormModel sensorModel = new();
+    private string uploadedFileName = string.Empty;
+    private bool validationExecuted = false;
+    private bool isValidTopology = false;
+
+    private DeploymentNode rootNode = new()
+    {
+        NodeId = "Facility A",
+        IsSecurelyConfigured = true,
+        SubNodes = new List<DeploymentNode>
+        {
+            new() { NodeId = "Zone 1", IsSecurelyConfigured = true, SubNodes = new List<DeploymentNode>
+                {
+                    new() { NodeId = "Sub-Zone B", IsSecurelyConfigured = true }
+                }
+            }
+        }
+    };
+
+    private void HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        uploadedFileName = e.File.Name;
+    }
+
+    private void HandleSensorRegistration()
+    {
+        // Registration handling logic
+    }
+
+    private void RunRecursiveValidation()
+    {
+        validationExecuted = true;
+        isValidTopology = rootNode.ValidateTopology(); // Recursive C# call
+    }
+}

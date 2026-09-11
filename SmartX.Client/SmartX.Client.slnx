@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="../SmartX.Server/SmartX.Server.csproj" />
   <Project Path="../SmartX.Shared/SmartX.Shared.csproj" />
+  <Project Path="../SmartX.Tests/SmartX.Tests.csproj" Id="d327e1dc-7239-46b7-be1e-1e077906a9d6" />
   <Project Path="SmartX.Client.csproj" />
 </Solution>

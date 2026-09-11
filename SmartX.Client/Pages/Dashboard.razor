@@ -17,9 +17,9 @@
         </div>
     </div>
 
-    @if (selectedHistory.Any())
-    {
-        var currentPoint = selectedHistory[selectedHourIndex].Payload;
+   @if (selectedHistory != null && selectedHistory.Count > 0 && selectedHourIndex < selectedHistory.Count)
+{
+    var currentPoint = selectedHistory[selectedHourIndex].Payload;
 
         <!-- Live Telemetry & Map Overview -->
         <div class="row g-3 mb-4">

@@ -14,9 +14,9 @@ builder.Services.AddSingleton<TelemetryBatchProcessor>();
 // Configure CORS for Blazor WASM frontend client
 builder.Services.AddCors(options =>
 {
-    options.AddPolicy("AllowBlazorClient", policy =>
+    options.AddPolicy("AllowAll", policy =>
     {
-        policy.WithOrigins("https://localhost:7100", "http://localhost:5100") // Adjust to match Blazor WASM port
+        policy.AllowAnyOrigin()
               .AllowAnyMethod()
               .AllowAnyHeader();
     });
@@ -24,14 +24,8 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
 app.UseHttpsRedirection();
-app.UseCors("AllowBlazorClient");
+app.UseCors("AllowAll"); // Must be before MapControllers
 app.UseAuthorization();
 app.MapControllers();
 

@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "Complete Startup",
+    "Projects": [
+      {
+        "Path": "..\\SmartX.Server\\SmartX.Server.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "SmartX.Client.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
