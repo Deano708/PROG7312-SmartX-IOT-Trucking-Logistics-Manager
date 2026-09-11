@@ -1,0 +1,6 @@
+@SmartX.Server_HostAddress = http://localhost:5240
+
+GET {{SmartX.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

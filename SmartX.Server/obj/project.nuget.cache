@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "6rsfEjJV81Q=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Server\\SmartX.Server.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Deano\\.nuget\\packages\\microsoft.aspnetcore.openapi\\10.0.12\\microsoft.aspnetcore.openapi.10.0.12.nupkg.sha512",
+    "C:\\Users\\Deano\\.nuget\\packages\\microsoft.openapi\\2.12.0\\microsoft.openapi.2.12.0.nupkg.sha512"
+  ],
+  "logs": []
+}
