@@ -1,0 +1,49 @@
+﻿@page "/leaderboard"
+
+<div class="container py-4">
+    <h2 class="mb-3 fw-bold">Fleet Efficiency Leaderboard</h2>
+    <p class="text-muted mb-4">Compare your company's performance against rival transport operators across South Africa.</p>
+
+    <div class="table-responsive shadow-sm rounded">
+        <table class="table table-hover align-middle bg-white mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>Rank</th>
+                    <th>Company Name</th>
+                    <th>Fleet Size</th>
+                    <th>Total Distance</th>
+                    <th>Avg Efficiency</th>
+                    <th>Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var entry in companyRanks)
+                {
+                    <tr class="@(entry.IsCurrentCompany ? "table-primary fw-bold" : "")">
+                        <td>#@entry.Rank</td>
+                        <td>
+                            @entry.CompanyName 
+                            @if (entry.IsCurrentCompany) { <span class="badge bg-primary ms-1">You</span> }
+                        </td>
+                        <td>@entry.TruckCount Trucks</td>
+                        <td>@entry.TotalDistanceKm.ToString("N0") km</td>
+                        <td>@entry.EfficiencyKmPerLiter.ToString("F2") km/L</td>
+                        <td><span class="badge bg-success">@entry.Score pts</span></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@code {
+    private record CompanyPerformance(int Rank, string CompanyName, int TruckCount, double TotalDistanceKm, double EfficiencyKmPerLiter, int Score, bool IsCurrentCompany);
+
+    private List<CompanyPerformance> companyRanks = new()
+    {
+        new(1, "KZN Express Logistics", 24, 184500, 3.42, 985, false),
+        new(2, "Smart-X Fleet (Your Account)", 12, 92400, 3.28, 890, true),
+        new(3, "Durban Coastal Haulage", 18, 112000, 3.10, 815, false),
+        new(4, "Highveld Transports", 8, 45000, 2.95, 670, false)
+    };
+}

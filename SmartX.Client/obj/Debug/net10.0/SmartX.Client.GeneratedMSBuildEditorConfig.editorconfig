@@ -37,6 +37,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSZWNlaXB0VXBsb2FkZXIucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Deano/Documents/Work/PROG7312/POE part 1/emkndn-prog7312-g2-2026-prog7312-poe-deano708/SmartX.Client/Pages/Account.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWNjb3VudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Deano/Documents/Work/PROG7312/POE part 1/emkndn-prog7312-g2-2026-prog7312-poe-deano708/SmartX.Client/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
@@ -47,6 +51,14 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Deano/Documents/Work/PROG7312/POE part 1/emkndn-prog7312-g2-2026-prog7312-poe-deano708/SmartX.Client/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG9tZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Deano/Documents/Work/PROG7312/POE part 1/emkndn-prog7312-g2-2026-prog7312-poe-deano708/SmartX.Client/Pages/Landing.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGFuZGluZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Deano/Documents/Work/PROG7312/POE part 1/emkndn-prog7312-g2-2026-prog7312-poe-deano708/SmartX.Client/Pages/Leaderboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTGVhZGVyYm9hcmQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Deano/Documents/Work/PROG7312/POE part 1/emkndn-prog7312-g2-2026-prog7312-poe-deano708/SmartX.Client/Pages/NotFound.razor]

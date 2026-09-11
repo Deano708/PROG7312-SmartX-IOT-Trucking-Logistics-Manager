@@ -1,0 +1,59 @@
+﻿@page "/"
+
+<div class="container py-5">
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary">Smart-X: Trucking Gateway</h1>
+        <p class="lead text-muted">High-Performance IoT Logistics & Fleet Management for KZN Transport Corridors</p>
+    </div>
+
+    <!-- Three Architectural Pillars -->
+    <div class="row g-4 mb-5">
+        <!-- Pillar 1: Active -->
+        <div class="col-md-4">
+            <div class="card h-100 border-success shadow-sm">
+                <div class="card-body">
+                    <span class="badge bg-success mb-2">Active</span>
+                    <h5 class="card-title">1. Telemetry Ingestion</h5>
+                    <p class="card-text text-secondary">
+                        Primary receiver layer processing ESP32 telemetry packets, route GPS streams, and sensor payload structures without boxing overhead.
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <a href="/dashboard" class="btn btn-outline-success w-100">Launch Dashboard</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pillar 2: Active -->
+        <div class="col-md-4">
+            <div class="card h-100 border-primary shadow-sm">
+                <div class="card-body">
+                    <span class="badge bg-primary mb-2">Active</span>
+                    <h5 class="card-title">2. Real-Time Command Stream</h5>
+                    <p class="card-text text-secondary">
+                        Live dynamic event distribution delivering speed metrics, KZN waypoint progress, and immediate driver status updates.
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <a href="/dashboard" class="btn btn-outline-primary w-100">Monitor Stream</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pillar 3: Disabled / Future -->
+        <div class="col-md-4">
+            <div class="card h-100 border-secondary bg-light opacity-75">
+                <div class="card-body">
+                    <span class="badge bg-secondary mb-2">Disabled / In Development</span>
+                    <h5 class="card-title text-muted">3. History & Mesh Routing</h5>
+                    <p class="card-text text-muted">
+                        Historical batch archive analytics and decentralized vehicle-to-vehicle mesh network topology routing.
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent border-0">
+                    <button class="btn btn-secondary w-100" disabled>Coming Soon</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

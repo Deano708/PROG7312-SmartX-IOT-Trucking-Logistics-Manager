@@ -1,0 +1,62 @@
+﻿@page "/account"
+
+<div class="container py-4">
+    <div class="row g-4">
+        <!-- Fleet Statistics Overview -->
+        <div class="col-md-4">
+            <div class="card p-3 shadow-sm mb-3">
+                <h5 class="card-title text-muted">Total Registered Trucks</h5>
+                <h2 class="fw-bold text-primary">12 Vehicles</h2>
+            </div>
+            <div class="card p-3 shadow-sm mb-3">
+                <h5 class="card-title text-muted">Total Distance Covered</h5>
+                <h2 class="fw-bold text-success">92,400 km</h2>
+            </div>
+            <div class="card p-3 shadow-sm">
+                <h5 class="card-title text-muted">Active Active Sensors</h5>
+                <h2 class="fw-bold text-info">36 Nodes</h2>
+            </div>
+        </div>
+
+        <!-- Account Settings & Credentials -->
+        <div class="col-md-8">
+            <div class="card p-4 shadow-sm">
+                <h4 class="mb-3">Account Profile Settings</h4>
+                <form @onsubmit="SaveProfile">
+                    <div class="mb-3">
+                        <label class="form-label">Company Name</label>
+                        <input type="text" class="form-control" @bind="userCompany" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Admin Email</label>
+                        <input type="email" class="form-control" @bind="userEmail" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Password</label>
+                        <input type="password" class="form-control" value="********" />
+                    </div>
+                    
+                    <div class="d-flex justify-content-between align-items-center mt-4">
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                        <button type="button" class="btn btn-outline-danger" @onclick="DeleteAccount">Delete Account</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string userCompany = "Smart-X Fleet";
+    private string userEmail = "admin@smartx.co.za";
+
+    private void SaveProfile()
+    {
+        // Save account changes to backend
+    }
+
+    private void DeleteAccount()
+    {
+        // Execute account deletion procedure
+    }
+}
