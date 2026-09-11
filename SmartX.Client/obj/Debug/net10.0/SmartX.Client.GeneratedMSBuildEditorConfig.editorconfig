@@ -33,8 +33,16 @@ build_property.EnableCodeStyleSeverity =
 build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Users/Deano/Documents/Work/PROG7312/POE part 1/emkndn-prog7312-g2-2026-prog7312-poe-deano708/SmartX.Client/Components/ReceiptUploader.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50c1xSZWNlaXB0VXBsb2FkZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/Deano/Documents/Work/PROG7312/POE part 1/emkndn-prog7312-g2-2026-prog7312-poe-deano708/SmartX.Client/Pages/Counter.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ291bnRlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Deano/Documents/Work/PROG7312/POE part 1/emkndn-prog7312-g2-2026-prog7312-poe-deano708/SmartX.Client/Pages/Dashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGFzaGJvYXJkLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Deano/Documents/Work/PROG7312/POE part 1/emkndn-prog7312-g2-2026-prog7312-poe-deano708/SmartX.Client/Pages/Home.razor]
@@ -43,10 +51,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Users/Deano/Documents/Work/PROG7312/POE part 1/emkndn-prog7312-g2-2026-prog7312-poe-deano708/SmartX.Client/Pages/NotFound.razor]
 build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTm90Rm91bmQucmF6b3I=
-build_metadata.AdditionalFiles.CssScope = 
-
-[C:/Users/Deano/Documents/Work/PROG7312/POE part 1/emkndn-prog7312-g2-2026-prog7312-poe-deano708/SmartX.Client/Pages/Weather.razor]
-build_metadata.AdditionalFiles.TargetPath = UGFnZXNcV2VhdGhlci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Users/Deano/Documents/Work/PROG7312/POE part 1/emkndn-prog7312-g2-2026-prog7312-poe-deano708/SmartX.Client/_Imports.razor]

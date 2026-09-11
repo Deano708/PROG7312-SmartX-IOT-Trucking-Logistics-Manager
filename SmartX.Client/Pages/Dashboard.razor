@@ -1,0 +1,88 @@
+﻿@page "/dashboard"
+@using SmartX.Shared.Models
+@using SmartX.Shared.Services
+@inject KznDataSeeder Seeder
+
+<div class="container-fluid p-4">
+    <h2 class="mb-4">Smart-X Fleet Tracker (KZN Division)</h2>
+
+    <!-- Truck Selection Dropdown -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <label class="form-label fw-bold">Select Fleet Truck:</label>
+            <select class="form-select" @onchange="OnTruckSelected">
+                <option value="TRK-001">TRK-001 (Driver: Sipho Zulu)</option>
+                <option value="TRK-002">TRK-002 (Driver: Johan Botha)</option>
+            </select>
+        </div>
+    </div>
+
+    @if (selectedHistory.Any())
+    {
+        var currentPoint = selectedHistory[selectedHourIndex].Payload;
+
+        <!-- Live Telemetry & Map Overview -->
+        <div class="row g-3 mb-4">
+            <div class="col-md-3">
+                <div class="card p-3 border-primary">
+                    <h6>Nearest Town</h6>
+                    <h4>@currentPoint.NearestTown</h4>
+                    <small>Lat: @currentPoint.Latitude.ToString("F4"), Lng: @currentPoint.Longitude.ToString("F4")</small>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-3">
+                    <h6>Current Speed</h6>
+                    <h4>@currentPoint.SpeedKmh km/h</h4>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-3">
+                    <h6>Distance Traveled</h6>
+                    <h4>@currentPoint.DistanceTraveledKm.ToString("F1") km</h4>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card p-3">
+                    <h6>Fuel Remaining</h6>
+                    <h4>@currentPoint.FuelLevelLiters.ToString("F1") L</h4>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hour-by-Hour Timeline Navigator -->
+        <div class="card p-4 mb-4">
+            <h5>Route Timeline Progress</h5>
+            <input type="range" class="form-range" min="0" max="@(selectedHistory.Count - 1)"
+                   @bind="selectedHourIndex" @bind:event="oninput" />
+            <div class="d-flex justify-content-between text-muted">
+                <span>Start (@selectedHistory.First().Timestamp.ToShortTimeString())</span>
+                <span>Selected Hour: +@selectedHourIndex hrs</span>
+                <span>Latest (@selectedHistory.Last().Timestamp.ToShortTimeString())</span>
+            </div>
+        </div>
+    }
+</div>
+
+@code {
+    private List<TelemetryPacket<TruckTelemetry>> selectedHistory = new();
+    private int selectedHourIndex = 0;
+
+    protected override void OnInitialized()
+    {
+        LoadTruckData("TRK-001", "Sipho Zulu");
+    }
+
+    private void OnTruckSelected(ChangeEventArgs e)
+    {
+        string truckId = e.Value?.ToString() ?? "TRK-001";
+        string driver = truckId == "TRK-001" ? "Sipho Zulu" : "Johan Botha";
+        LoadTruckData(truckId, driver);
+    }
+
+    private void LoadTruckData(string truckId, string driver)
+    {
+        selectedHistory = Seeder.GenerateRouteHistory(truckId, driver, 12);
+        selectedHourIndex = selectedHistory.Count - 1;
+    }
+}

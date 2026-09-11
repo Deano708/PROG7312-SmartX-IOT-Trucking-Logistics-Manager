@@ -1,0 +1,43 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+
+<div class="card p-3 mt-4">
+    <h5>Attached Petrol Receipts & Documents</h5>
+
+    <div class="mb-3">
+        <InputFile OnChange="UploadFile" accept=".pdf,.png,.jpg,.jpeg" class="form-control" />
+    </div>
+
+    @if (uploadedFiles.Any())
+    {
+        <ul class="list-group">
+            @foreach (var file in uploadedFiles)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>@file.Name (@(file.Size / 1024) KB)</span>
+                    <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteFile(file)">Delete</button>
+                </li>
+            }
+        </ul>
+    }
+    else
+    {
+        <p class="text-muted">No receipts attached for this trip.</p>
+    }
+</div>
+
+@code {
+    private List<IBrowserFile> uploadedFiles = new();
+
+    private void UploadFile(InputFileChangeEventArgs e)
+    {
+        foreach (var file in e.GetMultipleFiles())
+        {
+            uploadedFiles.Add(file);
+        }
+    }
+
+    private void DeleteFile(IBrowserFile file)
+    {
+        uploadedFiles.Remove(file);
+    }
+}
