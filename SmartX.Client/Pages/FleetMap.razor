@@ -1,0 +1,69 @@
+﻿@page "/fleet-map"
+@using SmartX.Client.Services
+@using SmartX.Shared.Models
+@inject TruckSensorStateService StateService
+@inject IJSRuntime JS
+
+<div class="container py-4">
+    <h3 class="fw-bold mb-3">Interactive Fleet GPS Monitor</h3>
+    <p class="text-muted mb-4">Select any of the 12 South African corridor vehicles to view real-time position tiles.</p>
+
+    <div class="row mb-4">
+        <div class="col-md-6">
+            <label class="form-label fw-bold">Select Active Truck</label>
+            <select class="form-select" @onchange="OnTruckSelected">
+                @foreach (var truck in StateService.Fleet)
+                {
+                    <option value="@truck.TruckId">@truck.TruckId — @truck.DriverName (@truck.NearestTown)</option>
+                }
+            </select>
+        </div>
+    </div>
+
+    @if (selectedTruck.TruckId != null)
+    {
+        <div class="card p-3 shadow-sm border-0">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="fw-bold mb-0">@selectedTruck.TruckId: @selectedTruck.DriverName</h5>
+                <span class="badge bg-primary">Speed: @selectedTruck.SpeedKmh km/h</span>
+            </div>
+            <p class="small text-muted mb-3">
+                Current Corridor: <strong>@selectedTruck.NearestTown</strong> | 
+                Coordinates: <code>@selectedTruck.Latitude, @selectedTruck.Longitude</code>
+            </p>
+
+            <!-- Map Container -->
+            <div id="truckMapContainer" style="height: 450px; width: 100%;" class="rounded border"></div>
+        </div>
+    }
+</div>
+
+@code {
+    private TruckTelemetry selectedTruck;
+
+    protected override void OnInitialized()
+    {
+        selectedTruck = StateService.Fleet.First();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await UpdateMap();
+        }
+    }
+
+    private async Task OnTruckSelected(ChangeEventArgs e)
+    {
+        var truckId = e.Value?.ToString();
+        selectedTruck = StateService.Fleet.First(t => t.TruckId == truckId);
+        await UpdateMap();
+    }
+
+    private async Task UpdateMap()
+    {
+        var popupLabel = $"{selectedTruck.TruckId} ({selectedTruck.DriverName})<br>{selectedTruck.NearestTown}";
+        await JS.InvokeVoidAsync("renderTruckMap", selectedTruck.Latitude, selectedTruck.Longitude, popupLabel);
+    }
+}

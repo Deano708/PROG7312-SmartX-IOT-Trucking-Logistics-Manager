@@ -6,16 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SmartX.Client</title>
     <base href="/" />
-    <link href="_framework/dotnet.jhp6ghtbtu.js" rel="preload" as="script" fetchpriority="high" crossorigin="anonymous" integrity="sha256-h0qabAv0ImhtEtqlIgc7AwTmGhaN7mCzFguwtneE6Dc=" />
+    <link href="_framework/dotnet.94qhjg0dmk.js" rel="preload" as="script" fetchpriority="high" crossorigin="anonymous" integrity="sha256-h+4yg4fZaKin5jOQKAFgMT4xqPFH0p1sydNNbcJb0SQ=" />
     <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/app.css" />
     <link rel="icon" type="image/png" href="favicon.png" />
     <link href="SmartX.Client.styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
     <script type="importmap">{
   "imports": {
     "./_framework/Microsoft.DotNet.HotReload.WebAssembly.Browser.lib.module.js": "./_framework/Microsoft.DotNet.HotReload.WebAssembly.Browser.0ql05aqe1d.lib.module.js",
     "./_framework/blazor.webassembly.js": "./_framework/blazor.webassembly.w3qd1tpl0e.js",
-    "./_framework/dotnet.js": "./_framework/dotnet.jhp6ghtbtu.js",
+    "./_framework/dotnet.js": "./_framework/dotnet.94qhjg0dmk.js",
     "./_framework/dotnet.native.js": "./_framework/dotnet.native.b6l13xorvf.js",
     "./_framework/dotnet.runtime.js": "./_framework/dotnet.runtime.v06hirbjsv.js",
     "./lib/bootstrap/dist/js/bootstrap.bundle.min.js": "./lib/bootstrap/dist/js/bootstrap.bundle.min.493y06b0oq.js",
@@ -31,8 +32,8 @@
     "./_framework/Microsoft.DotNet.HotReload.WebAssembly.Browser.lib.module.js": "sha256-COWwzg73Z3/o08f86sS51xhS4Ya6UXTEzWvXeOnbv00=",
     "./_framework/blazor.webassembly.js": "sha256-lDXsDYFgm62F+YUvxES7IOTCXYpiHpU3uR45YdC6mq4=",
     "./_framework/blazor.webassembly.w3qd1tpl0e.js": "sha256-lDXsDYFgm62F+YUvxES7IOTCXYpiHpU3uR45YdC6mq4=",
-    "./_framework/dotnet.jhp6ghtbtu.js": "sha256-h0qabAv0ImhtEtqlIgc7AwTmGhaN7mCzFguwtneE6Dc=",
-    "./_framework/dotnet.js": "sha256-h0qabAv0ImhtEtqlIgc7AwTmGhaN7mCzFguwtneE6Dc=",
+    "./_framework/dotnet.94qhjg0dmk.js": "sha256-h+4yg4fZaKin5jOQKAFgMT4xqPFH0p1sydNNbcJb0SQ=",
+    "./_framework/dotnet.js": "sha256-h+4yg4fZaKin5jOQKAFgMT4xqPFH0p1sydNNbcJb0SQ=",
     "./_framework/dotnet.native.b6l13xorvf.js": "sha256-jZddobLBM2C3lQhYQ61xSQJ/WqD3eQCO3RzoHGaOjx0=",
     "./_framework/dotnet.native.js": "sha256-jZddobLBM2C3lQhYQ61xSQJ/WqD3eQCO3RzoHGaOjx0=",
     "./_framework/dotnet.runtime.js": "sha256-QbnqrZGHtGq7wudS17/AYEPpH9JkphrsyVllD6JHmds=",
@@ -68,6 +69,34 @@
         <span class="dismiss">🗙</span>
     </div>
     <script src="_framework/blazor.webassembly.w3qd1tpl0e.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+    <script>
+            window.renderTruckMap = (lat, lng, popupText) => {
+                const mapContainer = document.getElementById('truckMapContainer');
+                if (!mapContainer) return;
+
+                // Destroy existing map instance to prevent duplicate binding errors on rerender
+                if (window.truckMapInstance) {
+                    window.truckMapInstance.remove();
+                }
+
+                // Initialize Leaflet map centered at truck coordinates
+                window.truckMapInstance = L.map('truckMapContainer').setView([lat, lng], 13);
+
+                // Load OpenStreetMap tile layer
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    maxZoom: 19,
+                    attribution: '© OpenStreetMap contributors'
+                }).addTo(window.truckMapInstance);
+
+                // Place marker at truck location with popup
+                L.marker([lat, lng])
+                 .addTo(window.truckMapInstance)
+                 .bindPopup(`<b>${popupText}</b>`)
+                 .openPopup();
+            };
+    </script>
 </body>
 
 </html>
