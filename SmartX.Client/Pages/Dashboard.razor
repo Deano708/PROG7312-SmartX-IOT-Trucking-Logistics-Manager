@@ -1,88 +1,126 @@
 ﻿@page "/dashboard"
-@using SmartX.Shared.Models
 @using SmartX.Shared.Services
+@using SmartX.Shared.Models
 @inject KznDataSeeder Seeder
+@inject IJSRuntime JS
 
-<div class="container-fluid p-4">
-    <h2 class="mb-4">Smart-X Fleet Tracker (KZN Division)</h2>
+<div class="container py-4">
+    <h3 class="fw-bold mb-3">Live Fleet Telemetry & GPS Monitor</h3>
+    <p class="text-muted mb-4">Monitor real-time status and playback 12-hour corridor routes for all 12 vehicles across South Africa.</p>
 
-    <!-- Truck Selection Dropdown -->
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <label class="form-label fw-bold">Select Fleet Truck:</label>
-            <select class="form-select" @onchange="OnTruckSelected">
-                <option value="TRK-001">TRK-001 (Driver: Sipho Zulu)</option>
-                <option value="TRK-002">TRK-002 (Driver: Johan Botha)</option>
-            </select>
+    <!-- Vehicle & Time Selection Controls -->
+    <div class="card p-4 shadow-sm border-0 mb-4 bg-white">
+        <div class="row g-3 align-items-center mb-3">
+            <div class="col-md-5">
+                <label class="form-label fw-bold">Select Fleet Vehicle (12 Active)</label>
+                <select class="form-select" @onchange="OnTruckChanged">
+                    @foreach (var truckKey in Seeder.FleetJourneys.Keys)
+                    {
+                        var firstPoint = Seeder.FleetJourneys[truckKey][0].Payload;
+                        <option value="@truckKey" selected="@(truckKey == selectedTruckId)">
+                            @firstPoint.TruckId — @firstPoint.DriverName (@firstPoint.NearestTown.Split('-')[0].Trim())
+                        </option>
+                    }
+                </select>
+            </div>
+
+            <div class="col-md-7">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <label class="form-label fw-bold mb-0">12-Hour Journey Timeline</label>
+                    <span class="badge bg-dark">Hour @(selectedHourIndex + 1) of 12 (@currentPoint.Timestamp.ToShortTimeString())</span>
+                </div>
+                <input type="range" class="form-range" min="0" max="11" step="1"
+                       value="@selectedHourIndex" @oninput="OnHourSliderInput" />
+            </div>
+        </div>
+
+        <!-- Metric Telemetry Cards -->
+        <div class="row g-3 text-center">
+            <div class="col-md-3">
+                <div class="p-3 bg-light rounded border">
+                    <div class="small text-muted">Vehicle Speed</div>
+                    <div class="fs-4 fw-bold text-primary">@currentPoint.Payload.SpeedKmh km/h</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3 bg-light rounded border">
+                    <div class="small text-muted">Distance Traveled</div>
+                    <div class="fs-4 fw-bold text-success">@currentPoint.Payload.DistanceTraveledKm km</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3 bg-light rounded border">
+                    <div class="small text-muted">Remaining Fuel</div>
+                    <div class="fs-4 fw-bold text-warning">@currentPoint.Payload.FuelLevelLiters L</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="p-3 bg-light rounded border">
+                    <div class="small text-muted">Coordinates</div>
+                    <div class="small fw-bold mt-1 text-dark">
+                        @currentPoint.Payload.Latitude.ToString("F4"), @currentPoint.Payload.Longitude.ToString("F4")
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-   @if (selectedHistory != null && selectedHistory.Count > 0 && selectedHourIndex < selectedHistory.Count)
-{
-    var currentPoint = selectedHistory[selectedHourIndex].Payload;
-
-        <!-- Live Telemetry & Map Overview -->
-        <div class="row g-3 mb-4">
-            <div class="col-md-3">
-                <div class="card p-3 border-primary">
-                    <h6>Nearest Town</h6>
-                    <h4>@currentPoint.NearestTown</h4>
-                    <small>Lat: @currentPoint.Latitude.ToString("F4"), Lng: @currentPoint.Longitude.ToString("F4")</small>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card p-3">
-                    <h6>Current Speed</h6>
-                    <h4>@currentPoint.SpeedKmh km/h</h4>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card p-3">
-                    <h6>Distance Traveled</h6>
-                    <h4>@currentPoint.DistanceTraveledKm.ToString("F1") km</h4>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="card p-3">
-                    <h6>Fuel Remaining</h6>
-                    <h4>@currentPoint.FuelLevelLiters.ToString("F1") L</h4>
-                </div>
-            </div>
-        </div>
-
-        <!-- Hour-by-Hour Timeline Navigator -->
-        <div class="card p-4 mb-4">
-            <h5>Route Timeline Progress</h5>
-            <input type="range" class="form-range" min="0" max="@(selectedHistory.Count - 1)"
-                   @bind="selectedHourIndex" @bind:event="oninput" />
-            <div class="d-flex justify-content-between text-muted">
-                <span>Start (@selectedHistory.First().Timestamp.ToShortTimeString())</span>
-                <span>Selected Hour: +@selectedHourIndex hrs</span>
-                <span>Latest (@selectedHistory.Last().Timestamp.ToShortTimeString())</span>
-            </div>
-        </div>
-    }
+    <!-- Live Map Container (Underneath Time Controls) -->
+    <div class="card p-3 shadow-sm border-0 bg-white">
+        <h5 class="fw-bold mb-2">Live Corridor GPS Position</h5>
+        <p class="small text-muted mb-3">
+            Location: <strong>@currentPoint.Payload.NearestTown</strong>
+        </p>
+        <div id="truckMapContainer" style="height: 420px; width: 100%;" class="rounded border"></div>
+    </div>
 </div>
 
 @code {
-    private List<TelemetryPacket<TruckTelemetry>> selectedHistory = new();
+    private string selectedTruckId = "TRK-001";
     private int selectedHourIndex = 0;
+    private TelemetryPacket<TruckTelemetry> currentPoint;
 
     protected override void OnInitialized()
     {
-        LoadTruckData("TRK-001", "Sipho Zulu");
+        UpdateCurrentPoint();
     }
 
-    private void OnTruckSelected(ChangeEventArgs e)
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        string truckId = e.Value?.ToString() ?? "TRK-001";
-        string driver = truckId == "TRK-001" ? "Sipho Zulu" : "Johan Botha";
-        LoadTruckData(truckId, driver);
+        await RenderMapLocation();
     }
 
-    private void LoadTruckData(string truckId, string driver)
+    private async Task OnTruckChanged(ChangeEventArgs e)
     {
-        selectedHistory = Seeder.GenerateRouteHistory(truckId, driver, 12);
-        selectedHourIndex = selectedHistory.Count - 1;
+        selectedTruckId = e.Value?.ToString() ?? "TRK-001";
+        UpdateCurrentPoint();
+        await RenderMapLocation();
+    }
+
+    private async Task OnHourSliderInput(ChangeEventArgs e)
+    {
+        if (int.TryParse(e.Value?.ToString(), out int newIndex))
+        {
+            selectedHourIndex = newIndex;
+            UpdateCurrentPoint();
+            await RenderMapLocation();
+        }
+    }
+
+    private void UpdateCurrentPoint()
+    {
+        if (Seeder.FleetJourneys.TryGetValue(selectedTruckId, out var history))
+        {
+            currentPoint = history[selectedHourIndex];
+        }
+    }
+
+    private async Task RenderMapLocation()
+    {
+        if (currentPoint.Payload.TruckId != null)
+        {
+            var popupLabel = $"{currentPoint.Payload.TruckId} ({currentPoint.Payload.DriverName})<br>Hour {selectedHourIndex + 1}: {currentPoint.Payload.SpeedKmh} km/h";
+            await JS.InvokeVoidAsync("renderTruckMap", currentPoint.Payload.Latitude, currentPoint.Payload.Longitude, popupLabel);
+        }
     }
 }
