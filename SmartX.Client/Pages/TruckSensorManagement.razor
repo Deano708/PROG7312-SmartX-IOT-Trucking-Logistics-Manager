@@ -1,0 +1,133 @@
+﻿@page "/truck-sensors"
+@page "/sensors"
+@using SmartX.Shared.Models
+@using Microsoft.AspNetCore.Components.Forms
+
+<div class="container py-4">
+    <h3 class="fw-bold mb-3">Vehicle Sensor Payload Configuration</h3>
+    <p class="text-muted mb-4">Register ESP32 nodes, assign vehicle sub-assembly zones, and attach hardware specs.</p>
+
+    <div class="row g-4">
+        <!-- Sensor Registration Form -->
+        <div class="col-md-6">
+            <div class="card p-4 shadow-sm border-0 bg-white">
+                <h5 class="card-title mb-3">Attach Sensor to Vehicle</h5>
+                <EditForm Model="sensorModel" OnValidSubmit="RegisterSensor">
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Target Truck</label>
+                        <select class="form-select" @bind="sensorModel.AssignedTruckId">
+                            <option value="TRK-001">TRK-001 (Freightliner - Sipho Zulu)</option>
+                            <option value="TRK-002">TRK-002 (Volvo FH - Johan Botha)</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Hardware MAC / Identifier</label>
+                        <input type="text" class="form-control" @bind="sensorModel.DeviceMac" placeholder="24:6F:28:AB:C1:10" required />
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Sensor Category</label>
+                        <InputSelect class="form-select" @bind-Value="sensorModel.Category">
+                            @foreach (var cat in Enum.GetValues<TruckSensorCategory>())
+                            {
+                                <option value="@cat">@cat</option>
+                            }
+                        </InputSelect>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Vehicle Placement Zone</label>
+                        <InputSelect class="form-select" @bind-Value="sensorModel.Zone">
+                            @foreach (var zone in Enum.GetValues<TruckDeploymentZone>())
+                            {
+                                <option value="@zone">@zone</option>
+                            }
+                        </InputSelect>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label fw-bold">Attach Calibration / Specification File</label>
+                        <InputFile OnChange="HandleFileSelected" class="form-control" accept=".pdf,.txt,.json,.csv" />
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-100">Attach Sensor Payload</button>
+                </EditForm>
+            </div>
+        </div>
+
+        <!-- Active Fleet Sensor Registry -->
+        <div class="col-md-6">
+            <div class="card p-4 shadow-sm border-0 bg-white">
+                <h5 class="card-title mb-3">Assigned Vehicle Sensors (@registeredSensors.Count)</h5>
+                @if (registeredSensors.Any())
+                {
+                    <div class="list-group">
+                        @foreach (var sensor in registeredSensors)
+                        {
+                            <div class="list-group-item d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="badge bg-dark me-2">@sensor.AssignedTruckId</span>
+                                    <strong>@sensor.Category</strong>
+                                    <div class="small text-muted">
+                                        MAC: @sensor.DeviceMac | Zone: @sensor.Zone
+                                    </div>
+                                    @if (!string.IsNullOrEmpty(sensor.SpecSheetFileName))
+                                    {
+                                        <div class="small text-success">File: @sensor.SpecSheetFileName</div>
+                                    }
+                                </div>
+                                <button class="btn btn-sm btn-outline-danger" @onclick="() => RemoveSensor(sensor)">Remove</button>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p class="text-muted">No sensors currently mapped to fleet vehicles.</p>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private TruckSensorProfile sensorModel = new()
+    {
+        AssignedTruckId = "TRK-001",
+        Category = TruckSensorCategory.FuelAndFluids,
+        Zone = TruckDeploymentZone.FuelTankPrimary
+    };
+
+    private List<TruckSensorProfile> registeredSensors = new()
+    {
+        new() { AssignedTruckId = "TRK-001", DeviceMac = "02:42:AC:11:00:02", Category = TruckSensorCategory.TelemetryAndKinetics, Zone = TruckDeploymentZone.CabDashboard, SpecSheetFileName = "gps_spec.pdf" },
+        new() { AssignedTruckId = "TRK-001", DeviceMac = "24:6F:28:AB:C1:12", Category = TruckSensorCategory.ColdChainAndCargo, Zone = TruckDeploymentZone.RefrigeratedTrailerBox, SpecSheetFileName = "dht22_calib.json" }
+    };
+
+    private void HandleFileSelected(InputFileChangeEventArgs e)
+    {
+        sensorModel.SpecSheetFileName = e.File.Name;
+    }
+
+    private void RegisterSensor()
+    {
+        registeredSensors.Add(new TruckSensorProfile
+        {
+            AssignedTruckId = sensorModel.AssignedTruckId,
+            DeviceMac = sensorModel.DeviceMac,
+            Category = sensorModel.Category,
+            Zone = sensorModel.Zone,
+            SpecSheetFileName = sensorModel.SpecSheetFileName
+        });
+
+        // Reset form MAC and Spec file
+        sensorModel.DeviceMac = string.Empty;
+        sensorModel.SpecSheetFileName = string.Empty;
+    }
+
+    private void RemoveSensor(TruckSensorProfile sensor)
+    {
+        registeredSensors.Remove(sensor);
+    }
+}

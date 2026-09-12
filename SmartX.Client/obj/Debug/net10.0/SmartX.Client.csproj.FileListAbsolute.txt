@@ -31,10 +31,6 @@ C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog73
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\Microsoft.VisualBasic.Core.17wn27qal2.wasm
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\Microsoft.Win32.Primitives.9d566sle9e.wasm
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\Microsoft.Win32.Registry.52dy96yk8i.wasm
-C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\SmartX.Client.fzb31gzqcq.wasm
-C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\SmartX.Client.g3g8dlsuxe.pdb
-C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\SmartX.Shared.13hfjjlxo0.wasm
-C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\SmartX.Shared.hnqflk64lg.pdb
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.AppContext.jwujeh069z.wasm
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Buffers.y0isk1x97h.wasm
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Collections.Concurrent.x5koi7bzem.wasm
@@ -201,7 +197,6 @@ C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog73
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.gjriafnqmz.wasm
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\WindowsBase.8zsce9qxfb.wasm
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\blazor.webassembly.w3qd1tpl0e.js
-C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\dotnet.7nq7gtf1yb.js
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\dotnet.js.map
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\dotnet.native.b6l13xorvf.js
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\dotnet.native.rw4kynp763.wasm
@@ -232,7 +227,6 @@ C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog73
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.IO.FileSystem.AccessControl.yme0uhbu37.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Text.Json.ixiaa8hd3h.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Net.Quic.hx06eo5xkj.wasm.gz
-C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\SmartX.Client.fzb31gzqcq.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Drawing.Primitives.y2uveru2yk.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\Microsoft.AspNetCore.Components.Forms.81edhczag4.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Linq.Parallel.2buevezvch.wasm.gz
@@ -261,7 +255,6 @@ C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog73
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Resources.Reader.41ppfyz2vc.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.IO.IsolatedStorage.hqyeyb5ipe.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.IO.FileSystem.o6jtz51fup.wasm.gz
-C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\SmartX.Client.g3g8dlsuxe.pdb.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Web.np8uzzakvl.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Text.Encoding.cxdyfepnpj.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\mscorlib.8ptuc08eli.wasm.gz
@@ -271,7 +264,6 @@ C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog73
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Net.Requests.hkjxlfe5f5.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Runtime.Loader.n6zxw1b98a.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Reflection.Primitives.igpmvwv78c.wasm.gz
-C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\SmartX.Shared.hnqflk64lg.pdb.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.IO.Pipes.AccessControl.qcancj8gj2.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Runtime.Handles.00oxj4o6ov.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Collections.Immutable.diwg7advch.wasm.gz
@@ -301,7 +293,6 @@ C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog73
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\dotnet.js.map.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\Microsoft.Extensions.Configuration.Json.yt3noczii3.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Xml.ReaderWriter.a9mr08uzci.wasm.gz
-C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\SmartX.Shared.13hfjjlxo0.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.IO.MemoryMappedFiles.zhamjnusxd.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.IO.FileSystem.Watcher.z570derp0d.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Resources.ResourceManager.sfwvfmw1ea.wasm.gz
@@ -383,7 +374,6 @@ C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog73
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.ObjectModel.kxu80demuu.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Security.Principal.Windows.gpqua4rz29.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Buffers.y0isk1x97h.wasm.gz
-C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\dotnet.7nq7gtf1yb.js.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Data.fsu4j4t4jw.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.IO.Compression.ZipFile.jkn9avr4vo.wasm.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\System.Text.RegularExpressions.2fhfmkk6vf.wasm.gz
@@ -1118,13 +1108,7 @@ C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog73
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\compressed\54obqfb2gu-{0}-tjcz0u77k5-tjcz0u77k5.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\compressed\ggtj08yisx-{0}-tptq2av103-tptq2av103.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\compressed\9rtyvy79h8-{0}-lfu7j35m59-lfu7j35m59.gz
-C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\compressed\bp2lowbb19-{0}-13hfjjlxo0-13hfjjlxo0.gz
-C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\compressed\87q7fcuuh7-{0}-hnqflk64lg-hnqflk64lg.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\compressed\zcvfatw1lm-{0}-mboztfuody-mboztfuody.gz
-C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\compressed\37n2nrncqn-{0}-fzb31gzqcq-fzb31gzqcq.gz
-C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\compressed\74jtbhelp0-{0}-g3g8dlsuxe-g3g8dlsuxe.gz
-C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\compressed\ss1y0ndpxn-{0}-7nq7gtf1yb-7nq7gtf1yb.gz
-C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\compressed\8qmbxpfxrx-{0}-e1erqbn2fw-e1erqbn2fw.gz
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\staticwebassets.build.json
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\staticwebassets.build.json.cache
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\staticwebassets.development.json
@@ -1136,3 +1120,19 @@ C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog73
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\refint\SmartX.Client.dll
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\SmartX.Client.pdb
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\ref\SmartX.Client.dll
+C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\SmartX.Shared.oaef6qc49i.pdb
+C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\SmartX.Shared.zrx3ae2eyj.wasm
+C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\SmartX.Shared.oaef6qc49i.pdb.gz
+C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\SmartX.Shared.zrx3ae2eyj.wasm.gz
+C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\compressed\bp2lowbb19-{0}-zrx3ae2eyj-zrx3ae2eyj.gz
+C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\compressed\87q7fcuuh7-{0}-oaef6qc49i-oaef6qc49i.gz
+C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\SmartX.Client.b9zrzfqdwv.wasm
+C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\SmartX.Client.z0bru4hqhe.pdb
+C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\dotnet.lz2416bfu3.js
+C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\SmartX.Client.b9zrzfqdwv.wasm.gz
+C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\SmartX.Client.z0bru4hqhe.pdb.gz
+C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\bin\Debug\net10.0\wwwroot\_framework\dotnet.lz2416bfu3.js.gz
+C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\compressed\37n2nrncqn-{0}-b9zrzfqdwv-b9zrzfqdwv.gz
+C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\compressed\74jtbhelp0-{0}-z0bru4hqhe-z0bru4hqhe.gz
+C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\compressed\ss1y0ndpxn-{0}-lz2416bfu3-lz2416bfu3.gz
+C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Client\obj\Debug\net10.0\compressed\8qmbxpfxrx-{0}-q4xvo4kuyf-q4xvo4kuyf.gz

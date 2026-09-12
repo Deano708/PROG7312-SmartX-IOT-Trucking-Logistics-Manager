@@ -7,6 +7,8 @@ public class TelemetryPacket<T> where T : struct
     public DateTime Timestamp { get; set; } = DateTime.UtcNow;
     public T Payload { get; set; }
 
+    public TelemetryPacket() { }
+
     public TelemetryPacket(string deviceMac, T payload)
     {
         DeviceMac = deviceMac;
@@ -14,7 +16,7 @@ public class TelemetryPacket<T> where T : struct
     }
 }
 
-// Concrete telemetry payload for KZN fleet tracking
+// Telemetry struct for KZN fleet tracking
 public struct TruckTelemetry
 {
     public string TruckId { get; set; }
@@ -39,7 +41,7 @@ public struct TruckTelemetry
 public class DeploymentNode
 {
     public string NodeId { get; set; } = string.Empty;
-    public string Category { get; set; } = string.Empty; // Environmental, Power, Actuator
+    public string Category { get; set; } = string.Empty;
     public bool IsSecurelyConfigured { get; set; }
     public List<DeploymentNode> SubNodes { get; set; } = new();
 
