@@ -1,4 +1,5 @@
-﻿using SmartX.Shared.Models;
+﻿using System.Text;
+using SmartX.Shared.Models;
 
 namespace SmartX.Client.Services;
 
@@ -24,11 +25,31 @@ public class TruckSensorStateService
 
     public TruckSensorStateService()
     {
+        var sampleDocBytes = Encoding.UTF8.GetBytes("{\"calibration\": \"verified\", \"voltage\": \"3.3V\", \"status\": \"OK\"}");
+
         foreach (var truck in Fleet)
         {
-            Sensors.Add(new TruckSensorProfile { AssignedTruckId = truck.TruckId, DeviceMac = $"02:42:AC:11:00:{truck.TruckId[^2..]}", Category = TruckSensorCategory.GpsAndTelemetry, AssignedSensorName = "GPS Transponder", SpecSheetFileName = "obd_gps.json" });
-            Sensors.Add(new TruckSensorProfile { AssignedTruckId = truck.TruckId, DeviceMac = $"24:6F:28:AB:C1:{truck.TruckId[^2..]}", Category = TruckSensorCategory.FuelAndFluids, AssignedSensorName = "(FLS) Fuel Level Sensor", SpecSheetFileName = "fuel_cap.pdf" });
-            Sensors.Add(new TruckSensorProfile { AssignedTruckId = truck.TruckId, DeviceMac = $"A4:CF:12:D4:E8:{truck.TruckId[^2..]}", Category = TruckSensorCategory.StructuralAndSafety, AssignedSensorName = "Tire Pressure Monitoring System (TPMS)", SpecSheetFileName = "tpms_spec.json" });
+            Sensors.Add(new TruckSensorProfile
+            {
+                AssignedTruckId = truck.TruckId,
+                DeviceMac = $"02:42:AC:11:00:{truck.TruckId[^2..]}",
+                Category = TruckSensorCategory.GpsAndTelemetry,
+                AssignedSensorName = "GPS Transponder",
+                SpecSheetFileName = "obd_gps.json",
+                FileData = sampleDocBytes,
+                FileContentType = "application/json"
+            });
+
+            Sensors.Add(new TruckSensorProfile
+            {
+                AssignedTruckId = truck.TruckId,
+                DeviceMac = $"24:6F:28:AB:C1:{truck.TruckId[^2..]}",
+                Category = TruckSensorCategory.FuelAndFluids,
+                AssignedSensorName = "(FLS) Fuel Level Sensor",
+                SpecSheetFileName = "fuel_cap.json",
+                FileData = sampleDocBytes,
+                FileContentType = "application/json"
+            });
         }
     }
 

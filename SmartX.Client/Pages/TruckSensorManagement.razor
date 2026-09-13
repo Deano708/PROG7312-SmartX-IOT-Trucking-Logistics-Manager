@@ -51,10 +51,14 @@
 
                     <div class="mb-3">
                         <label class="form-label fw-bold">Attach Calibration / Specification File</label>
-                        <InputFile OnChange="HandleFileSelected" class="form-control" accept=".pdf,.txt,.json,.csv" />
+                        <InputFile OnChange="HandleFileSelected" class="form-control" accept=".pdf,.txt,.json,.csv,.png,.jpg" />
+                        @if (isUploading)
+                        {
+                            <div class="small text-primary mt-1">Processing file binary...</div>
+                        }
                     </div>
 
-                    <button type="submit" class="btn btn-primary w-100">Attach Sensor Payload</button>
+                    <button type="submit" class="btn btn-primary w-100" disabled="@isUploading">Attach Sensor Payload</button>
                 </EditForm>
             </div>
         </div>
@@ -78,7 +82,19 @@
                                     </div>
                                     @if (!string.IsNullOrEmpty(sensor.SpecSheetFileName))
                                     {
-                                        <div class="small text-success">File: @sensor.SpecSheetFileName</div>
+                                        <div class="mt-2 d-flex align-items-center gap-2">
+                                            <span class="small text-success fw-bold">File: @sensor.SpecSheetFileName</span>
+                                            @if (sensor.FileData != null && sensor.FileData.Length > 0)
+                                            {
+                                                <a class="btn btn-sm btn-outline-primary py-0 px-2"
+                                                   style="font-size: 0.75rem;"
+                                                   href="@GetFileDownloadUrl(sensor)"
+                                                   download="@sensor.SpecSheetFileName"
+                                                   target="_blank">
+                                                    View / Download
+                                                </a>
+                                            }
+                                        </div>
                                     }
                                 </div>
                                 <button class="btn btn-sm btn-outline-danger" @onclick="() => SensorService.RemoveSensor(sensor)">Remove</button>
@@ -97,10 +113,11 @@
 
 @code {
     private TruckSensorProfile sensorModel = new();
+    private bool isUploading = false;
 
     protected override void OnInitialized()
     {
-        sensorModel.AssignedTruckId = SensorService.Fleet.Any() ? SensorService.Fleet.First().TruckId : "TRK-001";
+        sensorModel.AssignedTruckId = SensorService.Fleet.FirstOrDefault().TruckId;
         sensorModel.Category = TruckSensorCategory.FuelAndFluids;
         sensorModel.AssignedSensorName = GetSensorOptions(TruckSensorCategory.FuelAndFluids).First();
     }
@@ -131,9 +148,36 @@
         _ => category.ToString()
     };
 
-    private void HandleFileSelected(InputFileChangeEventArgs e)
+    private async Task HandleFileSelected(InputFileChangeEventArgs e)
     {
-        sensorModel.SpecSheetFileName = e.File.Name;
+        var file = e.File;
+        if (file != null)
+        {
+            isUploading = true;
+            try
+            {
+                // Max size set to 10MB
+                using var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024);
+                using var memoryStream = new MemoryStream();
+                await stream.CopyToAsync(memoryStream);
+
+                sensorModel.SpecSheetFileName = file.Name;
+                sensorModel.FileData = memoryStream.ToArray();
+                sensorModel.FileContentType = file.ContentType;
+            }
+            finally
+            {
+                isUploading = false;
+            }
+        }
+    }
+
+    private string GetFileDownloadUrl(TruckSensorProfile sensor)
+    {
+        if (sensor.FileData == null || sensor.FileData.Length == 0) return "#";
+        var base64 = Convert.ToBase64String(sensor.FileData);
+        var contentType = string.IsNullOrEmpty(sensor.FileContentType) ? "application/octet-stream" : sensor.FileContentType;
+        return $"data:{contentType};base64,{base64}";
     }
 
     private void RegisterSensor()
@@ -144,10 +188,15 @@
             DeviceMac = sensorModel.DeviceMac,
             Category = sensorModel.Category,
             AssignedSensorName = sensorModel.AssignedSensorName,
-            SpecSheetFileName = sensorModel.SpecSheetFileName
+            SpecSheetFileName = sensorModel.SpecSheetFileName,
+            FileData = sensorModel.FileData,
+            FileContentType = sensorModel.FileContentType
         });
 
+        // Reset inputs
         sensorModel.DeviceMac = string.Empty;
         sensorModel.SpecSheetFileName = string.Empty;
+        sensorModel.FileData = null;
+        sensorModel.FileContentType = null;
     }
 }
