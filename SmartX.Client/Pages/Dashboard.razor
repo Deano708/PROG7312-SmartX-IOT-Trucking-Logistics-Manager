@@ -78,7 +78,7 @@
 @code {
     private string selectedTruckId = "TRK-001";
     private int selectedHourIndex = 0;
-    private TelemetryPacket<TruckTelemetry> currentPoint;
+    private TelemetryPacket<TruckTelemetry> currentPoint = default!;
 
     protected override void OnInitialized()
     {

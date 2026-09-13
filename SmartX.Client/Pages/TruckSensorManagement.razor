@@ -7,7 +7,7 @@
 
 <div class="container py-4">
     <h3 class="fw-bold mb-3">Vehicle Sensor Payload Configuration</h3>
-    <p class="text-muted mb-4">Register ESP32 nodes, assign vehicle sub-assembly zones, and attach hardware specs.</p>
+    <p class="text-muted mb-4">Register hardware nodes, assign specific sensors, and attach calibration spec sheets across all 12 fleet vehicles.</p>
 
     <div class="row g-4">
         <!-- Sensor Registration Form -->
@@ -16,10 +16,12 @@
                 <h5 class="card-title mb-3">Attach Sensor to Vehicle</h5>
                 <EditForm Model="sensorModel" OnValidSubmit="RegisterSensor">
                     <div class="mb-3">
-                        <label class="form-label fw-bold">Target Truck</label>
+                        <label class="form-label fw-bold">Target Truck (12 Vehicles)</label>
                         <select class="form-select" @bind="sensorModel.AssignedTruckId">
-                            <option value="TRK-001">TRK-001 (Freightliner - Sipho Zulu)</option>
-                            <option value="TRK-002">TRK-002 (Volvo FH - Johan Botha)</option>
+                            @foreach (var truck in SensorService.Fleet)
+                            {
+                                <option value="@truck.TruckId">@truck.TruckId — @truck.DriverName (@truck.NearestTown.Split('(')[0].Trim())</option>
+                            }
                         </select>
                     </div>
 
@@ -30,22 +32,21 @@
 
                     <div class="mb-3">
                         <label class="form-label fw-bold">Sensor Category</label>
-                        <InputSelect class="form-select" @bind-Value="sensorModel.Category">
-                            @foreach (var cat in Enum.GetValues<TruckSensorCategory>())
-                            {
-                                <option value="@cat">@cat</option>
-                            }
-                        </InputSelect>
+                        <select class="form-select" value="@sensorModel.Category" @onchange="OnCategoryChanged">
+                            <option value="@TruckSensorCategory.FuelAndFluids">Fuel & Fluids</option>
+                            <option value="@TruckSensorCategory.GpsAndTelemetry">GPS & Telemetry</option>
+                            <option value="@TruckSensorCategory.StructuralAndSafety">Structural & Safety</option>
+                        </select>
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label fw-bold">Vehicle Placement Zone</label>
-                        <InputSelect class="form-select" @bind-Value="sensorModel.Zone">
-                            @foreach (var zone in Enum.GetValues<TruckDeploymentZone>())
+                        <label class="form-label fw-bold">Assign Sensor</label>
+                        <select class="form-select" @bind="sensorModel.AssignedSensorName">
+                            @foreach (var option in GetSensorOptions(sensorModel.Category))
                             {
-                                <option value="@zone">@zone</option>
+                                <option value="@option">@option</option>
                             }
-                        </InputSelect>
+                        </select>
                     </div>
 
                     <div class="mb-3">
@@ -64,15 +65,16 @@
                 <h5 class="card-title mb-3">Assigned Vehicle Sensors (@SensorService.Sensors.Count)</h5>
                 @if (SensorService.Sensors.Any())
                 {
-                    <div class="list-group">
+                    <div class="list-group style-scroll" style="max-height: 520px; overflow-y: auto;">
                         @foreach (var sensor in SensorService.Sensors)
                         {
                             <div class="list-group-item d-flex justify-content-between align-items-center">
                                 <div>
                                     <span class="badge bg-dark me-2">@sensor.AssignedTruckId</span>
-                                    <strong>@sensor.Category</strong>
-                                    <div class="small text-muted">
-                                        MAC: @sensor.DeviceMac | Zone: @sensor.Zone
+                                    <span class="badge bg-secondary me-2">@GetCategoryDisplayName(sensor.Category)</span>
+                                    <strong>@sensor.AssignedSensorName</strong>
+                                    <div class="small text-muted mt-1">
+                                        MAC: <code>@sensor.DeviceMac</code>
                                     </div>
                                     @if (!string.IsNullOrEmpty(sensor.SpecSheetFileName))
                                     {
@@ -94,11 +96,39 @@
 </div>
 
 @code {
-    private TruckSensorProfile sensorModel = new()
+    private TruckSensorProfile sensorModel = new();
+
+    protected override void OnInitialized()
     {
-        AssignedTruckId = "TRK-001",
-        Category = TruckSensorCategory.FuelAndFluids,
-        Zone = TruckDeploymentZone.FuelTankPrimary
+        sensorModel.AssignedTruckId = SensorService.Fleet.Any() ? SensorService.Fleet.First().TruckId : "TRK-001";
+        sensorModel.Category = TruckSensorCategory.FuelAndFluids;
+        sensorModel.AssignedSensorName = GetSensorOptions(TruckSensorCategory.FuelAndFluids).First();
+    }
+
+    private void OnCategoryChanged(ChangeEventArgs e)
+    {
+        if (Enum.TryParse<TruckSensorCategory>(e.Value?.ToString(), out var newCategory))
+        {
+            sensorModel.Category = newCategory;
+            var availableOptions = GetSensorOptions(newCategory);
+            sensorModel.AssignedSensorName = availableOptions.FirstOrDefault() ?? string.Empty;
+        }
+    }
+
+    private List<string> GetSensorOptions(TruckSensorCategory category) => category switch
+    {
+        TruckSensorCategory.FuelAndFluids => new List<string> { "(FLS) Fuel Level Sensor", "Engine Oil Level Sensor" },
+        TruckSensorCategory.GpsAndTelemetry => new List<string> { "GPS Transponder", "ESP 32 Connectivity Microcontroller" },
+        TruckSensorCategory.StructuralAndSafety => new List<string> { "Tire Pressure Monitoring System (TPMS)" },
+        _ => new List<string>()
+    };
+
+    private string GetCategoryDisplayName(TruckSensorCategory category) => category switch
+    {
+        TruckSensorCategory.FuelAndFluids => "Fuel & Fluids",
+        TruckSensorCategory.GpsAndTelemetry => "GPS & Telemetry",
+        TruckSensorCategory.StructuralAndSafety => "Structural & Safety",
+        _ => category.ToString()
     };
 
     private void HandleFileSelected(InputFileChangeEventArgs e)
@@ -113,7 +143,7 @@
             AssignedTruckId = sensorModel.AssignedTruckId,
             DeviceMac = sensorModel.DeviceMac,
             Category = sensorModel.Category,
-            Zone = sensorModel.Zone,
+            AssignedSensorName = sensorModel.AssignedSensorName,
             SpecSheetFileName = sensorModel.SpecSheetFileName
         });
 

@@ -2,22 +2,9 @@
 
 public enum TruckSensorCategory
 {
-    TelemetryAndKinetics,
     FuelAndFluids,
-    ColdChainAndCargo,
-    SecurityAndActuators,
+    GpsAndTelemetry,
     StructuralAndSafety
-}
-
-public enum TruckDeploymentZone
-{
-    CabDashboard,
-    EngineBay,
-    FuelTankPrimary,
-    FuelTankSecondary,
-    RefrigeratedTrailerBox,
-    TrailerTailgate,
-    WheelAxleAssembly
 }
 
 public class TruckSensorProfile
@@ -26,7 +13,7 @@ public class TruckSensorProfile
     public string DeviceMac { get; set; } = string.Empty;
     public string AssignedTruckId { get; set; } = string.Empty;
     public TruckSensorCategory Category { get; set; }
-    public TruckDeploymentZone Zone { get; set; }
+    public string AssignedSensorName { get; set; } = string.Empty;
     public string SpecSheetFileName { get; set; } = string.Empty;
     public bool IsActive { get; set; } = true;
 }

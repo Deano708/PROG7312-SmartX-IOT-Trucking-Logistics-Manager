@@ -24,12 +24,11 @@ public class TruckSensorStateService
 
     public TruckSensorStateService()
     {
-        // Seed sensors across all 12 trucks
         foreach (var truck in Fleet)
         {
-            Sensors.Add(new TruckSensorProfile { AssignedTruckId = truck.TruckId, DeviceMac = $"02:42:AC:11:00:{truck.TruckId[^2..]}", Category = TruckSensorCategory.TelemetryAndKinetics, Zone = TruckDeploymentZone.CabDashboard, SpecSheetFileName = "obd_gps.json" });
-            Sensors.Add(new TruckSensorProfile { AssignedTruckId = truck.TruckId, DeviceMac = $"24:6F:28:AB:C1:{truck.TruckId[^2..]}", Category = TruckSensorCategory.FuelAndFluids, Zone = TruckDeploymentZone.FuelTankPrimary, SpecSheetFileName = "fuel_cap.pdf" });
-            Sensors.Add(new TruckSensorProfile { AssignedTruckId = truck.TruckId, DeviceMac = $"A4:CF:12:D4:E8:{truck.TruckId[^2..]}", Category = TruckSensorCategory.ColdChainAndCargo, Zone = TruckDeploymentZone.RefrigeratedTrailerBox, SpecSheetFileName = "dht22_temp.json" });
+            Sensors.Add(new TruckSensorProfile { AssignedTruckId = truck.TruckId, DeviceMac = $"02:42:AC:11:00:{truck.TruckId[^2..]}", Category = TruckSensorCategory.GpsAndTelemetry, AssignedSensorName = "GPS Transponder", SpecSheetFileName = "obd_gps.json" });
+            Sensors.Add(new TruckSensorProfile { AssignedTruckId = truck.TruckId, DeviceMac = $"24:6F:28:AB:C1:{truck.TruckId[^2..]}", Category = TruckSensorCategory.FuelAndFluids, AssignedSensorName = "(FLS) Fuel Level Sensor", SpecSheetFileName = "fuel_cap.pdf" });
+            Sensors.Add(new TruckSensorProfile { AssignedTruckId = truck.TruckId, DeviceMac = $"A4:CF:12:D4:E8:{truck.TruckId[^2..]}", Category = TruckSensorCategory.StructuralAndSafety, AssignedSensorName = "Tire Pressure Monitoring System (TPMS)", SpecSheetFileName = "tpms_spec.json" });
         }
     }
 
