@@ -1,126 +1,309 @@
 ﻿@page "/dashboard"
-@using SmartX.Shared.Services
 @using SmartX.Shared.Models
-@inject KznDataSeeder Seeder
-@inject IJSRuntime JS
+@using SmartX.Client.Services
+@inject TruckSensorStateService SensorService
+@inject IJSRuntime JSRuntime
 
-<div class="container py-4">
-    <h3 class="fw-bold mb-3">Live Fleet Telemetry & GPS Monitor</h3>
-    <p class="text-muted mb-4">Monitor real-time status and playback 12-hour corridor routes for all 12 vehicles across South Africa.</p>
-
-    <!-- Vehicle & Time Selection Controls -->
-    <div class="card p-4 shadow-sm border-0 mb-4 bg-white">
-        <div class="row g-3 align-items-center mb-3">
-            <div class="col-md-5">
-                <label class="form-label fw-bold">Select Fleet Vehicle (12 Active)</label>
-                <select class="form-select" @onchange="OnTruckChanged">
-                    @foreach (var truckKey in Seeder.FleetJourneys.Keys)
-                    {
-                        var firstPoint = Seeder.FleetJourneys[truckKey][0].Payload;
-                        <option value="@truckKey" selected="@(truckKey == selectedTruckId)">
-                            @firstPoint.TruckId — @firstPoint.DriverName (@firstPoint.NearestTown.Split('-')[0].Trim())
-                        </option>
-                    }
-                </select>
-            </div>
-
-            <div class="col-md-7">
-                <div class="d-flex justify-content-between align-items-center mb-1">
-                    <label class="form-label fw-bold mb-0">12-Hour Journey Timeline</label>
-                    <span class="badge bg-dark">Hour @(selectedHourIndex + 1) of 12 (@currentPoint.Timestamp.ToShortTimeString())</span>
-                </div>
-                <input type="range" class="form-range" min="0" max="11" step="1"
-                       value="@selectedHourIndex" @oninput="OnHourSliderInput" />
-            </div>
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1">Live Fleet Telemetry Dashboard</h2>
+            <p class="text-muted mb-0">Real-time telemetry monitor with prioritized sensor visual hierarchy.</p>
         </div>
+        <!-- Truck Selection Dropdown -->
+        <div class="d-flex align-items-center gap-2">
+            <label class="fw-bold text-nowrap">Active Truck:</label>
+            <select class="form-select form-select-lg shadow-sm fw-bold border-primary" value="@selectedTruckId" @onchange="OnTruckSelected">
+                @foreach (var truck in SensorService.Fleet)
+                {
+                    <option value="@truck.TruckId">@truck.TruckId — @truck.DriverName (@truck.NearestTown.Split('(')[0].Trim())</option>
+                }
+            </select>
+        </div>
+    </div>
 
-        <!-- Metric Telemetry Cards -->
-        <div class="row g-3 text-center">
-            <div class="col-md-3">
-                <div class="p-3 bg-light rounded border">
-                    <div class="small text-muted">Vehicle Speed</div>
-                    <div class="fs-4 fw-bold text-primary">@currentPoint.Payload.SpeedKmh km/h</div>
-                </div>
+    @if (activeTruck.HasValue)
+    {
+        var truck = activeTruck.Value;
+
+        
+        <div class="card border-0 shadow-sm mb-4 bg-light">
+            <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center py-3">
+                <h5 class="mb-0 fw-bold"><i class="bi bi-speedometer2 me-2"></i>Primary Flight & Telemetry Metrics</h5>
+                <span class="badge bg-primary fs-6">Driver: @truck.DriverName</span>
             </div>
-            <div class="col-md-3">
-                <div class="p-3 bg-light rounded border">
-                    <div class="small text-muted">Distance Traveled</div>
-                    <div class="fs-4 fw-bold text-success">@currentPoint.Payload.DistanceTraveledKm km</div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="p-3 bg-light rounded border">
-                    <div class="small text-muted">Remaining Fuel</div>
-                    <div class="fs-4 fw-bold text-warning">@currentPoint.Payload.FuelLevelLiters L</div>
-                </div>
-            </div>
-            <div class="col-md-3">
-                <div class="p-3 bg-light rounded border">
-                    <div class="small text-muted">Coordinates</div>
-                    <div class="small fw-bold mt-1 text-dark">
-                        @currentPoint.Payload.Latitude.ToString("F4"), @currentPoint.Payload.Longitude.ToString("F4")
+            <div class="card-body p-4">
+                <div class="row g-4 text-center">
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white rounded shadow-sm border">
+                            <div class="text-uppercase small text-muted fw-bold">Vehicle Speed</div>
+                            <div class="display-6 fw-bold text-primary my-1">@truck.SpeedKmh.ToString("F1") <span class="fs-6">km/h</span></div>
+                            <span class="badge @(truck.SpeedKmh > 0 ? "bg-success" : "bg-secondary")">
+                                @(truck.SpeedKmh > 0 ? "In Transit" : "Stationary")
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white rounded shadow-sm border">
+                            <div class="text-uppercase small text-muted fw-bold">Distance Traveled</div>
+                            <div class="display-6 fw-bold text-dark my-1">@truck.DistanceTraveledKm.ToString("N0") <span class="fs-6">km</span></div>
+                            <span class="badge bg-info text-dark">Odometer Metric</span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white rounded shadow-sm border">
+                            <div class="text-uppercase small text-muted fw-bold">Remaining Fuel</div>
+                            <div class="display-6 fw-bold @GetFuelTextColor(truck.FuelLevelLiters) my-1">
+                                @truck.FuelLevelLiters.ToString("F0") <span class="fs-6">L</span>
+                            </div>
+                            <span class="badge @GetFuelBadgeColor(truck.FuelLevelLiters)">
+                                @GetFuelStatusLabel(truck.FuelLevelLiters)
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="p-3 bg-white rounded shadow-sm border">
+                            <div class="text-uppercase small text-muted fw-bold">GPS Location</div>
+                            <div class="fw-bold text-dark fs-5 mt-2 mb-1">@currentLat.ToString("F4"), @currentLng.ToString("F4")</div>
+                            <div class="small text-truncate text-muted">@truck.NearestTown</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Live Map Container (Underneath Time Controls) -->
-    <div class="card p-3 shadow-sm border-0 bg-white">
-        <h5 class="fw-bold mb-2">Live Corridor GPS Position</h5>
-        <p class="small text-muted mb-3">
-            Location: <strong>@currentPoint.Payload.NearestTown</strong>
-        </p>
-        <div id="truckMapContainer" style="height: 420px; width: 100%;" class="rounded border"></div>
-    </div>
+        
+        <h5 class="fw-bold mb-3"><i class="bi bi-shield-check me-2"></i>Critical Fluid & Safety Sensors</h5>
+        <div class="row g-4 mb-4">
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm p-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-uppercase small text-muted fw-bold d-block">Engine Fluid Health</span>
+                            <h4 class="fw-bold mb-0 mt-1">Oil Level Sensor</h4>
+                        </div>
+                        <div>
+                            @if (IsOilLevelCorrect(truck.TruckId))
+                            {
+                                <span class="badge bg-success fs-5 px-4 py-2">Correct</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger fs-5 px-4 py-2">Low</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card border-0 shadow-sm p-3">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <span class="text-uppercase small text-muted fw-bold d-block">Chassis & Safety</span>
+                            <h4 class="fw-bold mb-0 mt-1">Overall Tire Pressure (TPMS)</h4>
+                        </div>
+                        <div>
+                            @if (IsTirePressureCorrect(truck.TruckId))
+                            {
+                                <span class="badge bg-success fs-5 px-4 py-2">Correct</span>
+                            }
+                            else
+                            {
+                                <span class="badge bg-danger fs-5 px-4 py-2">Low</span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        
+        <div class="card border-0 shadow-sm opacity-75 mb-4">
+            <div class="card-header bg-secondary text-white py-2">
+                <h6 class="mb-0 fw-bold small text-uppercase">Components: Transponder & Hardware Nodes</h6>
+            </div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded border">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <strong>GPS Transponder Module</strong>
+                                <span class="badge bg-outline-dark border text-dark">Active Sync</span>
+                            </div>
+                            <div class="small text-muted mt-2">
+                                MAC Identifier: <code>02:42:AC:11:00:@truck.TruckId[^2..]</code><br />
+                                Protocol: NMEA 0183 / Satellite Uplink<br />
+                                Signal Strength: -68 dBm (Optimal)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="p-3 bg-light rounded border">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <strong>ESP 32 Connectivity Microcontroller</strong>
+                                <span class="badge bg-outline-dark border text-dark">Telemetry Bus</span>
+                            </div>
+                            <div class="small text-muted mt-2">
+                                MAC Identifier: <code>24:6F:28:AB:C1:@truck.TruckId[^2..]</code><br />
+                                Firmware: v2.4.1 (ESP-IDF Native)<br />
+                                Bus Status: CAN-Bus 2.0B Nominal
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        //Live map and slider
+        <div class="card border-0 shadow-sm">
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center py-3">
+                <h5 class="mb-0 fw-bold"><i class="bi bi-geo-alt-fill me-2"></i>Live Geospatial Route & Historical Progression</h5>
+                <span class="badge bg-light text-dark">@GetPlaybackLabel()</span>
+            </div>
+            <div class="card-body p-4">
+                <!-- Historical Timeline Slider -->
+                <div class="p-3 bg-light rounded border mb-3">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <label class="fw-bold text-dark">Telemetry Timeline Playback:</label>
+                        <span class="fw-bold text-primary fs-5">
+                            @(hoursAgo == 0 ? "LIVE (Current)" : $"{hoursAgo:F1} Hours Ago")
+                        </span>
+                    </div>
+                    <input type="range" class="form-range" min="0" max="12" step="0.5" value="@hoursAgo" @oninput="OnTimelineSliderChanged" />
+                    <div class="d-flex justify-content-between text-muted small fw-bold mt-1">
+                        <span>NOW (Live)</span>
+                        <span>3 Hours Ago</span>
+                        <span>6 Hours Ago</span>
+                        <span>9 Hours Ago</span>
+                        <span class="text-success">12 Hours Ago</span>
+                    </div>
+                </div>
+
+                <!-- Leaflet Map Container -->
+                <div id="fleetDashboardMap" style="height: 420px; width: 100%; border-radius: 8px; z-index: 1;" class="border shadow-sm"></div>
+            </div>
+        </div>
+    }
 </div>
 
 @code {
     private string selectedTruckId = "TRK-001";
-    private int selectedHourIndex = 0;
-    private TelemetryPacket<TruckTelemetry> currentPoint = default!;
+    private TruckTelemetry? activeTruck;
+    private double hoursAgo = 0;
+    private double currentLat;
+    private double currentLng;
 
     protected override void OnInitialized()
     {
-        UpdateCurrentPoint();
+        UpdateActiveTruck();
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        await RenderMapLocation();
+        if (activeTruck.HasValue)
+        {
+            await RenderMapAsync();
+        }
     }
 
-    private async Task OnTruckChanged(ChangeEventArgs e)
+    private void OnTruckSelected(ChangeEventArgs e)
     {
         selectedTruckId = e.Value?.ToString() ?? "TRK-001";
-        UpdateCurrentPoint();
-        await RenderMapLocation();
+        hoursAgo = 0; // Reset timeline on truck change
+        UpdateActiveTruck();
     }
 
-    private async Task OnHourSliderInput(ChangeEventArgs e)
+    private async Task OnTimelineSliderChanged(ChangeEventArgs e)
     {
-        if (int.TryParse(e.Value?.ToString(), out int newIndex))
+        if (double.TryParse(e.Value?.ToString(), out var parsedValue))
         {
-            selectedHourIndex = newIndex;
-            UpdateCurrentPoint();
-            await RenderMapLocation();
+            hoursAgo = parsedValue;
+            CalculateHistoricalCoordinates();
+            await RenderMapAsync();
         }
     }
 
-    private void UpdateCurrentPoint()
+    private void UpdateActiveTruck()
     {
-        if (Seeder.FleetJourneys.TryGetValue(selectedTruckId, out var history))
+        if (SensorService.Fleet.Any(t => t.TruckId == selectedTruckId))
         {
-            currentPoint = history[selectedHourIndex];
+            activeTruck = SensorService.Fleet.First(t => t.TruckId == selectedTruckId);
+        }
+        else if (SensorService.Fleet.Any())
+        {
+            activeTruck = SensorService.Fleet.First();
+        }
+        else
+        {
+            activeTruck = null;
+        }
+
+        CalculateHistoricalCoordinates();
+    }
+
+    private void CalculateHistoricalCoordinates()
+    {
+        if (!activeTruck.HasValue) return;
+
+        // Simulate historical trajectory drift along transit corridors based on slider hours. ##TEMPORARY 
+        double driftFactor = hoursAgo * 0.08;
+        currentLat = activeTruck.Value.Latitude - (driftFactor * 0.15);
+        currentLng = activeTruck.Value.Longitude - (driftFactor * 0.12);
+    }
+
+    private async Task RenderMapAsync()
+    {
+        if (!activeTruck.HasValue) return;
+
+        try
+        {
+            await JSRuntime.InvokeVoidAsync(
+                "updateFleetMap",
+                "fleetDashboardMap",
+                currentLat,
+                currentLng,
+                activeTruck.Value.TruckId,
+                activeTruck.Value.DriverName,
+                hoursAgo
+            );
+        }
+        catch
+        {
+            // Fallback gracefully during prerendering or initial script load
         }
     }
 
-    private async Task RenderMapLocation()
+    private string GetPlaybackLabel()
     {
-        if (currentPoint.Payload.TruckId != null)
-        {
-            var popupLabel = $"{currentPoint.Payload.TruckId} ({currentPoint.Payload.DriverName})<br>Hour {selectedHourIndex + 1}: {currentPoint.Payload.SpeedKmh} km/h";
-            await JS.InvokeVoidAsync("renderTruckMap", currentPoint.Payload.Latitude, currentPoint.Payload.Longitude, popupLabel);
-        }
+        if (hoursAgo == 0) return "Mode: Real-Time Stream";
+        return $"Playback: -{hoursAgo:F1}h Historical Buffer";
     }
+
+    private string GetFuelBadgeColor(float fuel) => fuel switch
+    {
+        > 300f => "bg-success",
+        <= 100f => "bg-danger",
+        _ => "bg-warning text-dark"
+    };
+
+    private string GetFuelTextColor(float fuel) => fuel switch
+    {
+        > 300f => "text-success",
+        <= 100f => "text-danger fw-bold",
+        _ => "text-warning"
+    };
+
+    private string GetFuelStatusLabel(float fuel) => fuel switch
+    {
+        > 300f => "Optimal Level",
+        <= 100f => "CRITICAL LOW FUEL",
+        _ => "Moderate Level"
+    };
+
+    private bool IsOilLevelCorrect(string truckId) => truckId != "TRK-003" && truckId != "TRK-008";
+    private bool IsTirePressureCorrect(string truckId) => truckId != "TRK-002" && truckId != "TRK-007" && truckId != "TRK-011";
 }

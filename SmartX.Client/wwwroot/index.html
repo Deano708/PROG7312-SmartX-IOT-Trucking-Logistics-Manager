@@ -30,33 +30,49 @@
         <span class="dismiss">🗙</span>
     </div>
     <script src="_framework/blazor.webassembly#[.{fingerprint}].js"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-            window.renderTruckMap = (lat, lng, popupText) => {
-                const mapContainer = document.getElementById('truckMapContainer');
-                if (!mapContainer) return;
+            var mapInstances = {};
 
-                // Destroy existing map instance to prevent duplicate binding errors on rerender
-                if (window.truckMapInstance) {
-                    window.truckMapInstance.remove();
+            function updateFleetMap(elementId, lat, lng, truckId, driverName, hoursAgo) {
+                var container = document.getElementById(elementId);
+                if (!container) return;
+
+                // Reset stale Leaflet instance if Blazor recreated the DOM container
+                if (mapInstances[elementId]) {
+                    if (mapInstances[elementId].getContainer() !== container) {
+                        mapInstances[elementId].remove();
+                        delete mapInstances[elementId];
+                    }
                 }
 
-                // Initialize Leaflet map centered at truck coordinates
-                window.truckMapInstance = L.map('truckMapContainer').setView([lat, lng], 13);
+                // Initialize new Leaflet instance on the current DOM container
+                if (!mapInstances[elementId]) {
+                    mapInstances[elementId] = L.map(elementId).setView([lat, lng], 10);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        maxZoom: 18,
+                        attribution: '© OpenStreetMap'
+                    }).addTo(mapInstances[elementId]);
+                    mapInstances[elementId].marker = L.marker([lat, lng]).addTo(mapInstances[elementId]);
+                } else {
+                    mapInstances[elementId].setView([lat, lng], mapInstances[elementId].getZoom());
+                    mapInstances[elementId].marker.setLatLng([lat, lng]);
+                }
 
-                // Load OpenStreetMap tile layer
-                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                    maxZoom: 19,
-                    attribution: '© OpenStreetMap contributors'
-                }).addTo(window.truckMapInstance);
+                // Force Leaflet to recalculate container dimensions upon page navigation
+                setTimeout(function () {
+                    if (mapInstances[elementId]) {
+                        mapInstances[elementId].invalidateSize();
+                    }
+                }, 100);
 
-                // Place marker at truck location with popup
-                L.marker([lat, lng])
-                 .addTo(window.truckMapInstance)
-                 .bindPopup(`<b>${popupText}</b>`)
-                 .openPopup();
-            };
+                var statusText = hoursAgo === 0 ? "LIVE LOCATION" : hoursAgo + " hrs ago";
+                mapInstances[elementId].marker.bindPopup(
+                    "<b>" + truckId + " (" + driverName + ")</b><br/>Status: " + statusText + "<br/>Lat: " + lat.toFixed(4) + ", Lng: " + lng.toFixed(4)
+                ).openPopup();
+            }
     </script>
 </body>
 

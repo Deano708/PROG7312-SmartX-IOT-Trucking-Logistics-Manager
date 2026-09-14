@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "SmartX.Client",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-fkaLn5cXoMd6j93u/0Ob/hi4gxmJz0r6mCPW0pKuGnI=",
+    "hash": "sha256-G4+kvdwmEy/k4WMYVN5U54XIIShOgYcI95/JPJpNA3A=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.b6l13xorvf.js"
@@ -1248,8 +1248,8 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "SmartX.Client.wasm",
-        "name": "SmartX.Client.9x3nw4gcju.wasm",
-        "hash": "sha256-Y9yJ7ok+f3S2mkquzaJYLK1JNHYQ0pM+O/2P+s7KHnw=",
+        "name": "SmartX.Client.vshdblm04a.wasm",
+        "hash": "sha256-X1oq6HEaR4RGrENwFkfxWMmelVGYyWwLlrGpIysel+g=",
         "cache": "force-cache"
       }
     ],
@@ -1262,8 +1262,8 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "SmartX.Client.pdb",
-        "name": "SmartX.Client.52xvbbh8h6.pdb",
-        "hash": "sha256-HcBAXWixmTZsJf7sWsA3LjpPWI2RLm8alLv2uN3CTQg=",
+        "name": "SmartX.Client.x3o5pcdsre.pdb",
+        "hash": "sha256-TUJK8qoTnNxWJudsK6g7V+FSAR6J2VzvgrKRP9rF/OI=",
         "cache": "force-cache"
       }
     ],
