@@ -1,6 +1,10 @@
 ﻿namespace SmartX.Shared.Models;
 
-// Generic zero-boxing wrapper for incoming ESP32 payloads
+//DELCARATION OF AI USAGE
+//Gemini. (2026) . Setup of TruckTelemetry including validation logic. Available at: 
+//https://share.gemini.google/O9Qf6fnMtm4B (Accessed: 12/09/2026).
+
+// Generic zero-boxing wrapper for incoming ESP32 payloads. makes use of TelemetryPacket<T> to encapsulate the payload and metadata.
 public class TelemetryPacket<T> where T : struct
 {
     public string DeviceMac { get; set; } = string.Empty;

@@ -2,6 +2,10 @@
 
 using SmartX.Shared.Models;
 
+//DELCARATION OF AI USAGE
+//Gemini. (2026) . Setup of TelemetryBatchProcessor. Available at: 
+//https://share.gemini.google/O9Qf6fnMtm4B (Accessed: 12/09/2026).
+
 public class TelemetryBatchProcessor
 {
     // Flattens sequential historical batches from raw arrays into List<T>

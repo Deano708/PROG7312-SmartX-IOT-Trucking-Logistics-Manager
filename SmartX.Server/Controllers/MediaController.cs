@@ -2,6 +2,10 @@
 
 namespace SmartX.Server.Controllers;
 
+//DELCARATION OF AI USAGE
+//Gemini. (2026) . Setup of API MediaController including upload and delete functionality. Available at: 
+//https://share.gemini.google/O9Qf6fnMtm4B (Accessed: 12/09/2026).
+
 [ApiController]
 [Route("api/[controller]")]
 public class MediaController : ControllerBase

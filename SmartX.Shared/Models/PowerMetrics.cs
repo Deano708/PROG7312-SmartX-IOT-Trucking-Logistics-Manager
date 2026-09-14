@@ -1,5 +1,5 @@
 ﻿namespace SmartX.Shared.Models;
-
+//makes use of Operator Overloading to encapsulate power metrics for fleet vehicles and IoT devices.
 public struct PowerMetric
 {
     public int LoadWatts { get; set; }

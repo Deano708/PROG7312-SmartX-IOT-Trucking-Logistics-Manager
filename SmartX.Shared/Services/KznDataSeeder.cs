@@ -2,6 +2,10 @@
 
 namespace SmartX.Shared.Services;
 
+//DELCARATION OF AI USAGE
+//Gemini. (2026) . Creation of truck data records and seeding logic. Available at: 
+//https://share.gemini.google/O9Qf6fnMtm4B (Accessed: 12/09/2026).
+
 public class KznDataSeeder
 {
     public Dictionary<string, List<TelemetryPacket<TruckTelemetry>>> FleetJourneys { get; set; } = new();

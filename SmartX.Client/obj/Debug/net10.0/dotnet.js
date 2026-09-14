@@ -5,7 +5,7 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
   "mainAssemblyName": "SmartX.Client",
   "applicationEnvironment": "Development",
   "resources": {
-    "hash": "sha256-G4+kvdwmEy/k4WMYVN5U54XIIShOgYcI95/JPJpNA3A=",
+    "hash": "sha256-gOKtUhpoTHXMv8sG4/2pIpTRka8o1LVaBStlPalhP54=",
     "jsModuleNative": [
       {
         "name": "dotnet.native.b6l13xorvf.js"
@@ -1236,8 +1236,8 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "SmartX.Shared.wasm",
-        "name": "SmartX.Shared.abr45xszqj.wasm",
-        "hash": "sha256-Riwx15x98/MRZOYHZr7OVBqFr4DO4GOHrOfXQT21f1E=",
+        "name": "SmartX.Shared.4bp8udb333.wasm",
+        "hash": "sha256-INRA1bMwo+U08LQ5YrjosC6FL1u6W/YURzuX1vM92fk=",
         "cache": "force-cache"
       },
       {
@@ -1248,22 +1248,22 @@ var e=!1;const t=async()=>WebAssembly.validate(new Uint8Array([0,97,115,109,1,0,
       },
       {
         "virtualPath": "SmartX.Client.wasm",
-        "name": "SmartX.Client.vshdblm04a.wasm",
-        "hash": "sha256-X1oq6HEaR4RGrENwFkfxWMmelVGYyWwLlrGpIysel+g=",
+        "name": "SmartX.Client.ckzjz2jmos.wasm",
+        "hash": "sha256-zDUUeiHP9scUmU8JpNlA3LVQEtdFNiXheVtPIuFxc2E=",
         "cache": "force-cache"
       }
     ],
     "pdb": [
       {
         "virtualPath": "SmartX.Shared.pdb",
-        "name": "SmartX.Shared.79h0kpjxm7.pdb",
-        "hash": "sha256-W19xxmHWcvQyJsoOLG2yHsVwitQDE7Wiva8QQ5BFLoc=",
+        "name": "SmartX.Shared.jtuwhojuzm.pdb",
+        "hash": "sha256-ByWvlhKCZ6F1ttx4xvrK9zZkTnKB3wim9JrnJFUyc4c=",
         "cache": "force-cache"
       },
       {
         "virtualPath": "SmartX.Client.pdb",
-        "name": "SmartX.Client.x3o5pcdsre.pdb",
-        "hash": "sha256-TUJK8qoTnNxWJudsK6g7V+FSAR6J2VzvgrKRP9rF/OI=",
+        "name": "SmartX.Client.7y45jy8sa2.pdb",
+        "hash": "sha256-T+PNx9biVhFBrruyEhwGhrbAG2At4LKz7BDy5xE8+iI=",
         "cache": "force-cache"
       }
     ],

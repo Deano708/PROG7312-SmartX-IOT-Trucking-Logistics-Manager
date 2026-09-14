@@ -1,7 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 namespace SmartX.Server.Controllers;
-
+//simple account management controller for Smart-X Fleet Management System
+//currently not functional, serves as a placeholder for future implementation of user registration, login, and profile management features.
 [ApiController]
 [Route("api/[controller]")]
 public class AccountController : ControllerBase

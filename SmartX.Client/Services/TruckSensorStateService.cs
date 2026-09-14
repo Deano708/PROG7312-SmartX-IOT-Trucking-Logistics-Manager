@@ -3,6 +3,10 @@ using SmartX.Shared.Models;
 
 namespace SmartX.Client.Services;
 
+//DELCARATION OF AI USAGE
+//Gemini. (2026) . Setup of TruckSensorStateService. Available at: 
+//https://share.gemini.google/O9Qf6fnMtm4B (Accessed: 12/09/2026).
+
 public class TruckSensorStateService
 {
     public List<TruckTelemetry> Fleet { get; private set; } = new()
