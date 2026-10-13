@@ -57,3 +57,4 @@ C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog73
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Server\bin\filter-validation\Debug\net10.0\Swashbuckle.AspNetCore.SwaggerUI.dll
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Server\bin\filter-validation\Debug\net10.0\SmartX.Shared.dll
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Server\bin\filter-validation\Debug\net10.0\SmartX.Shared.pdb
+C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Server\obj\Debug\net10.0\staticwebassets.upToDateCheck.txt

@@ -108,6 +108,10 @@
     },
     {
       "AbsoluteMoniker": "D:0:0:{3B821B62-A2B6-E869-53FE-3734431F8BA4}|..\\SmartX.Shared\\SmartX.Shared.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.shared\\models\\fleetalert.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.client\\pages\\about.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|solutionrelative:pages\\about.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -125,15 +129,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": ".gitignore",
-              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\.gitignore",
-              "RelativeDocumentMoniker": "..\\.gitignore",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\.gitignore",
-              "RelativeToolTip": "..\\.gitignore",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2026-10-13T19:02:02.124Z",
+              "DocumentIndex": 31,
+              "Title": "About.razor",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\About.razor",
+              "RelativeDocumentMoniker": "Pages\\About.razor",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\About.razor",
+              "RelativeToolTip": "Pages\\About.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-10-13T19:17:47.951Z",
               "EditorCaption": ""
             },
             {
@@ -154,9 +158,9 @@
               "Title": "Landing.razor",
               "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\Landing.razor",
               "RelativeDocumentMoniker": "Pages\\Landing.razor",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\Landing.razor*",
-              "RelativeToolTip": "Pages\\Landing.razor*",
-              "ViewState": "AgIAACQAAAAAAAAAAAAAACEAAACaAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\Landing.razor",
+              "RelativeToolTip": "Pages\\Landing.razor",
+              "ViewState": "AgIAAAMAAAAAAAAAAIBJwCEAAACaAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-09-14T08:39:03.694Z",
               "EditorCaption": ""
@@ -183,8 +187,7 @@
               "RelativeToolTip": "Pages\\Account.razor",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-09-14T08:38:59.619Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-09-14T08:38:59.619Z"
             },
             {
               "$type": "Document",
@@ -194,7 +197,7 @@
               "RelativeDocumentMoniker": "Layout\\MainLayout.razor",
               "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Layout\\MainLayout.razor",
               "RelativeToolTip": "Layout\\MainLayout.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAgAAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-09-14T08:37:18.67Z",
               "EditorCaption": ""
@@ -205,12 +208,24 @@
               "Title": "NavMenu.razor",
               "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Layout\\NavMenu.razor",
               "RelativeDocumentMoniker": "Layout\\NavMenu.razor",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Layout\\NavMenu.razor*",
-              "RelativeToolTip": "Layout\\NavMenu.razor*",
-              "ViewState": "AgIAAAkAAAAAAAAAAAAAAA8AAABfAAAAAAAAAA==",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Layout\\NavMenu.razor",
+              "RelativeToolTip": "Layout\\NavMenu.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAABfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2026-09-14T08:37:19.483Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": ".gitignore",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\.gitignore",
+              "RelativeDocumentMoniker": "..\\.gitignore",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\.gitignore",
+              "RelativeToolTip": "..\\.gitignore",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2026-10-13T19:02:02.124Z"
             },
             {
               "$type": "Document",
