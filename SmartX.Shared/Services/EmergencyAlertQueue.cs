@@ -8,7 +8,7 @@ public sealed class EmergencyAlertQueue
     private const float LowFuelThresholdLiters = 100f;
     private readonly object _sync = new();
     private readonly Dictionary<string, QueueEntry> _activeAlerts = new(StringComparer.OrdinalIgnoreCase);
-    private PriorityQueue<QueueEntry, (int Severity, long Recency)> _queue = new();
+    private PriorityQueue<QueueEntry, (int Severity, int TruckNumber, string TruckId, int AlertType)> _queue = new();
     private long _version;
 
     public void ProcessTelemetry(TelemetryPacket<TruckTelemetry> packet)
@@ -109,12 +109,26 @@ public sealed class EmergencyAlertQueue
         }
     }
 
-    private static (int Severity, long Recency) GetPriority(FleetAlert alert) =>
-        ((int)alert.Severity, -alert.LastUpdatedAt.Ticks);
+    private static (int Severity, int TruckNumber, string TruckId, int AlertType) GetPriority(FleetAlert alert) =>
+        ((int)alert.Severity, GetTruckNumber(alert.TruckId), alert.TruckId, (int)alert.Type);
+
+    private static int GetTruckNumber(string truckId)
+    {
+        var digitStart = truckId.Length;
+        while (digitStart > 0 && char.IsAsciiDigit(truckId[digitStart - 1]))
+        {
+            digitStart--;
+        }
+
+        return digitStart < truckId.Length &&
+               int.TryParse(truckId.AsSpan(digitStart), NumberStyles.None, CultureInfo.InvariantCulture, out var truckNumber)
+            ? truckNumber
+            : int.MaxValue;
+    }
 
     private void RebuildQueue()
     {
-        _queue = new PriorityQueue<QueueEntry, (int Severity, long Recency)>();
+        _queue = new PriorityQueue<QueueEntry, (int Severity, int TruckNumber, string TruckId, int AlertType)>();
         foreach (var entry in _activeAlerts.Values)
         {
             _queue.Enqueue(entry, GetPriority(entry.Alert));

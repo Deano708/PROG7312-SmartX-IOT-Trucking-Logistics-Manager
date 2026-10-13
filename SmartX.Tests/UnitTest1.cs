@@ -131,6 +131,58 @@ public class SmartXEngineTests
     }
 
     [Fact]
+    public void Test_EmergencyAlertQueue_OrdersCriticalAlertsByTruckNumberStably()
+    {
+        var queue = new EmergencyAlertQueue();
+        var timestamp = new DateTime(2026, 6, 1, 12, 0, 0, DateTimeKind.Utc);
+
+        queue.ProcessTelemetry(CreateTelemetryPacket(new TruckTelemetry
+        {
+            TruckId = "TRK-010",
+            FuelLevelLiters = 300,
+            OilLevelLow = true
+        }, timestamp));
+        queue.ProcessTelemetry(CreateTelemetryPacket(new TruckTelemetry
+        {
+            TruckId = "TRK-002",
+            FuelLevelLiters = 300,
+            TyrePressureLow = true
+        }, timestamp.AddMinutes(1)));
+        queue.ProcessTelemetry(CreateTelemetryPacket(new TruckTelemetry
+        {
+            TruckId = "TRK-001",
+            FuelLevelLiters = 300,
+            OilLevelLow = true
+        }, timestamp.AddMinutes(2)));
+        queue.ProcessTelemetry(CreateTelemetryPacket(new TruckTelemetry
+        {
+            TruckId = "TRK-002",
+            FuelLevelLiters = 300,
+            OilLevelLow = true,
+            TyrePressureLow = true
+        }, timestamp.AddMinutes(3)));
+
+        var expectedOrder = new[]
+        {
+            ("TRK-001", FleetAlertType.OilLevelLow),
+            ("TRK-002", FleetAlertType.OilLevelLow),
+            ("TRK-002", FleetAlertType.TyrePressureLow),
+            ("TRK-010", FleetAlertType.OilLevelLow)
+        };
+
+        Assert.Equal(expectedOrder, queue.GetActiveAlerts().Select(alert => (alert.TruckId, alert.Type)));
+
+        queue.ProcessTelemetry(CreateTelemetryPacket(new TruckTelemetry
+        {
+            TruckId = "TRK-010",
+            FuelLevelLiters = 300,
+            OilLevelLow = true
+        }, timestamp.AddHours(1)));
+
+        Assert.Equal(expectedOrder, queue.GetActiveAlerts().Select(alert => (alert.TruckId, alert.Type)));
+    }
+
+    [Fact]
     public void Test_EmergencyAlertQueue_DeduplicatesAlertsAndClearsOnRecovery()
     {
         var queue = new EmergencyAlertQueue();
