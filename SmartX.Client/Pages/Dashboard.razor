@@ -38,41 +38,50 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
                 <h5 class="mb-0 fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Emergency Dispatch Feed</h5>
                 <div class="small">Active vehicle risks, ordered by severity and recency</div>
             </div>
-            <span class="badge bg-light text-danger fs-6">@emergencyAlerts.Count active</span>
+            <div class="d-flex align-items-center gap-2">
+                <span class="badge bg-light text-danger fs-6">@emergencyAlerts.Count active</span>
+                <button type="button" class="btn btn-sm btn-light text-danger fw-bold" aria-expanded="@isEmergencyFeedExpanded" aria-controls="emergencyDispatchFeedBody" @onclick="ToggleEmergencyFeed">
+                    @(isEmergencyFeedExpanded ? "Collapse" : "Expand")
+                    <i class="bi @(isEmergencyFeedExpanded ? "bi-chevron-up" : "bi-chevron-down") ms-1"></i>
+                </button>
+            </div>
         </div>
-        <div class="card-body">
-            @if (!string.IsNullOrEmpty(alertFeedError))
-            {
-                <div class="alert alert-warning mb-3" role="alert">@alertFeedError</div>
-            }
+        @if (isEmergencyFeedExpanded)
+        {
+            <div class="card-body" id="emergencyDispatchFeedBody">
+                @if (!string.IsNullOrEmpty(alertFeedError))
+                {
+                    <div class="alert alert-warning mb-3" role="alert">@alertFeedError</div>
+                }
 
-            @if (emergencyAlerts.Count == 0)
-            {
-                <div class="text-muted">No active emergency alerts. This feed checks the telemetry API every five seconds.</div>
-            }
-            else
-            {
-                <div class="list-group">
-                    @foreach (var alert in emergencyAlerts)
-                    {
-                        <div class="list-group-item border-start border-4 @(alert.Severity == FleetAlertSeverity.Critical ? "border-danger" : "border-warning")">
-                            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
-                                <div>
-                                    <div class="d-flex flex-wrap align-items-center gap-2">
-                                        <span class="badge @(alert.Severity == FleetAlertSeverity.Critical ? "bg-danger" : "bg-warning text-dark")">@alert.Severity</span>
-                                        <span class="badge bg-dark">@alert.TruckId</span>
-                                        <strong>@GetAlertTypeDisplay(alert.Type) — @alert.DriverName</strong>
+                @if (emergencyAlerts.Count == 0)
+                {
+                    <div class="text-muted">No active emergency alerts. This feed checks the telemetry API every five seconds.</div>
+                }
+                else
+                {
+                    <div class="list-group">
+                        @foreach (var alert in emergencyAlerts)
+                        {
+                            <div class="list-group-item border-start border-4 @(alert.Severity == FleetAlertSeverity.Critical ? "border-danger" : "border-warning")">
+                                <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                                    <div>
+                                        <div class="d-flex flex-wrap align-items-center gap-2">
+                                            <span class="badge @(alert.Severity == FleetAlertSeverity.Critical ? "bg-danger" : "bg-warning text-dark")">@alert.Severity</span>
+                                            <span class="badge bg-dark">@alert.TruckId</span>
+                                            <strong>@GetAlertTypeDisplay(alert.Type) — @alert.DriverName</strong>
+                                        </div>
+                                        <div class="mt-2">@alert.Message</div>
+                                        <div class="small text-muted mt-1">First raised: @alert.FirstRaisedAt.ToLocalTime().ToString("g")</div>
                                     </div>
-                                    <div class="mt-2">@alert.Message</div>
-                                    <div class="small text-muted mt-1">First raised: @alert.FirstRaisedAt.ToLocalTime().ToString("g")</div>
+                                    <button class="btn btn-outline-danger" @onclick="() => GoToTruckAsync(alert.TruckId)">Dispatch / View Truck</button>
                                 </div>
-                                <button class="btn btn-outline-danger" @onclick="() => GoToTruckAsync(alert.TruckId)">Dispatch / View Truck</button>
                             </div>
-                        </div>
                     }
-                </div>
-            }
-        </div>
+                    </div>
+                }
+            </div>
+        }
     </div>
 
     <div class="card border-0 shadow-sm mb-4">
@@ -350,6 +359,7 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
     private string? telemetryError;
     private bool hasGpsLocation;
     private List<FleetAlert> emergencyAlerts = new();
+    private bool isEmergencyFeedExpanded = true;
     private string? alertFeedError;
     private CancellationTokenSource? alertPollingCancellation;
     private Task? alertPollingTask;
@@ -561,6 +571,8 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
         FleetAlertType.TyrePressureLow => "Low tyre pressure",
         _ => "Vehicle alert"
     };
+
+    private void ToggleEmergencyFeed() => isEmergencyFeedExpanded = !isEmergencyFeedExpanded;
 
     private string GetFuelFilterState(float fuel) => fuel switch
     {

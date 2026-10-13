@@ -1,0 +1,30 @@
+# .NET build output
+[Bb]in/
+[Oo]bj/
+artifacts/
+[Pp]ublish/
+
+# Test output and coverage
+[Tt]est[Rr]esult*/
+coverage/
+*.coverage
+*.coveragexml
+
+# Visual Studio user and workspace files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.vspscc
+*.vssscc
+
+# NuGet packages
+packages/
+*.nupkg
+*.snupkg
+
+# IDE and operating-system files
+.idea/
+.DS_Store
+Thumbs.db
