@@ -222,6 +222,94 @@
           }
         }
       }
+    },
+    "/api/Telemetry/ingest/batch": {
+      "post": {
+        "tags": [
+          "Telemetry"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TruckTelemetryTelemetryPacket"
+                }
+              }
+            },
+            "text/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TruckTelemetryTelemetryPacket"
+                }
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/TruckTelemetryTelemetryPacket"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Telemetry/history/{truckId}": {
+      "get": {
+        "tags": [
+          "Telemetry"
+        ],
+        "parameters": [
+          {
+            "name": "truckId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TruckTelemetryTelemetryPacket"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TruckTelemetryTelemetryPacket"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/TruckTelemetryTelemetryPacket"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {

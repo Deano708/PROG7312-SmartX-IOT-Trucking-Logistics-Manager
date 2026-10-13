@@ -107,6 +107,32 @@
   },
   {
     "ContainingType": "SmartX.Server.Controllers.TelemetryController",
+    "Method": "GetHistory",
+    "RelativePath": "api/Telemetry/history/{truckId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "truckId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "System.Collections.Generic.IReadOnlyList\u00601[[SmartX.Shared.Models.TelemetryPacket\u00601[[SmartX.Shared.Models.TruckTelemetry, SmartX.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SmartX.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
+    "ContainingType": "SmartX.Server.Controllers.TelemetryController",
     "Method": "IngestTelemetry",
     "RelativePath": "api/Telemetry/ingest",
     "HttpMethod": "POST",
@@ -116,6 +142,22 @@
       {
         "Name": "packet",
         "Type": "SmartX.Shared.Models.TelemetryPacket\u00601[[SmartX.Shared.Models.TruckTelemetry, SmartX.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "SmartX.Server.Controllers.TelemetryController",
+    "Method": "IngestTelemetryBatch",
+    "RelativePath": "api/Telemetry/ingest/batch",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "packets",
+        "Type": "System.Collections.Generic.List\u00601[[SmartX.Shared.Models.TelemetryPacket\u00601[[SmartX.Shared.Models.TruckTelemetry, SmartX.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]], SmartX.Shared, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null]]",
         "IsRequired": true
       }
     ],

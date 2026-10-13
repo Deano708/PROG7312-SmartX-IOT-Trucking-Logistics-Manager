@@ -31,6 +31,98 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
         </div>
     </div>
 
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
+                <div>
+                    <h5 class="fw-bold mb-1">Fleet Health Filters</h5>
+                    <p class="text-muted mb-0">Combine fuel, oil, and tyre states to find trucks that need attention.</p>
+                </div>
+                <span class="badge bg-primary fs-6">@GetFilteredTrucks().Count matching</span>
+            </div>
+            <div class="row g-3 align-items-end">
+                <div class="col-md-3">
+                    <label class="form-label fw-bold" for="fuelFilter">Remaining fuel</label>
+                    <select id="fuelFilter" class="form-select" @bind="fuelFilter">
+                        <option value="Any">Any state</option>
+                        <option value="Optimal">Optimal (&gt; 300 L)</option>
+                        <option value="Moderate">Moderate (101–300 L)</option>
+                        <option value="Low">Low (≤ 100 L)</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold" for="oilFilter">Oil level</label>
+                    <select id="oilFilter" class="form-select" @bind="oilFilter">
+                        <option value="Any">Any state</option>
+                        <option value="Correct">Correct</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold" for="tyreFilter">Tyre pressure</label>
+                    <select id="tyreFilter" class="form-select" @bind="tyreFilter">
+                        <option value="Any">Any state</option>
+                        <option value="Correct">Correct</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+                <div class="col-md-3 d-flex gap-2">
+                    <button class="btn btn-primary flex-grow-1" @onclick="ShowFilteredTrucks">Show trucks</button>
+                    <button class="btn btn-outline-secondary" @onclick="ClearFilters">Clear</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (showFilterResults)
+    {
+        var filteredTrucks = GetFilteredTrucks();
+        <div class="modal d-block" tabindex="-1" role="dialog" aria-modal="true" aria-labelledby="truckFilterResultsTitle" style="background-color: rgba(0, 0, 0, 0.5);" @onclick="CloseFilterResults">
+            <div class="modal-dialog modal-dialog-centered modal-lg modal-dialog-scrollable" role="document" @onclick:stopPropagation="true">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <div>
+                            <h5 class="modal-title fw-bold" id="truckFilterResultsTitle">Matching trucks</h5>
+                            <div class="small text-muted">@filteredTrucks.Count truck(s) match the selected health filters.</div>
+                        </div>
+                        <button type="button" class="btn-close" aria-label="Close" @onclick="CloseFilterResults"></button>
+                    </div>
+                    <div class="modal-body">
+                        @if (filteredTrucks.Count == 0)
+                        {
+                            <div class="alert alert-info mb-0">No trucks match all of the selected states. Try clearing one or more filters.</div>
+                        }
+                        else
+                        {
+                            <div class="list-group">
+                                @foreach (var matchingTruck in filteredTrucks)
+                                {
+                                    <div class="list-group-item">
+                                        <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                                            <div>
+                                                <div class="fw-bold"><span class="badge bg-dark me-2">@matchingTruck.TruckId</span>@matchingTruck.DriverName</div>
+                                                <div class="small text-muted mt-1">@matchingTruck.NearestTown</div>
+                                                <div class="small mt-2 d-flex flex-wrap gap-3">
+                                                    <span>Fuel: <strong>@matchingTruck.FuelLevelLiters.ToString("F0") L · @GetFuelStatusLabel(matchingTruck.FuelLevelLiters)</strong></span>
+                                                    <span>Oil: <strong>@GetOilLevelStatus(matchingTruck.TruckId)</strong></span>
+                                                    <span>Tyres: <strong>@GetTyrePressureStatus(matchingTruck.TruckId)</strong></span>
+                                                </div>
+                                            </div>
+                                            <button class="btn btn-outline-primary" @onclick="() => GoToTruckAsync(matchingTruck.TruckId)">Go to Truck</button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" @onclick="CloseFilterResults">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
     @if (activeTruck.HasValue)
     {
         var truck = activeTruck.Value;
@@ -213,6 +305,10 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
     private List<TelemetryPacket<TruckTelemetry>> telemetryHistory = new();
     private string? telemetryError;
     private bool hasGpsLocation;
+    private string fuelFilter = "Any";
+    private string oilFilter = "Any";
+    private string tyreFilter = "Any";
+    private bool showFilterResults;
 
     protected override async Task OnInitializedAsync()
     {
@@ -375,4 +471,38 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
 
     private bool IsOilLevelCorrect(string truckId) => truckId != "TRK-003" && truckId != "TRK-008";
     private bool IsTirePressureCorrect(string truckId) => truckId != "TRK-002" && truckId != "TRK-007" && truckId != "TRK-011";
+
+    private string GetFuelFilterState(float fuel) => fuel switch
+    {
+        > 300f => "Optimal",
+        <= 100f => "Low",
+        _ => "Moderate"
+    };
+
+    private string GetOilLevelStatus(string truckId) => IsOilLevelCorrect(truckId) ? "Correct" : "Low";
+
+    private string GetTyrePressureStatus(string truckId) => IsTirePressureCorrect(truckId) ? "Correct" : "Low";
+
+    private List<TruckTelemetry> GetFilteredTrucks() => SensorService.Fleet
+        .Where(truck => fuelFilter == "Any" || GetFuelFilterState(truck.FuelLevelLiters) == fuelFilter)
+        .Where(truck => oilFilter == "Any" || GetOilLevelStatus(truck.TruckId) == oilFilter)
+        .Where(truck => tyreFilter == "Any" || GetTyrePressureStatus(truck.TruckId) == tyreFilter)
+        .ToList();
+
+    private void ShowFilteredTrucks() => showFilterResults = true;
+
+    private void CloseFilterResults() => showFilterResults = false;
+
+    private void ClearFilters()
+    {
+        fuelFilter = "Any";
+        oilFilter = "Any";
+        tyreFilter = "Any";
+    }
+
+    private Task GoToTruckAsync(string truckId)
+    {
+        showFilterResults = false;
+        return OnTruckSelected(new ChangeEventArgs { Value = truckId });
+    }
 }
