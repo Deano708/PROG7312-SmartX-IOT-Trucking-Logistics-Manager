@@ -31,6 +31,8 @@ public struct TruckTelemetry
     public float SpeedKmh { get; set; }
     public double DistanceTraveledKm { get; set; }
     public float FuelLevelLiters { get; set; }
+    public bool OilLevelLow { get; set; }
+    public bool TyrePressureLow { get; set; }
 
     // Operator Overloading for direct delta/aggregation calculations
     public static TruckTelemetry operator +(TruckTelemetry a, TruckTelemetry b) => new()

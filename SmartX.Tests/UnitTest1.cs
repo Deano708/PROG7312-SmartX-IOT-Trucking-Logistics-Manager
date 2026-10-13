@@ -102,4 +102,68 @@ public class SmartXEngineTests
             Assert.False(string.IsNullOrWhiteSpace(sample.DeviceMac));
         });
     }
+
+    [Fact]
+    public void Test_EmergencyAlertQueue_PrioritizesCriticalAlertsBeforeHighAlerts()
+    {
+        var queue = new EmergencyAlertQueue();
+        var timestamp = new DateTime(2026, 6, 1, 12, 0, 0, DateTimeKind.Utc);
+
+        queue.ProcessTelemetry(CreateTelemetryPacket(new TruckTelemetry
+        {
+            TruckId = "TRK-FUEL",
+            FuelLevelLiters = 80
+        }, timestamp.AddMinutes(5)));
+        queue.ProcessTelemetry(CreateTelemetryPacket(new TruckTelemetry
+        {
+            TruckId = "TRK-TYRE",
+            FuelLevelLiters = 300,
+            TyrePressureLow = true
+        }, timestamp));
+
+        var alerts = queue.GetActiveAlerts();
+
+        Assert.Equal(2, alerts.Count);
+        Assert.Equal("TRK-TYRE", alerts[0].TruckId);
+        Assert.Equal(FleetAlertSeverity.Critical, alerts[0].Severity);
+        Assert.Equal("TRK-FUEL", alerts[1].TruckId);
+        Assert.Equal(FleetAlertSeverity.High, alerts[1].Severity);
+    }
+
+    [Fact]
+    public void Test_EmergencyAlertQueue_DeduplicatesAlertsAndClearsOnRecovery()
+    {
+        var queue = new EmergencyAlertQueue();
+        var firstReadingAt = new DateTime(2026, 6, 1, 12, 0, 0, DateTimeKind.Utc);
+
+        queue.ProcessTelemetry(CreateTelemetryPacket(new TruckTelemetry
+        {
+            TruckId = "TRK-OIL",
+            FuelLevelLiters = 300,
+            OilLevelLow = true
+        }, firstReadingAt));
+        queue.ProcessTelemetry(CreateTelemetryPacket(new TruckTelemetry
+        {
+            TruckId = "TRK-OIL",
+            FuelLevelLiters = 300,
+            OilLevelLow = true
+        }, firstReadingAt.AddHours(1)));
+
+        var activeAlerts = queue.GetActiveAlerts();
+        Assert.Single(activeAlerts);
+        Assert.Equal(firstReadingAt, activeAlerts[0].FirstRaisedAt);
+        Assert.Equal(firstReadingAt.AddHours(1), activeAlerts[0].LastUpdatedAt);
+
+        queue.ProcessTelemetry(CreateTelemetryPacket(new TruckTelemetry
+        {
+            TruckId = "TRK-OIL",
+            FuelLevelLiters = 300,
+            OilLevelLow = false
+        }, firstReadingAt.AddHours(2)));
+
+        Assert.Empty(queue.GetActiveAlerts());
+    }
+
+    private static TelemetryPacket<TruckTelemetry> CreateTelemetryPacket(TruckTelemetry telemetry, DateTime timestamp) =>
+        new("TEST-MAC", telemetry) { Timestamp = timestamp };
 }

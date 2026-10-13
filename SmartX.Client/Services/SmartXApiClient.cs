@@ -28,6 +28,9 @@ public class SmartXApiClient
     public Task<List<TelemetryPacket<TruckTelemetry>>?> GetTelemetryHistoryAsync(string truckId) =>
         _http.GetFromJsonAsync<List<TelemetryPacket<TruckTelemetry>>>($"api/telemetry/history/{Uri.EscapeDataString(truckId)}");
 
+    public Task<List<FleetAlert>?> GetEmergencyAlertsAsync(CancellationToken cancellationToken = default) =>
+        _http.GetFromJsonAsync<List<FleetAlert>>("api/telemetry/alerts", cancellationToken);
+
     // Multipart File Upload API call
     public async Task<bool> UploadReceiptAsync(string truckId, Stream fileStream, string fileName)
     {

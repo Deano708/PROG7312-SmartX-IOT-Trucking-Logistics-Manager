@@ -12,6 +12,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<KznDataSeeder>();
 builder.Services.AddSingleton<TelemetryBatchProcessor>();
 builder.Services.AddSingleton<TelemetryHistoryStore>();
+builder.Services.AddSingleton<EmergencyAlertQueue>();
 
 // Configure CORS for Blazor WASM frontend client
 builder.Services.AddCors(options =>

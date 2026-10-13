@@ -310,10 +310,101 @@
           }
         }
       }
+    },
+    "/api/Telemetry/alerts": {
+      "get": {
+        "tags": [
+          "Telemetry"
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FleetAlert"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FleetAlert"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/FleetAlert"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
     "schemas": {
+      "FleetAlert": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true
+          },
+          "truckId": {
+            "type": "string",
+            "nullable": true
+          },
+          "driverName": {
+            "type": "string",
+            "nullable": true
+          },
+          "type": {
+            "$ref": "#/components/schemas/FleetAlertType"
+          },
+          "severity": {
+            "$ref": "#/components/schemas/FleetAlertSeverity"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "firstRaisedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "lastUpdatedAt": {
+            "type": "string",
+            "format": "date-time"
+          }
+        },
+        "additionalProperties": false
+      },
+      "FleetAlertSeverity": {
+        "enum": [
+          0,
+          1
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "FleetAlertType": {
+        "enum": [
+          0,
+          1,
+          2
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
       "LoginModel": {
         "type": "object",
         "properties": {
@@ -394,6 +485,12 @@
           "fuelLevelLiters": {
             "type": "number",
             "format": "float"
+          },
+          "oilLevelLow": {
+            "type": "boolean"
+          },
+          "tyrePressureLow": {
+            "type": "boolean"
           }
         },
         "additionalProperties": false

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using SmartX.Shared.Models;
+using SmartX.Shared.Services;
 using SmartX.Server.Services;
 
 namespace SmartX.Server.Controllers;
@@ -9,10 +10,12 @@ namespace SmartX.Server.Controllers;
 public class TelemetryController : ControllerBase
 {
     private readonly TelemetryHistoryStore _historyStore;
+    private readonly EmergencyAlertQueue _alertQueue;
 
-    public TelemetryController(TelemetryHistoryStore historyStore)
+    public TelemetryController(TelemetryHistoryStore historyStore, EmergencyAlertQueue alertQueue)
     {
         _historyStore = historyStore;
+        _alertQueue = alertQueue;
     }
 
     [HttpPost("ingest")]
@@ -21,7 +24,7 @@ public class TelemetryController : ControllerBase
         if (!IsValidPacket(packet))
             return BadRequest("Invalid telemetry packet.");
 
-        _historyStore.Ingest(packet);
+        ProcessPacket(packet);
         return Ok(new { Status = "Ingested", ProcessedAt = DateTime.UtcNow, Truck = packet.Payload.TruckId });
     }
 
@@ -33,7 +36,7 @@ public class TelemetryController : ControllerBase
 
         foreach (var packet in packets)
         {
-            _historyStore.Ingest(packet);
+            ProcessPacket(packet);
         }
 
         return Ok(new { Status = "Ingested", Count = packets.Count, ProcessedAt = DateTime.UtcNow });
@@ -42,6 +45,16 @@ public class TelemetryController : ControllerBase
     [HttpGet("history/{truckId}")]
     public ActionResult<IReadOnlyList<TelemetryPacket<TruckTelemetry>>> GetHistory(string truckId) =>
         Ok(_historyStore.GetHistory(truckId));
+
+    [HttpGet("alerts")]
+    public ActionResult<IReadOnlyList<FleetAlert>> GetAlerts() =>
+        Ok(_alertQueue.GetActiveAlerts());
+
+    private void ProcessPacket(TelemetryPacket<TruckTelemetry> packet)
+    {
+        _historyStore.Ingest(packet);
+        _alertQueue.ProcessTelemetry(packet);
+    }
 
     private static bool IsValidPacket(TelemetryPacket<TruckTelemetry>? packet) =>
         packet is not null &&

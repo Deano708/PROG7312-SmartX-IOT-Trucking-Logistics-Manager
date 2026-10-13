@@ -1,4 +1,5 @@
 ﻿@page "/dashboard"
+@implements IAsyncDisposable
 @using SmartX.Shared.Models
 @using SmartX.Client.Services
 @using SmartX.Shared.Services
@@ -28,6 +29,49 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
                     <option value="@truck.TruckId">@truck.TruckId — @truck.DriverName (@truck.NearestTown.Split('(')[0].Trim())</option>
                 }
             </select>
+        </div>
+    </div>
+
+    <div class="card border-danger shadow-sm mb-4">
+        <div class="card-header bg-danger text-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+            <div>
+                <h5 class="mb-0 fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i>Emergency Dispatch Feed</h5>
+                <div class="small">Active vehicle risks, ordered by severity and recency</div>
+            </div>
+            <span class="badge bg-light text-danger fs-6">@emergencyAlerts.Count active</span>
+        </div>
+        <div class="card-body">
+            @if (!string.IsNullOrEmpty(alertFeedError))
+            {
+                <div class="alert alert-warning mb-3" role="alert">@alertFeedError</div>
+            }
+
+            @if (emergencyAlerts.Count == 0)
+            {
+                <div class="text-muted">No active emergency alerts. This feed checks the telemetry API every five seconds.</div>
+            }
+            else
+            {
+                <div class="list-group">
+                    @foreach (var alert in emergencyAlerts)
+                    {
+                        <div class="list-group-item border-start border-4 @(alert.Severity == FleetAlertSeverity.Critical ? "border-danger" : "border-warning")">
+                            <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
+                                <div>
+                                    <div class="d-flex flex-wrap align-items-center gap-2">
+                                        <span class="badge @(alert.Severity == FleetAlertSeverity.Critical ? "bg-danger" : "bg-warning text-dark")">@alert.Severity</span>
+                                        <span class="badge bg-dark">@alert.TruckId</span>
+                                        <strong>@GetAlertTypeDisplay(alert.Type) — @alert.DriverName</strong>
+                                    </div>
+                                    <div class="mt-2">@alert.Message</div>
+                                    <div class="small text-muted mt-1">First raised: @alert.FirstRaisedAt.ToLocalTime().ToString("g")</div>
+                                </div>
+                                <button class="btn btn-outline-danger" @onclick="() => GoToTruckAsync(alert.TruckId)">Dispatch / View Truck</button>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
         </div>
     </div>
 
@@ -305,6 +349,10 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
     private List<TelemetryPacket<TruckTelemetry>> telemetryHistory = new();
     private string? telemetryError;
     private bool hasGpsLocation;
+    private List<FleetAlert> emergencyAlerts = new();
+    private string? alertFeedError;
+    private CancellationTokenSource? alertPollingCancellation;
+    private Task? alertPollingTask;
     private string fuelFilter = "Any";
     private string oilFilter = "Any";
     private string tyreFilter = "Any";
@@ -320,14 +368,48 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
             if (!await ApiClient.SendTelemetryBatchAsync(routeSamples))
             {
                 telemetryError = "The telemetry API did not accept the simulated GPS data.";
-                return;
             }
-
-            await LoadTruckHistoryAsync();
+            else
+            {
+                await LoadTruckHistoryAsync();
+            }
         }
         catch (HttpRequestException)
         {
             telemetryError = "Unable to reach the telemetry API. GPS playback requires the server to be running.";
+        }
+
+        await RefreshEmergencyAlertsAsync();
+        alertPollingCancellation = new CancellationTokenSource();
+        alertPollingTask = PollEmergencyAlertsAsync(alertPollingCancellation.Token);
+    }
+
+    private async Task PollEmergencyAlertsAsync(CancellationToken cancellationToken)
+    {
+        using var timer = new PeriodicTimer(TimeSpan.FromSeconds(5));
+        try
+        {
+            while (await timer.WaitForNextTickAsync(cancellationToken))
+            {
+                await RefreshEmergencyAlertsAsync(cancellationToken);
+                await InvokeAsync(StateHasChanged);
+            }
+        }
+        catch (OperationCanceledException) when (cancellationToken.IsCancellationRequested)
+        {
+        }
+    }
+
+    private async Task RefreshEmergencyAlertsAsync(CancellationToken cancellationToken = default)
+    {
+        try
+        {
+            emergencyAlerts = await ApiClient.GetEmergencyAlertsAsync(cancellationToken) ?? new();
+            alertFeedError = null;
+        }
+        catch (HttpRequestException)
+        {
+            alertFeedError = "Unable to refresh emergency alerts from the telemetry API.";
         }
     }
 
@@ -469,8 +551,16 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
         _ => "Moderate Level"
     };
 
-    private bool IsOilLevelCorrect(string truckId) => truckId != "TRK-003" && truckId != "TRK-008";
-    private bool IsTirePressureCorrect(string truckId) => truckId != "TRK-002" && truckId != "TRK-007" && truckId != "TRK-011";
+    private bool IsOilLevelCorrect(string truckId) => !SensorService.Fleet.FirstOrDefault(truck => truck.TruckId == truckId).OilLevelLow;
+    private bool IsTirePressureCorrect(string truckId) => !SensorService.Fleet.FirstOrDefault(truck => truck.TruckId == truckId).TyrePressureLow;
+
+    private static string GetAlertTypeDisplay(FleetAlertType alertType) => alertType switch
+    {
+        FleetAlertType.FuelLow => "Low fuel",
+        FleetAlertType.OilLevelLow => "Low oil level",
+        FleetAlertType.TyrePressureLow => "Low tyre pressure",
+        _ => "Vehicle alert"
+    };
 
     private string GetFuelFilterState(float fuel) => fuel switch
     {
@@ -504,5 +594,21 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
     {
         showFilterResults = false;
         return OnTruckSelected(new ChangeEventArgs { Value = truckId });
+    }
+
+    public async ValueTask DisposeAsync()
+    {
+        if (alertPollingCancellation is null)
+        {
+            return;
+        }
+
+        alertPollingCancellation.Cancel();
+        if (alertPollingTask is not null)
+        {
+            await alertPollingTask;
+        }
+
+        alertPollingCancellation.Dispose();
     }
 }
