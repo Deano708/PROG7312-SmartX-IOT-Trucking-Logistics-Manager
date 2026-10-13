@@ -1,7 +1,9 @@
 ﻿@page "/dashboard"
 @using SmartX.Shared.Models
 @using SmartX.Client.Services
+@using SmartX.Shared.Services
 @inject TruckSensorStateService SensorService
+@inject SmartXApiClient ApiClient
 @inject IJSRuntime JSRuntime
 
  @*//DELCARATION OF AI USAGE
@@ -180,7 +182,7 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
                             @(hoursAgo == 0 ? "LIVE (Current)" : $"{hoursAgo:F1} Hours Ago")
                         </span>
                     </div>
-                    <input type="range" class="form-range" min="0" max="12" step="0.5" value="@hoursAgo" @oninput="OnTimelineSliderChanged" />
+                    <input type="range" class="form-range" min="0" max="12" step="1" value="@hoursAgo" @oninput="OnTimelineSliderChanged" />
                     <div class="d-flex justify-content-between text-muted small fw-bold mt-1">
                         <span>NOW (Live)</span>
                         <span>3 Hours Ago</span>
@@ -189,6 +191,11 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
                         <span class="text-success">12 Hours Ago</span>
                     </div>
                 </div>
+
+                @if (!string.IsNullOrEmpty(telemetryError))
+                {
+                    <div class="alert alert-warning" role="alert">@telemetryError</div>
+                }
 
                 <!-- Leaflet Map Container -->
                 <div id="fleetDashboardMap" style="height: 420px; width: 100%; border-radius: 8px; z-index: 1;" class="border shadow-sm"></div>
@@ -203,25 +210,45 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
     private double hoursAgo = 0;
     private double currentLat;
     private double currentLng;
+    private List<TelemetryPacket<TruckTelemetry>> telemetryHistory = new();
+    private string? telemetryError;
+    private bool hasGpsLocation;
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         UpdateActiveTruck();
+
+        try
+        {
+            var routeSamples = TruckRouteSimulator.GenerateHourlySamples(SensorService.Fleet);
+            if (!await ApiClient.SendTelemetryBatchAsync(routeSamples))
+            {
+                telemetryError = "The telemetry API did not accept the simulated GPS data.";
+                return;
+            }
+
+            await LoadTruckHistoryAsync();
+        }
+        catch (HttpRequestException)
+        {
+            telemetryError = "Unable to reach the telemetry API. GPS playback requires the server to be running.";
+        }
     }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (activeTruck.HasValue)
+        if (activeTruck.HasValue && hasGpsLocation)
         {
             await RenderMapAsync();
         }
     }
 
-    private void OnTruckSelected(ChangeEventArgs e)
+    private async Task OnTruckSelected(ChangeEventArgs e)
     {
         selectedTruckId = e.Value?.ToString() ?? "TRK-001";
         hoursAgo = 0; // Reset timeline on truck change
         UpdateActiveTruck();
+        await LoadTruckHistoryAsync();
     }
 
     private async Task OnTimelineSliderChanged(ChangeEventArgs e)
@@ -229,7 +256,7 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
         if (double.TryParse(e.Value?.ToString(), out var parsedValue))
         {
             hoursAgo = parsedValue;
-            CalculateHistoricalCoordinates();
+            SetCurrentGpsLocation();
             await RenderMapAsync();
         }
     }
@@ -249,25 +276,59 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
             activeTruck = null;
         }
 
-        CalculateHistoricalCoordinates();
+        SetCurrentGpsLocation();
     }
 
-    private void CalculateHistoricalCoordinates()
+    private async Task LoadTruckHistoryAsync()
     {
-        if (!activeTruck.HasValue) return;
-
-        // Simulate historical trajectory drift along transit corridors based on slider hours. ##TEMPORARY 
-        double driftFactor = hoursAgo * 0.08;
-        currentLat = activeTruck.Value.Latitude - (driftFactor * 0.15);
-        currentLng = activeTruck.Value.Longitude - (driftFactor * 0.12);
-    }
-
-    private async Task RenderMapAsync()
-    {
+        telemetryHistory.Clear();
+        hasGpsLocation = false;
+        telemetryError = null;
         if (!activeTruck.HasValue) return;
 
         try
         {
+            telemetryHistory = await ApiClient.GetTelemetryHistoryAsync(activeTruck.Value.TruckId) ?? new();
+            if (telemetryHistory.Count == 0)
+            {
+                telemetryError = "No GPS history is available for this truck from the telemetry API.";
+                return;
+            }
+
+            SetCurrentGpsLocation();
+        }
+        catch (HttpRequestException)
+        {
+            telemetryError = "Unable to retrieve GPS history from the telemetry API.";
+        }
+    }
+
+    private void SetCurrentGpsLocation()
+    {
+        if (telemetryHistory.Count == 0)
+        {
+            hasGpsLocation = false;
+            return;
+        }
+
+        var history = telemetryHistory.OrderByDescending(packet => packet.Timestamp).ToArray();
+        var readingIndex = Math.Min((int)Math.Round(hoursAgo), history.Length - 1);
+        var telemetry = history[readingIndex].Payload;
+        currentLat = telemetry.Latitude;
+        currentLng = telemetry.Longitude;
+        hasGpsLocation = true;
+    }
+
+    private async Task RenderMapAsync()
+    {
+        if (!activeTruck.HasValue || !hasGpsLocation) return;
+
+        try
+        {
+            var routeCoordinates = telemetryHistory
+                .OrderBy(packet => packet.Timestamp)
+                .Select(packet => new[] { packet.Payload.Latitude, packet.Payload.Longitude })
+                .ToArray();
             await JSRuntime.InvokeVoidAsync(
                 "updateFleetMap",
                 "fleetDashboardMap",
@@ -275,7 +336,8 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
                 currentLng,
                 activeTruck.Value.TruckId,
                 activeTruck.Value.DriverName,
-                hoursAgo
+                hoursAgo,
+                routeCoordinates
             );
         }
         catch

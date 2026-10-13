@@ -36,9 +36,10 @@
     <script>
             var mapInstances = {};
 
-            function updateFleetMap(elementId, lat, lng, truckId, driverName, hoursAgo) {
+            function updateFleetMap(elementId, lat, lng, truckId, driverName, hoursAgo, routeCoordinates) {
                 var container = document.getElementById(elementId);
                 if (!container) return;
+                routeCoordinates = routeCoordinates && routeCoordinates.length ? routeCoordinates : [[lat, lng]];
 
                 // Reset stale Leaflet instance if Blazor recreated the DOM container
                 if (mapInstances[elementId]) {
@@ -56,9 +57,11 @@
                         attribution: '© OpenStreetMap'
                     }).addTo(mapInstances[elementId]);
                     mapInstances[elementId].marker = L.marker([lat, lng]).addTo(mapInstances[elementId]);
+                    mapInstances[elementId].route = L.polyline(routeCoordinates, { color: '#0d6efd', weight: 4, opacity: 0.75 }).addTo(mapInstances[elementId]);
                 } else {
                     mapInstances[elementId].setView([lat, lng], mapInstances[elementId].getZoom());
                     mapInstances[elementId].marker.setLatLng([lat, lng]);
+                    mapInstances[elementId].route.setLatLngs(routeCoordinates);
                 }
 
                 // Force Leaflet to recalculate container dimensions upon page navigation

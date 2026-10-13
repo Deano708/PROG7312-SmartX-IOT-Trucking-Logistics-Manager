@@ -10,4 +10,3 @@ C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog73
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Shared\obj\Debug\net10.0\refint\SmartX.Shared.dll
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Shared\obj\Debug\net10.0\SmartX.Shared.pdb
 C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Shared\obj\Debug\net10.0\ref\SmartX.Shared.dll
-C:\Users\Deano\Documents\Work\PROG7312\POE part 1\emkndn-prog7312-g2-2026-prog7312-poe-deano708\SmartX.Shared\obj\Debug\net10.0\SmartX.S.760530F7.Up2Date

@@ -60,4 +60,46 @@ public class SmartXEngineTests
         Assert.Equal(350.0, combined.DistanceTraveledKm);
         Assert.Equal(90.0f, combined.FuelLevelLiters);
     }
+
+    [Fact]
+    public void Test_TruckRouteSimulator_GeneratesHourlySamplesBetweenRouteEndpoints()
+    {
+        var fleet = new[]
+        {
+            new TruckTelemetry { TruckId = "TRK-001", Latitude = -29.8587, Longitude = 31.0218 },
+            new TruckTelemetry { TruckId = "TRK-002", Latitude = -26.2041, Longitude = 28.0473 }
+        };
+        var currentTime = new DateTime(2026, 6, 1, 12, 34, 0, DateTimeKind.Utc);
+
+        var samples = TruckRouteSimulator.GenerateHourlySamples(fleet, currentTime);
+
+        Assert.Equal(26, samples.Count);
+        var firstTruckSamples = samples.Where(sample => sample.Payload.TruckId == "TRK-001").ToArray();
+        Assert.Equal(13, firstTruckSamples.Length);
+        Assert.Equal(currentTime.AddHours(-12).AddMinutes(-34), firstTruckSamples[0].Timestamp);
+        Assert.Equal(-29.8587, firstTruckSamples[^1].Payload.Latitude, 4);
+        Assert.Equal(31.0218, firstTruckSamples[^1].Payload.Longitude, 4);
+        Assert.NotEqual(firstTruckSamples[0].Payload.Latitude, firstTruckSamples[^1].Payload.Latitude);
+        Assert.All(firstTruckSamples.Zip(firstTruckSamples.Skip(1)), pair =>
+            Assert.Equal(TimeSpan.FromHours(1), pair.Second.Timestamp - pair.First.Timestamp));
+    }
+
+    [Fact]
+    public void Test_TruckRouteSimulator_CoversEveryFleetTruckWithGpsCoordinates()
+    {
+        var fleet = Enumerable.Range(1, 12)
+            .Select(number => new TruckTelemetry { TruckId = $"TRK-{number:000}" })
+            .ToArray();
+
+        var samples = TruckRouteSimulator.GenerateHourlySamples(fleet);
+
+        Assert.Equal(12 * 13, samples.Count);
+        Assert.Equal(12, samples.Select(sample => sample.Payload.TruckId).Distinct().Count());
+        Assert.All(samples, sample =>
+        {
+            Assert.InRange(sample.Payload.Latitude, -90, 90);
+            Assert.InRange(sample.Payload.Longitude, -180, 180);
+            Assert.False(string.IsNullOrWhiteSpace(sample.DeviceMac));
+        });
+    }
 }

@@ -19,6 +19,15 @@ public class SmartXApiClient
         return response.IsSuccessStatusCode;
     }
 
+    public async Task<bool> SendTelemetryBatchAsync(IReadOnlyCollection<TelemetryPacket<TruckTelemetry>> packets)
+    {
+        var response = await _http.PostAsJsonAsync("api/telemetry/ingest/batch", packets);
+        return response.IsSuccessStatusCode;
+    }
+
+    public Task<List<TelemetryPacket<TruckTelemetry>>?> GetTelemetryHistoryAsync(string truckId) =>
+        _http.GetFromJsonAsync<List<TelemetryPacket<TruckTelemetry>>>($"api/telemetry/history/{Uri.EscapeDataString(truckId)}");
+
     // Multipart File Upload API call
     public async Task<bool> UploadReceiptAsync(string truckId, Stream fileStream, string fileName)
     {

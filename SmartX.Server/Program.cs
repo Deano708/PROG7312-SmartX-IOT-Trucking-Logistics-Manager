@@ -1,4 +1,5 @@
 using SmartX.Shared.Services;
+using SmartX.Server.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,7 @@ builder.Services.AddSwaggerGen();
 // Register shared logic services for API consumption
 builder.Services.AddSingleton<KznDataSeeder>();
 builder.Services.AddSingleton<TelemetryBatchProcessor>();
+builder.Services.AddSingleton<TelemetryHistoryStore>();
 
 // Configure CORS for Blazor WASM frontend client
 builder.Services.AddCors(options =>
