@@ -4,7 +4,8 @@ public enum FleetAlertType
 {
     FuelLow,
     OilLevelLow,
-    TyrePressureLow
+    TyrePressureLow,
+    VehicleAlert
 }
 
 public enum FleetAlertSeverity

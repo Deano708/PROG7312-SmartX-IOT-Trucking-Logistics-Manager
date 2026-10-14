@@ -216,6 +216,37 @@ public class SmartXEngineTests
         Assert.Empty(queue.GetActiveAlerts());
     }
 
+    [Fact]
+    public void Test_EmergencyAlertQueue_DeduplicatesSensorDisconnectsAndRaisesAgainAfterReconnect()
+    {
+        var queue = new EmergencyAlertQueue();
+        var packet = CreateTelemetryPacket(new TruckTelemetry
+        {
+            TruckId = "TRK-SENSOR",
+            DriverName = "Test Driver",
+            FuelLevelLiters = 300
+        }, DateTime.UtcNow);
+
+        queue.ProcessSensorHeartbeat(packet, isConnected: false);
+        queue.ProcessSensorHeartbeat(packet, isConnected: false);
+
+        var disconnectedAlerts = queue.GetActiveAlerts();
+        Assert.Single(disconnectedAlerts);
+        Assert.Equal(FleetAlertType.VehicleAlert, disconnectedAlerts[0].Type);
+        Assert.Equal("TRK-SENSOR:TEST-MAC:Disconnected", disconnectedAlerts[0].Id);
+
+        queue.ProcessTelemetry(packet);
+        Assert.Single(queue.GetActiveAlerts());
+
+        queue.ProcessSensorHeartbeat(packet, isConnected: true);
+        Assert.Empty(queue.GetActiveAlerts());
+
+        queue.ProcessSensorHeartbeat(packet, isConnected: false);
+        var reconnectedAlerts = queue.GetActiveAlerts();
+        Assert.Single(reconnectedAlerts);
+        Assert.Equal(FleetAlertType.VehicleAlert, reconnectedAlerts[0].Type);
+    }
+
     private static TelemetryPacket<TruckTelemetry> CreateTelemetryPacket(TruckTelemetry telemetry, DateTime timestamp) =>
         new("TEST-MAC", telemetry) { Timestamp = timestamp };
 }

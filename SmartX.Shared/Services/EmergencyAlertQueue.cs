@@ -8,6 +8,7 @@ public sealed class EmergencyAlertQueue
     private const float LowFuelThresholdLiters = 100f;
     private readonly object _sync = new();
     private readonly Dictionary<string, QueueEntry> _activeAlerts = new(StringComparer.OrdinalIgnoreCase);
+    private readonly DisconnectedSensorTracker _disconnectedTracker = new();
     private PriorityQueue<QueueEntry, (int Severity, int TruckNumber, string TruckId, int AlertType)> _queue = new();
     private long _version;
 
@@ -23,7 +24,9 @@ public sealed class EmergencyAlertQueue
         lock (_sync)
         {
             foreach (var activeAlert in _activeAlerts.Values
-                         .Where(entry => entry.Alert.TruckId == telemetry.TruckId && !detectedTypes.Contains(entry.Alert.Type))
+                         .Where(entry => entry.Alert.TruckId == telemetry.TruckId &&
+                                         entry.Alert.Type != FleetAlertType.VehicleAlert &&
+                                         !detectedTypes.Contains(entry.Alert.Type))
                          .ToArray())
             {
                 _activeAlerts.Remove(activeAlert.Alert.Id);
@@ -134,6 +137,66 @@ public sealed class EmergencyAlertQueue
             _queue.Enqueue(entry, GetPriority(entry.Alert));
         }
     }
+
+    public void ProcessSensorHeartbeat(TelemetryPacket<TruckTelemetry> packet, bool isConnected)
+    {
+        var truckId = packet.Payload.TruckId;
+        var mac = packet.DeviceMac;
+        var alertId = $"{truckId}:{mac}:Disconnected";
+
+        lock (_sync)
+        {
+            if (!isConnected)
+            {
+                if (_disconnectedTracker.RegisterDisconnection(truckId, mac))
+                {
+                    var raisedAt = DateTime.UtcNow;
+                    EnqueueAlert(new FleetAlert
+                    {
+                        Id = alertId,
+                        TruckId = truckId,
+                        DriverName = packet.Payload.DriverName,
+                        Type = FleetAlertType.VehicleAlert,
+                        Severity = FleetAlertSeverity.Critical,
+                        Message = $"Hardware sensor node [{mac}] disconnected from truck telemetry bus.",
+                        FirstRaisedAt = raisedAt,
+                        LastUpdatedAt = raisedAt
+                    });
+                }
+            }
+            else
+            {
+                _disconnectedTracker.ResolveDisconnection(truckId, mac);
+                _activeAlerts.Remove(alertId);
+
+                if (_queue.Count > Math.Max(128, _activeAlerts.Count * 4))
+                {
+                    RebuildQueue();
+                }
+            }
+        }
+    }
+
+    private void EnqueueAlert(FleetAlert alert)
+    {
+        lock (_sync)
+        {
+            if (_activeAlerts.TryGetValue(alert.Id, out var existing))
+            {
+                alert.FirstRaisedAt = existing.Alert.FirstRaisedAt;
+            }
+
+            var entry = new QueueEntry(alert, ++_version);
+            _activeAlerts[alert.Id] = entry;
+            _queue.Enqueue(entry, GetPriority(alert));
+
+            if (_queue.Count > Math.Max(128, _activeAlerts.Count * 4))
+            {
+                RebuildQueue();
+            }
+        }
+    }
+
 
     private sealed record QueueEntry(FleetAlert Alert, long Version);
     private sealed record DetectedAlert(FleetAlertType Type, FleetAlertSeverity Severity, string Message);
