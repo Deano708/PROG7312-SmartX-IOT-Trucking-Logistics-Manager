@@ -14,6 +14,7 @@ builder.Services.AddSingleton<TelemetryBatchProcessor>();
 builder.Services.AddSingleton<TelemetryHistoryStore>();
 builder.Services.AddSingleton<EmergencyAlertQueue>();
 builder.Services.AddSingleton<DisconnectedSensorTracker>();
+builder.Services.AddSingleton<FuelPredictionService>();
 
 // Configure CORS for Blazor WASM frontend client
 builder.Services.AddCors(options =>
