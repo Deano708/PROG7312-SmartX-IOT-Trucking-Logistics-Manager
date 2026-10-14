@@ -31,6 +31,7 @@ public struct TruckTelemetry
     public float SpeedKmh { get; set; }
     public double DistanceTraveledKm { get; set; }
     public float FuelLevelLiters { get; set; }
+    public float PayloadWeightTons { get; set; }
     public bool OilLevelLow { get; set; }
     public bool TyrePressureLow { get; set; }
 
