@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmartX.Server")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3b3585269007584a80d3a624b1cf2de4c9dc5ee0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b1fc9d67e5aefab3f727716c310822db2a6fe2ca")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmartX.Server")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmartX.Server")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
