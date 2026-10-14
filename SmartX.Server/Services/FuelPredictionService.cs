@@ -1,6 +1,6 @@
 ﻿using Microsoft.ML;
 using System.Data;
-
+using SmartX.Server.Models;
 public class FuelPredictionService
 {
     private readonly MLContext _mlContext;
