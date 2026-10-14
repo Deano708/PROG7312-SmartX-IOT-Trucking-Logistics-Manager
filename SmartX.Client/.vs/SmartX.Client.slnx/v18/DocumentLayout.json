@@ -3,6 +3,54 @@
   "WorkspaceRootPath": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{3B821B62-A2B6-E869-53FE-3734431F8BA4}|..\\SmartX.Shared\\SmartX.Shared.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.shared\\services\\disconnectedsensortracker.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3B821B62-A2B6-E869-53FE-3734431F8BA4}|..\\SmartX.Shared\\SmartX.Shared.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.shared\\services\\emergencyalertqueue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3B821B62-A2B6-E869-53FE-3734431F8BA4}|..\\SmartX.Shared\\SmartX.Shared.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.shared\\models\\trucktelemetry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3B821B62-A2B6-E869-53FE-3734431F8BA4}|..\\SmartX.Shared\\SmartX.Shared.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.shared\\models\\trucksensor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3B821B62-A2B6-E869-53FE-3734431F8BA4}|..\\SmartX.Shared\\SmartX.Shared.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.shared\\services\\telemetryaggregator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3B821B62-A2B6-E869-53FE-3734431F8BA4}|..\\SmartX.Shared\\SmartX.Shared.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.shared\\services\\kzndataseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3B821B62-A2B6-E869-53FE-3734431F8BA4}|..\\SmartX.Shared\\SmartX.Shared.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.shared\\services\\truckroutesimulator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3B821B62-A2B6-E869-53FE-3734431F8BA4}|..\\SmartX.Shared\\SmartX.Shared.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.shared\\services\\telemetryservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A11380CD-C91F-C811-4777-EEE8741EE091}|..\\SmartX.Server\\SmartX.Server.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.server\\services\\telemetryhistorystore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A11380CD-C91F-C811-4777-EEE8741EE091}|..\\SmartX.Server\\SmartX.Server.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.server\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A11380CD-C91F-C811-4777-EEE8741EE091}|..\\SmartX.Server\\SmartX.Server.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.server\\controllers\\mediacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{A11380CD-C91F-C811-4777-EEE8741EE091}|..\\SmartX.Server\\SmartX.Server.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.server\\controllers\\telemetrycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.client\\services\\trucksensorstateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|solutionrelative:services\\trucksensorstateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.client\\pages\\dashboard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|solutionrelative:pages\\dashboard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.client\\services\\smartxapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|solutionrelative:services\\smartxapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.client\\layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|solutionrelative:layout\\navmenu.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
@@ -22,37 +70,11 @@
       "AbsoluteMoniker": "D:0:0:{A2FE74E1-B743-11D0-AE1A-00A0C90FFFC3}|\u003CMiscFiles\u003E|C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3B821B62-A2B6-E869-53FE-3734431F8BA4}|..\\SmartX.Shared\\SmartX.Shared.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.shared\\services\\emergencyalertqueue.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.client\\pages\\dashboard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|solutionrelative:pages\\dashboard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A11380CD-C91F-C811-4777-EEE8741EE091}|..\\SmartX.Server\\SmartX.Server.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.server\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.client\\pages\\trucksensormanagement.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|solutionrelative:pages\\trucksensormanagement.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.client\\services\\trucksensorstateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|solutionrelative:services\\trucksensorstateservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A11380CD-C91F-C811-4777-EEE8741EE091}|..\\SmartX.Server\\SmartX.Server.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.server\\controllers\\accountcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A11380CD-C91F-C811-4777-EEE8741EE091}|..\\SmartX.Server\\SmartX.Server.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.server\\controllers\\mediacontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3B821B62-A2B6-E869-53FE-3734431F8BA4}|..\\SmartX.Shared\\SmartX.Shared.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.shared\\services\\telemetryservices.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3B821B62-A2B6-E869-53FE-3734431F8BA4}|..\\SmartX.Shared\\SmartX.Shared.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.shared\\services\\kzndataseeder.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3B821B62-A2B6-E869-53FE-3734431F8BA4}|..\\SmartX.Shared\\SmartX.Shared.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.shared\\models\\trucktelemetry.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3B821B62-A2B6-E869-53FE-3734431F8BA4}|..\\SmartX.Shared\\SmartX.Shared.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.shared\\models\\powermetrics.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -62,16 +84,7 @@
       "RelativeMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|solutionrelative:components\\receiptuploader.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A11380CD-C91F-C811-4777-EEE8741EE091}|..\\SmartX.Server\\SmartX.Server.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.server\\controllers\\telemetrycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{3B821B62-A2B6-E869-53FE-3734431F8BA4}|..\\SmartX.Shared\\SmartX.Shared.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.shared\\class1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3B821B62-A2B6-E869-53FE-3734431F8BA4}|..\\SmartX.Shared\\SmartX.Shared.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.shared\\models\\trucksensor.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3B821B62-A2B6-E869-53FE-3734431F8BA4}|..\\SmartX.Shared\\SmartX.Shared.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.shared\\services\\telemetryaggregator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{D327E1DC-7239-46B7-BE1E-1E077906A9D6}|..\\SmartX.Tests\\SmartX.Tests.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.tests\\unittest1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
@@ -79,10 +92,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.client\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.client\\services\\smartxapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|solutionrelative:services\\smartxapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.client\\pages\\counter.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -95,12 +104,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.client\\pages\\leaderboard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}",
       "RelativeMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|solutionrelative:pages\\leaderboard.razor||{40D31677-CBC0-4297-A9EF-89D907823A98}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{3B821B62-A2B6-E869-53FE-3734431F8BA4}|..\\SmartX.Shared\\SmartX.Shared.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.shared\\services\\truckroutesimulator.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A11380CD-C91F-C811-4777-EEE8741EE091}|..\\SmartX.Server\\SmartX.Server.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.server\\services\\telemetryhistorystore.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{F052D796-8434-2FB0-22DD-4F4105AA7189}|SmartX.Client.csproj|c:\\users\\deano\\documents\\work\\prog7312\\poe part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\smartx.client\\wwwroot\\index.html||{40D31677-CBC0-4297-A9EF-89D907823A98}",
@@ -121,7 +124,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -129,82 +132,202 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
-              "Title": "About.razor",
-              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\About.razor",
-              "RelativeDocumentMoniker": "Pages\\About.razor",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\About.razor",
-              "RelativeToolTip": "Pages\\About.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-10-13T19:17:47.951Z",
+              "DocumentIndex": 0,
+              "Title": "DisconnectedSensorTracker.cs",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\DisconnectedSensorTracker.cs",
+              "RelativeDocumentMoniker": "..\\SmartX.Shared\\Services\\DisconnectedSensorTracker.cs",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\DisconnectedSensorTracker.cs",
+              "RelativeToolTip": "..\\SmartX.Shared\\Services\\DisconnectedSensorTracker.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAC4AAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-14T10:15:33.08Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 6,
-              "Title": "Dashboard.razor",
-              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\Dashboard.razor",
-              "RelativeDocumentMoniker": "Pages\\Dashboard.razor",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\Dashboard.razor",
-              "RelativeToolTip": "Pages\\Dashboard.razor",
-              "ViewState": "AgIAAE0AAAAAAAAAAIBJwHECAAABAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-09-14T08:37:25.541Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Landing.razor",
-              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\Landing.razor",
-              "RelativeDocumentMoniker": "Pages\\Landing.razor",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\Landing.razor",
-              "RelativeToolTip": "Pages\\Landing.razor",
-              "ViewState": "AgIAAAMAAAAAAAAAAIBJwCEAAACaAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-09-14T08:39:03.694Z",
+              "Title": "TruckRouteSimulator.cs",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\TruckRouteSimulator.cs",
+              "RelativeDocumentMoniker": "..\\SmartX.Shared\\Services\\TruckRouteSimulator.cs",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\TruckRouteSimulator.cs",
+              "RelativeToolTip": "..\\SmartX.Shared\\Services\\TruckRouteSimulator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-13T12:29:40.039Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 1,
               "Title": "EmergencyAlertQueue.cs",
               "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\EmergencyAlertQueue.cs",
               "RelativeDocumentMoniker": "..\\SmartX.Shared\\Services\\EmergencyAlertQueue.cs",
               "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\EmergencyAlertQueue.cs",
               "RelativeToolTip": "..\\SmartX.Shared\\Services\\EmergencyAlertQueue.cs",
-              "ViewState": "AgIAAGoAAAAAAAAAAAAkwIwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAHcAAAAAAAAAAAAwwIkAAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-13T14:03:59.54Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Account.razor",
-              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\Account.razor",
-              "RelativeDocumentMoniker": "Pages\\Account.razor",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\Account.razor",
-              "RelativeToolTip": "Pages\\Account.razor",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-09-14T08:38:59.619Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "MainLayout.razor",
-              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Layout\\MainLayout.razor",
-              "RelativeDocumentMoniker": "Layout\\MainLayout.razor",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Layout\\MainLayout.razor",
-              "RelativeToolTip": "Layout\\MainLayout.razor",
-              "ViewState": "AgIAAAgAAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2026-09-14T08:37:18.67Z",
+              "WhenOpened": "2026-10-13T14:03:59.54Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 5,
+              "Title": "KznDataSeeder.cs",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\KznDataSeeder.cs",
+              "RelativeDocumentMoniker": "..\\SmartX.Shared\\Services\\KznDataSeeder.cs",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\KznDataSeeder.cs",
+              "RelativeToolTip": "..\\SmartX.Shared\\Services\\KznDataSeeder.cs",
+              "ViewState": "AgIAAC4AAAAAAAAAAAAQwEUAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-14T07:07:01.91Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "TelemetryAggregator.cs",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\TelemetryAggregator.cs",
+              "RelativeDocumentMoniker": "..\\SmartX.Shared\\Services\\TelemetryAggregator.cs",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\TelemetryAggregator.cs",
+              "RelativeToolTip": "..\\SmartX.Shared\\Services\\TelemetryAggregator.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-14T07:07:13.995Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "TruckSensor.cs",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Models\\TruckSensor.cs",
+              "RelativeDocumentMoniker": "..\\SmartX.Shared\\Models\\TruckSensor.cs",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Models\\TruckSensor.cs",
+              "RelativeToolTip": "..\\SmartX.Shared\\Models\\TruckSensor.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAADwvxQAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-14T07:05:39.163Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "TruckTelemetry.cs",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Models\\TruckTelemetry.cs",
+              "RelativeDocumentMoniker": "..\\SmartX.Shared\\Models\\TruckTelemetry.cs",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Models\\TruckTelemetry.cs",
+              "RelativeToolTip": "..\\SmartX.Shared\\Models\\TruckTelemetry.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-14T07:04:01.674Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "TelemetryServices.cs",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\TelemetryServices.cs",
+              "RelativeDocumentMoniker": "..\\SmartX.Shared\\Services\\TelemetryServices.cs",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\TelemetryServices.cs",
+              "RelativeToolTip": "..\\SmartX.Shared\\Services\\TelemetryServices.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAxwB4AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-14T07:07:17.009Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "TelemetryHistoryStore.cs",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Server\\Services\\TelemetryHistoryStore.cs",
+              "RelativeDocumentMoniker": "..\\SmartX.Server\\Services\\TelemetryHistoryStore.cs",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Server\\Services\\TelemetryHistoryStore.cs",
+              "RelativeToolTip": "..\\SmartX.Server\\Services\\TelemetryHistoryStore.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAuwBkAAABPAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-10-13T12:30:16.794Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "AccountController.cs",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Server\\Controllers\\AccountController.cs",
+              "RelativeDocumentMoniker": "..\\SmartX.Server\\Controllers\\AccountController.cs",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Server\\Controllers\\AccountController.cs",
+              "RelativeToolTip": "..\\SmartX.Server\\Controllers\\AccountController.cs",
+              "ViewState": "AgIAAAsAAAAAAAAAAAA3wAQAAACLAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-14T08:35:08.296Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "MediaController.cs",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Server\\Controllers\\MediaController.cs",
+              "RelativeDocumentMoniker": "..\\SmartX.Server\\Controllers\\MediaController.cs",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Server\\Controllers\\MediaController.cs",
+              "RelativeToolTip": "..\\SmartX.Server\\Controllers\\MediaController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAABZAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-14T08:35:11.796Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "TelemetryController.cs",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Server\\Controllers\\TelemetryController.cs",
+              "RelativeDocumentMoniker": "..\\SmartX.Server\\Controllers\\TelemetryController.cs",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Server\\Controllers\\TelemetryController.cs",
+              "RelativeToolTip": "..\\SmartX.Server\\Controllers\\TelemetryController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-14T08:36:05.314Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "TruckSensorStateService.cs",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Services\\TruckSensorStateService.cs",
+              "RelativeDocumentMoniker": "Services\\TruckSensorStateService.cs",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Services\\TruckSensorStateService.cs",
+              "RelativeToolTip": "Services\\TruckSensorStateService.cs",
+              "ViewState": "AgIAACgAAAAAAAAAAAAAAD0AAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-14T08:40:14.069Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Dashboard.razor",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\Dashboard.razor",
+              "RelativeDocumentMoniker": "Pages\\Dashboard.razor",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\Dashboard.razor",
+              "RelativeToolTip": "Pages\\Dashboard.razor",
+              "ViewState": "AgIAAFoCAAAAAAAAAAAQwHECAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-09-14T08:37:25.541Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "SmartXApiClient.cs",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Services\\SmartXApiClient.cs",
+              "RelativeDocumentMoniker": "Services\\SmartXApiClient.cs",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Services\\SmartXApiClient.cs",
+              "RelativeToolTip": "Services\\SmartXApiClient.cs",
+              "ViewState": "AgIAAB0AAAAAAAAAAAAuwDIAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-09-14T08:40:10.693Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
               "Title": "NavMenu.razor",
               "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Layout\\NavMenu.razor",
               "RelativeDocumentMoniker": "Layout\\NavMenu.razor",
@@ -217,7 +340,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 19,
               "Title": ".gitignore",
               "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\.gitignore",
               "RelativeDocumentMoniker": "..\\.gitignore",
@@ -229,7 +352,55 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 16,
+              "Title": "MainLayout.razor",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Layout\\MainLayout.razor",
+              "RelativeDocumentMoniker": "Layout\\MainLayout.razor",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Layout\\MainLayout.razor",
+              "RelativeToolTip": "Layout\\MainLayout.razor",
+              "ViewState": "AgIAAAgAAAAAAAAAAIBJwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-09-14T08:37:18.67Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "Account.razor",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\Account.razor",
+              "RelativeDocumentMoniker": "Pages\\Account.razor",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\Account.razor",
+              "RelativeToolTip": "Pages\\Account.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-09-14T08:38:59.619Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "Landing.razor",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\Landing.razor",
+              "RelativeDocumentMoniker": "Pages\\Landing.razor",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\Landing.razor",
+              "RelativeToolTip": "Pages\\Landing.razor",
+              "ViewState": "AgIAAAMAAAAAAAAAAIBJwCEAAACaAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-09-14T08:39:03.694Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 32,
+              "Title": "About.razor",
+              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\About.razor",
+              "RelativeDocumentMoniker": "Pages\\About.razor",
+              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\About.razor",
+              "RelativeToolTip": "Pages\\About.razor",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2026-10-13T19:17:47.951Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 30,
               "Title": "index.html",
               "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\wwwroot\\index.html",
               "RelativeDocumentMoniker": "wwwroot\\index.html",
@@ -241,7 +412,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 20,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Server\\Program.cs",
               "RelativeDocumentMoniker": "..\\SmartX.Server\\Program.cs",
@@ -253,19 +424,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
-              "Title": "TruckRouteSimulator.cs",
-              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\TruckRouteSimulator.cs",
-              "RelativeDocumentMoniker": "..\\SmartX.Shared\\Services\\TruckRouteSimulator.cs",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\TruckRouteSimulator.cs",
-              "RelativeToolTip": "..\\SmartX.Shared\\Services\\TruckRouteSimulator.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAFoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-13T12:29:40.039Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "FleetAlert.cs",
               "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Models\\FleetAlert.cs",
               "RelativeDocumentMoniker": "..\\SmartX.Shared\\Models\\FleetAlert.cs",
@@ -277,7 +436,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 21,
               "Title": "TruckSensorManagement.razor",
               "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\TruckSensorManagement.razor",
               "RelativeDocumentMoniker": "Pages\\TruckSensorManagement.razor",
@@ -289,91 +448,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
-              "Title": "TelemetryHistoryStore.cs",
-              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Server\\Services\\TelemetryHistoryStore.cs",
-              "RelativeDocumentMoniker": "..\\SmartX.Server\\Services\\TelemetryHistoryStore.cs",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Server\\Services\\TelemetryHistoryStore.cs",
-              "RelativeToolTip": "..\\SmartX.Server\\Services\\TelemetryHistoryStore.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABwAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-10-13T12:30:16.794Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "TruckSensorStateService.cs",
-              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Services\\TruckSensorStateService.cs",
-              "RelativeDocumentMoniker": "Services\\TruckSensorStateService.cs",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Services\\TruckSensorStateService.cs",
-              "RelativeToolTip": "Services\\TruckSensorStateService.cs",
-              "ViewState": "AgIAAA4AAAAAAAAAAIBJwBAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-14T08:40:14.069Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "AccountController.cs",
-              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Server\\Controllers\\AccountController.cs",
-              "RelativeDocumentMoniker": "..\\SmartX.Server\\Controllers\\AccountController.cs",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Server\\Controllers\\AccountController.cs",
-              "RelativeToolTip": "..\\SmartX.Server\\Controllers\\AccountController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAACLAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-14T08:35:08.296Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "MediaController.cs",
-              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Server\\Controllers\\MediaController.cs",
-              "RelativeDocumentMoniker": "..\\SmartX.Server\\Controllers\\MediaController.cs",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Server\\Controllers\\MediaController.cs",
-              "RelativeToolTip": "..\\SmartX.Server\\Controllers\\MediaController.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAABZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-14T08:35:11.796Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "TelemetryServices.cs",
-              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\TelemetryServices.cs",
-              "RelativeDocumentMoniker": "..\\SmartX.Shared\\Services\\TelemetryServices.cs",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\TelemetryServices.cs",
-              "RelativeToolTip": "..\\SmartX.Shared\\Services\\TelemetryServices.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-14T07:07:17.009Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "KznDataSeeder.cs",
-              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\KznDataSeeder.cs",
-              "RelativeDocumentMoniker": "..\\SmartX.Shared\\Services\\KznDataSeeder.cs",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\KznDataSeeder.cs",
-              "RelativeToolTip": "..\\SmartX.Shared\\Services\\KznDataSeeder.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAUAAABDAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-14T07:07:01.91Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "TruckTelemetry.cs",
-              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Models\\TruckTelemetry.cs",
-              "RelativeDocumentMoniker": "..\\SmartX.Shared\\Models\\TruckTelemetry.cs",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Models\\TruckTelemetry.cs",
-              "RelativeToolTip": "..\\SmartX.Shared\\Models\\TruckTelemetry.cs",
-              "ViewState": "AgIAACEAAAAAAAAAAEBUwAMAAABFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-14T07:04:01.674Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 22,
               "Title": "PowerMetrics.cs",
               "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Models\\PowerMetrics.cs",
               "RelativeDocumentMoniker": "..\\SmartX.Shared\\Models\\PowerMetrics.cs",
@@ -385,7 +460,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 23,
               "Title": "ReceiptUploader.razor",
               "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Components\\ReceiptUploader.razor",
               "RelativeDocumentMoniker": "Components\\ReceiptUploader.razor",
@@ -397,19 +472,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
-              "Title": "TelemetryController.cs",
-              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Server\\Controllers\\TelemetryController.cs",
-              "RelativeDocumentMoniker": "..\\SmartX.Server\\Controllers\\TelemetryController.cs",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Server\\Controllers\\TelemetryController.cs",
-              "RelativeToolTip": "..\\SmartX.Server\\Controllers\\TelemetryController.cs",
-              "ViewState": "AgIAAAIAAAAAAAAAAABBwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-14T08:36:05.314Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 24,
               "Title": "Class1.cs",
               "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Class1.cs",
               "RelativeDocumentMoniker": "..\\SmartX.Shared\\Class1.cs",
@@ -421,19 +484,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
-              "Title": "TelemetryAggregator.cs",
-              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\TelemetryAggregator.cs",
-              "RelativeDocumentMoniker": "..\\SmartX.Shared\\Services\\TelemetryAggregator.cs",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Services\\TelemetryAggregator.cs",
-              "RelativeToolTip": "..\\SmartX.Shared\\Services\\TelemetryAggregator.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-14T07:07:13.995Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 25,
               "Title": "UnitTest1.cs",
               "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Tests\\UnitTest1.cs",
               "RelativeDocumentMoniker": "..\\SmartX.Tests\\UnitTest1.cs",
@@ -445,19 +496,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
-              "Title": "TruckSensor.cs",
-              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Models\\TruckSensor.cs",
-              "RelativeDocumentMoniker": "..\\SmartX.Shared\\Models\\TruckSensor.cs",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Shared\\Models\\TruckSensor.cs",
-              "RelativeToolTip": "..\\SmartX.Shared\\Models\\TruckSensor.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAABNAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-14T07:05:39.163Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 26,
               "Title": "Program.cs",
               "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Program.cs",
               "RelativeDocumentMoniker": "Program.cs",
@@ -469,19 +508,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
-              "Title": "SmartXApiClient.cs",
-              "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Services\\SmartXApiClient.cs",
-              "RelativeDocumentMoniker": "Services\\SmartXApiClient.cs",
-              "ToolTip": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Services\\SmartXApiClient.cs",
-              "RelativeToolTip": "Services\\SmartXApiClient.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAIBQwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-09-14T08:40:10.693Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 27,
               "Title": "Counter.razor",
               "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\Counter.razor",
               "RelativeDocumentMoniker": "Pages\\Counter.razor",
@@ -493,7 +520,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 28,
               "Title": "NotFound.razor",
               "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\NotFound.razor",
               "RelativeDocumentMoniker": "Pages\\NotFound.razor",
@@ -505,7 +532,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 29,
               "Title": "Leaderboard.razor",
               "DocumentMoniker": "C:\\Users\\Deano\\Documents\\Work\\PROG7312\\POE part 1\\emkndn-prog7312-g2-2026-prog7312-poe-deano708\\SmartX.Client\\Pages\\Leaderboard.razor",
               "RelativeDocumentMoniker": "Pages\\Leaderboard.razor",
