@@ -31,6 +31,13 @@ public class SmartXApiClient
     public Task<List<FleetAlert>?> GetEmergencyAlertsAsync(CancellationToken cancellationToken = default) =>
         _http.GetFromJsonAsync<List<FleetAlert>>("api/telemetry/alerts", cancellationToken);
 
+    public async Task<FuelRangePrediction?> PredictFuelRangeAsync(TruckTelemetry telemetry)
+    {
+        using var response = await _http.PostAsJsonAsync("api/fuel-prediction/range", telemetry);
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadFromJsonAsync<FuelRangePrediction>();
+    }
+
     // Multipart File Upload API call
     public async Task<bool> UploadReceiptAsync(string truckId, Stream fileStream, string fileName)
     {
