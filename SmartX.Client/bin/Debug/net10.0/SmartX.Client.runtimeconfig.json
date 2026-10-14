@@ -4,7 +4,7 @@
     "includedFrameworks": [
       {
         "name": "Microsoft.NETCore.App",
-        "version": "10.0.12"
+        "version": "10.0.13"
       }
     ],
     "wasmHostProperties": {
@@ -23,13 +23,13 @@
       "System.ComponentModel.TypeConverter.EnableUnsafeBinaryFormatterInDesigntimeLicenseContextSerialization": false,
       "System.ComponentModel.TypeDescriptor.IsComObjectDescriptorSupported": false,
       "System.Data.DataSet.XmlSerializationIsSupported": false,
-      "System.Diagnostics.Metrics.Meter.IsSupported": false,
-      "System.Diagnostics.Tracing.EventSource.IsSupported": false,
+      "System.Diagnostics.Metrics.Meter.IsSupported": true,
+      "System.Diagnostics.Tracing.EventSource.IsSupported": true,
       "System.GC.Server": true,
       "System.Globalization.Invariant": false,
       "System.TimeZoneInfo.Invariant": false,
       "System.Linq.Enumerable.IsSizeOptimized": true,
-      "System.Net.Http.EnableActivityPropagation": false,
+      "System.Net.Http.EnableActivityPropagation": true,
       "System.Net.Http.WasmEnableStreamingResponse": true,
       "System.Net.SocketsHttpHandler.Http3Support": false,
       "System.Reflection.Metadata.MetadataUpdater.IsSupported": false,

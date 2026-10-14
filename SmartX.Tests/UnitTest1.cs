@@ -2,11 +2,50 @@
 using Assert = Xunit.Assert;
 using SmartX.Shared.Models;
 using SmartX.Shared.Services;
+using SmartX.Server.Models;
+using SmartX.Server.Services;
 
 namespace SmartX.Tests;
 
 public class SmartXEngineTests
 {
+    [Theory]
+    [InlineData(82.5f, 310f, 24f)]
+    [InlineData(65f, 280f, 32f)]
+    [InlineData(88f, 210f, 15f)]
+    public void FuelPrediction_MovingTruck_ReturnsPositiveRange(float speedKmh, float fuelLiters, float payloadTons)
+    {
+        var service = new FuelPredictionService();
+
+        var range = service.PredictRange(new FuelInputData
+        {
+            SpeedKmh = speedKmh,
+            CurrentFuelLiters = fuelLiters,
+            PayloadWeightTons = payloadTons
+        });
+
+        Assert.True(float.IsFinite(range));
+        Assert.True(range > 0f);
+    }
+
+    [Theory]
+    [InlineData(0f, 450f)]
+    [InlineData(0.5f, 450f)]
+    [InlineData(80f, 0f)]
+    public void FuelPrediction_StationaryOrEmptyTruck_ReturnsZero(float speedKmh, float fuelLiters)
+    {
+        var service = new FuelPredictionService();
+
+        var range = service.PredictRange(new FuelInputData
+        {
+            SpeedKmh = speedKmh,
+            CurrentFuelLiters = fuelLiters,
+            PayloadWeightTons = 24f
+        });
+
+        Assert.Equal(0f, range);
+    }
+
     [Fact]
     public void Test_JaggedArrayFlattener_FlattensWithoutLoss()
     {

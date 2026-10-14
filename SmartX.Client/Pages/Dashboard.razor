@@ -250,7 +250,14 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
                     <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
                         <div>
                             <div class="fw-bold">@truck.TruckId — @truck.DriverName</div>
-                            <div class="small text-muted">Estimate based on speed, distance, current fuel, and payload.</div>
+                            @if (truck.SpeedKmh <= 0.5f)
+                            {
+                                <div class="small text-muted">Stationary — predicted remaining range is 0 km until the truck moves.</div>
+                            }
+                            else
+                            {
+                                <div class="small text-muted">Estimate based on speed, current fuel, and payload.</div>
+                            }
                             <div class="small text-muted">Updated @fuelRangePrediction.PredictedAtUtc.ToLocalTime().ToString("t")</div>
                         </div>
                         <div class="display-5 fw-bold text-primary">@fuelRangePrediction.PredictedRemainingRangeKm.ToString("N0") <span class="fs-5">km</span></div>

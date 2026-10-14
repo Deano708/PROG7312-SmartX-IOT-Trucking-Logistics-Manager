@@ -69,6 +69,32 @@
     "ReturnTypes": []
   },
   {
+    "ContainingType": "SmartX.Server.Controllers.FuelPredictionController",
+    "Method": "PredictRange",
+    "RelativePath": "api/fuel-prediction/range",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "telemetry",
+        "Type": "SmartX.Shared.Models.TruckTelemetry",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": [
+      {
+        "Type": "SmartX.Shared.Models.FuelRangePrediction",
+        "MediaTypes": [
+          "text/plain",
+          "application/json",
+          "text/json"
+        ],
+        "StatusCode": 200
+      }
+    ]
+  },
+  {
     "ContainingType": "SmartX.Server.Controllers.MediaController",
     "Method": "DeleteReceipt",
     "RelativePath": "api/Media/{fileName}",
