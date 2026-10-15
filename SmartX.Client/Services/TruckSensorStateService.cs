@@ -26,9 +26,11 @@ public class TruckSensorStateService
     };
 
     public List<TruckSensorProfile> Sensors { get; private set; } = new();
+    public IReadOnlyDictionary<string, TruckTelemetry> TrucksById { get; }
 
     public TruckSensorStateService()
     {
+        TrucksById = Fleet.ToDictionary(truck => truck.TruckId, StringComparer.Ordinal);
         var sampleDocBytes = Encoding.UTF8.GetBytes("{\"calibration\": \"verified\", \"voltage\": \"3.3V\", \"status\": \"OK\"}");
 
         foreach (var truck in Fleet)
