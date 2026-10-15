@@ -182,7 +182,7 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
         <div class="row g-3">
             @foreach (var truck in SensorService.Fleet)
             {
-                var truckAlertCount = emergencyAlerts.Count(alert => alert.TruckId == truck.TruckId);
+                var truckAlertCount = alertCountsByTruck.GetValueOrDefault(truck.TruckId);
                 <div class="col-sm-6 col-xl-4">
                     <article class="card h-100 shadow-sm">
                         <div class="card-body d-flex flex-column">
@@ -211,6 +211,7 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
 
 @code {
     private List<FleetAlert> emergencyAlerts = new();
+    private Dictionary<string, int> alertCountsByTruck = new(StringComparer.Ordinal);
     private bool isEmergencyFeedExpanded = true;
     private string? alertFeedError;
     private CancellationTokenSource? alertPollingCancellation;
@@ -248,6 +249,9 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
         try
         {
             emergencyAlerts = await ApiClient.GetEmergencyAlertsAsync(cancellationToken) ?? new();
+            alertCountsByTruck = emergencyAlerts
+                .GroupBy(alert => alert.TruckId, StringComparer.Ordinal)
+                .ToDictionary(group => group.Key, group => group.Count(), StringComparer.Ordinal);
             alertFeedError = null;
         }
         catch (HttpRequestException)
@@ -287,17 +291,11 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
         _ => "Moderate Level"
     };
 
-    private string GetOilLevelStatus(string truckId)
-    {
-        var truck = SensorService.Fleet.FirstOrDefault(item => item.TruckId == truckId);
-        return truck.TruckId == truckId && !truck.OilLevelLow ? "Correct" : "Low";
-    }
+    private string GetOilLevelStatus(string truckId) =>
+        SensorService.TrucksById.TryGetValue(truckId, out var truck) && !truck.OilLevelLow ? "Correct" : "Low";
 
-    private string GetTyrePressureStatus(string truckId)
-    {
-        var truck = SensorService.Fleet.FirstOrDefault(item => item.TruckId == truckId);
-        return truck.TruckId == truckId && !truck.TyrePressureLow ? "Correct" : "Low";
-    }
+    private string GetTyrePressureStatus(string truckId) =>
+        SensorService.TrucksById.TryGetValue(truckId, out var truck) && !truck.TyrePressureLow ? "Correct" : "Low";
 
     private List<TruckTelemetry> GetFilteredTrucks() => SensorService.Fleet
         .Where(truck => fuelFilter == "Any" || GetFuelFilterState(truck.FuelLevelLiters) == fuelFilter)

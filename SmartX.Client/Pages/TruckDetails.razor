@@ -166,8 +166,9 @@
 
     protected override async Task OnParametersSetAsync()
     {
-        var matchingTruck = SensorService.Fleet.FirstOrDefault(truck => truck.TruckId == TruckId);
-        activeTruck = matchingTruck.TruckId == TruckId ? matchingTruck : null;
+        activeTruck = SensorService.TrucksById.TryGetValue(TruckId ?? string.Empty, out var matchingTruck)
+            ? matchingTruck
+            : null;
         if (activeTruck is null)
         {
             return;
