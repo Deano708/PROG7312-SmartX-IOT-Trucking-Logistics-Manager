@@ -2,6 +2,7 @@
 @implements IAsyncDisposable
 @using SmartX.Shared.Models
 @using SmartX.Client.Services
+@using SmartX.Shared.Services
 @inject TruckSensorStateService SensorService
 @inject SmartXApiClient ApiClient
 @inject NavigationManager NavigationManager
@@ -44,14 +45,22 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
         @if (isEmergencyFeedExpanded)
         {
             <div class="card-body" id="emergencyDispatchFeedBody">
+                @if (!string.IsNullOrEmpty(telemetryInitializationError))
+                {
+                    <div class="alert alert-warning mb-3" role="alert">@telemetryInitializationError</div>
+                }
                 @if (!string.IsNullOrEmpty(alertFeedError))
                 {
                     <div class="alert alert-warning mb-3" role="alert">@alertFeedError</div>
                 }
 
-                @if (emergencyAlerts.Count == 0)
+                @if (isLoadingAlerts)
                 {
-                    <div class="text-muted">No active emergency alerts. This feed checks the telemetry API every five seconds.</div>
+                    <div class="text-muted" role="status">Initializing fleet telemetry and loading emergency alerts...</div>
+                }
+                else if (emergencyAlerts.Count == 0)
+                {
+                    <div class="text-muted">No active emergency alerts. This feed refreshes from the telemetry API every five seconds.</div>
                 }
                 else
                 {
@@ -212,6 +221,8 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
 @code {
     private List<FleetAlert> emergencyAlerts = new();
     private Dictionary<string, int> alertCountsByTruck = new(StringComparer.Ordinal);
+    private bool isLoadingAlerts = true;
+    private string? telemetryInitializationError;
     private bool isEmergencyFeedExpanded = true;
     private string? alertFeedError;
     private CancellationTokenSource? alertPollingCancellation;
@@ -223,9 +234,27 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
 
     protected override async Task OnInitializedAsync()
     {
+        await InitializeFleetTelemetryAsync();
         await RefreshEmergencyAlertsAsync();
+        isLoadingAlerts = false;
         alertPollingCancellation = new CancellationTokenSource();
         alertPollingTask = PollEmergencyAlertsAsync(alertPollingCancellation.Token);
+    }
+
+    private async Task InitializeFleetTelemetryAsync()
+    {
+        try
+        {
+            var routeSamples = TruckRouteSimulator.GenerateHourlySamples(SensorService.Fleet);
+            if (!await ApiClient.SendTelemetryBatchAsync(routeSamples))
+            {
+                telemetryInitializationError = "The telemetry API did not accept the simulated fleet data. Emergency alerts may be incomplete.";
+            }
+        }
+        catch (HttpRequestException)
+        {
+            telemetryInitializationError = "Unable to send simulated fleet telemetry. Emergency alerts may be incomplete until the telemetry API is available.";
+        }
     }
 
     private async Task PollEmergencyAlertsAsync(CancellationToken cancellationToken)
