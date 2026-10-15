@@ -1,9 +1,53 @@
 ﻿@page "/"
 
+<PageTitle>Gateway | Smart-X Trucking</PageTitle>
+
 <div class="container py-5">
-    <div class="text-center mb-5">
-        <h1 class="display-4 fw-bold text-primary">Smart-X: Trucking Home</h1>
-        <p class="lead text-muted">High-Performance IoT Logistics & Fleet Management for KZN Transport Corridors</p>
+    <div class="text-center mb-4">
+        <h1 class="display-4 fw-bold text-primary">Smart-X: Trucking Gateway</h1>
+        <p class="lead text-muted">IoT logistics and fleet management for KZN transport corridors</p>
+    </div>
+
+    <section class="card border-0 shadow-sm mb-5" aria-labelledby="aboutSmartXTitle">
+        <div class="card-body p-4 p-lg-5">
+            <div class="row g-4">
+                <div class="col-12">
+                    <span class="badge bg-primary mb-2">About the application</span>
+                    <h2 class="h3 fw-bold" id="aboutSmartXTitle">Fleet telemetry, alerts, and predictive insights</h2>
+                    <p class="text-secondary mb-0">
+                        Smart-X is a fleet-management demonstration that brings simulated truck telemetry and connected sensor status into one place.
+                        Use the workspaces below to manage sensor assignments, monitor vehicle health and emergency alerts, and explore the application’s data and prediction features.
+                    </p>
+                </div>
+                <div class="col-lg-6">
+                    <div class="h-100 p-3 bg-light rounded">
+                        <h3 class="h5 fw-bold"><i class="bi bi-diagram-3 me-2 text-primary"></i>Data structures in use</h3>
+                        <ul class="mb-0 ps-3">
+                            <li class="mb-2"><strong>Dictionary:</strong> maps a truck ID to its telemetry for direct lookups; the dashboard also groups active alert counts by truck ID.</li>
+                            <li class="mb-2"><strong>Priority queue:</strong> orders active dispatch alerts so critical risks appear before lower-severity alerts, with truck ID used to break ties.</li>
+                            <li class="mb-2"><strong>Hash set:</strong> tracks unique disconnected sensor nodes and detected alert types, helping avoid duplicate alerts and identify recovered conditions.</li>
+                            <li><strong>Concurrent dictionary:</strong> stores telemetry history by truck and timestamp, supporting safe access while the server ingests readings.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="h-100 p-3 bg-light rounded">
+                        <h3 class="h5 fw-bold"><i class="bi bi-cpu me-2 text-success"></i>ML.NET fuel-range prediction</h3>
+                        <p class="text-secondary">
+                            ML.NET is Microsoft’s machine-learning framework for .NET. Smart-X trains a FastTree regression model when the server starts, using generated examples of speed, fuel level, and payload weight paired with estimated remaining-range labels.
+                        </p>
+                        <p class="text-secondary mb-0">
+                            When a truck’s range is requested, those three telemetry values are passed to the trained model to estimate remaining kilometres. Stationary trucks and trucks with no fuel are handled explicitly as a 0 km range. This demonstration uses synthetic training data, not calibrated vehicle fuel measurements. Note: All trucks are assumed to be Volvo FH440 with 15 , 24 & 32 tonne payloads.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="text-center mb-3">
+        <h2 class="h3 fw-bold">Choose a workspace</h2>
+        <p class="text-muted mb-0">Select one of the three application areas to continue.</p>
     </div>
 
     <!-- Three Architectural Pillars -->
@@ -28,10 +72,10 @@
         <div class="col-md-4">
             <div class="card h-100 border-primary shadow-sm">
                 <div class="card-body">
-                    <span class="badge bg-primary mb-2">Under Development</span>
+                    <span class="badge bg-primary mb-2">Active </span>
                     <h5 class="card-title">2. Real-Time Command Stream </h5>
                     <p class="card-text text-secondary">
-                        Live dynamic dashboard delivering speed metrics, hourly GSP reports, and current truck operational condition and emergency alerts.
+                        Live dynamic dashboard delivering speed metrics, hourly GSP reports, and current truck operational condition and emergency alerts with the inclusion of a predictive range recommendation.
                     </p>
                 </div>
                 <div class="card-footer bg-transparent border-0">
