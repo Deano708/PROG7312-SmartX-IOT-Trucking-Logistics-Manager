@@ -3,6 +3,21 @@ using SmartX.Shared.Models;
 
 namespace SmartX.Shared.Services;
 
+//DELCARATION OF AI USAGE
+//Gemini. (2026) . Setup of EmergencyAlertQueue Service. Available at: 
+//https://share.gemini.google/QmMLMrJlXoZF (Accessed: 13/10/2026).
+
+/*
+   Title: PriorityQueue<TElement,TPriority> Class
+   Author: Microsoft Learn
+   Date: N/A
+   Date accessed: 13/10/2026
+   Availability: https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.priorityqueue-2?view=net-8.0
+*/
+
+
+
+
 public sealed class EmergencyAlertQueue
 {
     private const float LowFuelThresholdLiters = 100f;

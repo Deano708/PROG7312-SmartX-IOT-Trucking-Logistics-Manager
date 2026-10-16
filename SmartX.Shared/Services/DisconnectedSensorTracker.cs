@@ -3,6 +3,19 @@ using System.Linq;
 
 namespace SmartX.Shared.Services;
 
+//DELCARATION OF AI USAGE
+//Gemini. (2026) . HashSet build in DisconnectedSensorTracker. Available at: 
+//https://share.gemini.google/QmMLMrJlXoZF (Accessed: 13/10/2026).
+
+/*
+   Title: HashSet<T> Class
+   Author: Microsoft Learn
+   Date: N/A
+   Date accessed: 14/10/2026
+   Availability: https://learn.microsoft.com/en-us/dotnet/api/system.collections.generic.hashset-1?view=net-8.0
+*/
+
+
 public sealed class DisconnectedSensorTracker
 {
     // HashSet holding unique keys for active disconnected sensor nodes (e.g., "TRK-001:24:6F:28:AB:C1:01")

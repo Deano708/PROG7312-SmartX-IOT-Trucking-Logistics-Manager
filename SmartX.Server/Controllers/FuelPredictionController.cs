@@ -3,6 +3,12 @@ using SmartX.Server.Models;
 using SmartX.Server.Services;
 using SmartX.Shared.Models;
 
+//DELCARATION OF AI USAGE
+//Gemini. (2026) . FuelPredictionController checking for valid input and prediction range. Available at: 
+//https://share.gemini.google/QmMLMrJlXoZF (Accessed: 14/10/2026).
+
+
+
 namespace SmartX.Server.Controllers;
 
 [ApiController]
