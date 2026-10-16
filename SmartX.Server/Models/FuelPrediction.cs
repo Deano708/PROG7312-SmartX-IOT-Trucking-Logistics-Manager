@@ -2,6 +2,23 @@
 
 using Microsoft.ML.Data;
 
+/*
+   Title: Revolutionize Your Coding: C# Machine Learning Essentials with ML.NET!
+   Author: Nick Proud
+   Date: 2 Years Ago
+   Date accessed: 14/10/2026
+   Availability: https://www.youtube.com/watch?v=R3kRf7hNVMg
+*/
+
+/*
+   Title: Train and evaluate a model
+   Author: Microsoft Learn
+   Date: N/A
+   Date accessed: 14/10/2026
+   Availability: https://learn.microsoft.com/en-us/dotnet/machine-learning/how-to-guides/train-machine-learning-model-ml-net
+*/
+
+
 public class FuelInputData
 {
     [LoadColumn(0)] public float SpeedKmh { get; set; }

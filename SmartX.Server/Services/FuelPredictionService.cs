@@ -1,6 +1,29 @@
 ﻿using Microsoft.ML;
 using SmartX.Server.Models;
 
+//DELCARATION OF AI USAGE
+//Gemini. (2026) . Setup of FuelPredictionService, Also basic simulated data training of payload, speed and fuel level. Available at: 
+//https://share.gemini.google/QmMLMrJlXoZF (Accessed: 14/10/2026).
+
+
+/*
+   Title: Train and evaluate a model
+   Author: Microsoft Learn
+   Date: N/A
+   Date accessed: 14/10/2026
+   Availability: https://learn.microsoft.com/en-us/dotnet/machine-learning/how-to-guides/train-machine-learning-model-ml-net
+*/
+
+/*
+   Title: Bringing AI to Your .NET Apps with ML.NET — Part 1: Predicting Customer Churn with FastTree
+   Author: Ghori Ketan
+   Date: 1 Years Ago
+   Date accessed: 14/10/2026
+   Availability: https://medium.com/@ghoriketan33/bringing-ai-to-your-net-apps-with-ml-net-part-1-predicting-customer-churn-with-fasttree-312b13c498e6
+*/
+
+
+
 namespace SmartX.Server.Services;
 
 public class FuelPredictionService
