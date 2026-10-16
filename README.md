@@ -57,9 +57,9 @@ Under configure startup projects, choose Multiple startup projects and choose Sm
 
 | Data Structure | Class | Description |
 |---|---|---|
-| Priority Queue| EmergencyAlertQueue.cs | Used to make priority queue|
-|Dictionary | EmergencyAlertQueue.cs | 112|
-|HashSet | DisconnectedSensorTracker.cs | dqd|
+| Priority Queue| EmergencyAlertQueue.cs | orders active dispatch alerts so critical risks appear before lower-severity alerts, with truck ID used to break ties. |
+|Dictionary | EmergencyAlertQueue.cs | maps a truck ID to its telemetry for direct lookups. |
+|HashSet | DisconnectedSensorTracker.cs | tracks unique disconnected sensor nodes and detected alert types, helping avoid duplicate alerts and identify recovered conditions. |
 
 ---
 
