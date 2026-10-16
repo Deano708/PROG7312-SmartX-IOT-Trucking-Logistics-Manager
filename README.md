@@ -1,6 +1,6 @@
 # Smart X Trucks - Logistical Management System
 <br />
-Youtube : https://youtu.be/ndCsIYxb7mU
+Youtube : https://youtu.be/dD5ClByrhNY
 <br />
 
 Smart X Trucks is a Dashboard management system revolving trucks and their respective sensor conditions. The dashboard allows users to view a live location and historical GPS data while keeping track of crucial truck conditions such as oil level, tire pressure, speed and fuel amount.
@@ -58,7 +58,7 @@ Under configure startup projects, choose Multiple startup projects and choose Sm
 | Data Structure | Class | Description |
 |---|---|---|
 | Priority Queue| EmergencyAlertQueue.cs | orders active dispatch alerts so critical risks appear before lower-severity alerts, with truck ID used to break ties. |
-|Dictionary | EmergencyAlertQueue.cs | maps a truck ID to its telemetry for direct lookups. |
+|Dictionary | TruckSensorStateService.cs | maps a truck ID to its telemetry for direct lookups. |
 |HashSet | DisconnectedSensorTracker.cs | tracks unique disconnected sensor nodes and detected alert types, helping avoid duplicate alerts and identify recovered conditions. |
 
 ---
