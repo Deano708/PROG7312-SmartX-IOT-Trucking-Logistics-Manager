@@ -2,7 +2,9 @@
 <br />
 Youtube : https://youtu.be/dD5ClByrhNY
 <br />
-
+PLEASE NOTE: Last moment I realized that my application was missing a stack command history data structure. Once has been incorporated but the demonstration video does not reflect this change
+<br />
+<br />
 Smart X Trucks is a Dashboard management system revolving trucks and their respective sensor conditions. The dashboard allows users to view a live location and historical GPS data while keeping track of crucial truck conditions such as oil level, tire pressure, speed and fuel amount.
 
 ---
@@ -106,5 +108,6 @@ Ghori Ketan. 2025. Bringing AI to Your .NET Apps with ML.NET — Part 1: Predict
 
 ### Part 2
 ### https://share.gemini.google/QmMLMrJlXoZF
-<img width="925" height="636" alt="image" src="https://github.com/user-attachments/assets/20ec5f82-e61f-417b-a3a2-cf3a409c8b96" />
+<img width="922" height="821" alt="image" src="https://github.com/user-attachments/assets/c260b318-7f5f-4c50-8e40-ed571f7ea6ab" />
+
 
