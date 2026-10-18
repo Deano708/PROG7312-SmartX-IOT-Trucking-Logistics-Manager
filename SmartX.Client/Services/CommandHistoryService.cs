@@ -1,5 +1,10 @@
 namespace SmartX.Client.Services;
 
+//DELCARATION OF AI USAGE
+//Gemini. (2026) . Setup of Command History Service used to incorporate a stack data structure. Available at: 
+//https://share.gemini.google/O9Qf6fnMtm4B (Accessed: 18/09/2026).
+
+
 public sealed record CommandHistoryEntry(string Command, string TargetPath, DateTime ExecutedAtUtc);
 
 public sealed class CommandHistoryService

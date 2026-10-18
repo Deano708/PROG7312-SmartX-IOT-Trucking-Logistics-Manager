@@ -30,7 +30,8 @@
                             <li class="mb-2"><strong>Dictionary:</strong> maps a truck ID to its telemetry for direct lookups; the dashboard also groups active alert counts by truck ID.</li>
                             <li class="mb-2"><strong>Priority queue:</strong> orders active dispatch alerts so critical risks appear before lower-severity alerts, with truck ID used to break ties.</li>
                             <li class="mb-2"><strong>Hash set:</strong> tracks unique disconnected sensor nodes and detected alert types, helping avoid duplicate alerts and identify recovered conditions.</li>
-                            <li><strong>Concurrent dictionary:</strong> stores telemetry history by truck and timestamp, supporting safe access while the server ingests readings.</li>
+                            <li class="mb-2"><strong>Concurrent dictionary:</strong> stores telemetry history by truck and timestamp, supporting safe access while the server ingests readings.</li>
+                            <li><strong>Stack:</strong> the command history service pushes workspace visits and fleet-filter actions onto a last-in, first-out stack. The gateway shows the newest entries first, lets you revisit their workspace, and keeps up to 50 entries for the current app session. This is a revisit history, not an undo/redo system.</li>
                         </ul>
                     </div>
                 </div>
