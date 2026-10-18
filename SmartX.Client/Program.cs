@@ -14,6 +14,7 @@ builder.Services.AddSingleton<TruckSensorStateService>();
 
 // 2. Register required services for Blazor components
 builder.Services.AddScoped<SmartXApiClient>();
+builder.Services.AddScoped<CommandHistoryService>();
 builder.Services.AddSingleton<KznDataSeeder>();
 builder.Services.AddSingleton<TelemetryAggregator>();
 

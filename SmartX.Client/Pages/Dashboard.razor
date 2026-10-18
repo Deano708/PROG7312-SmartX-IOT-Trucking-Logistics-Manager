@@ -6,6 +6,7 @@
 @inject TruckSensorStateService SensorService
 @inject SmartXApiClient ApiClient
 @inject NavigationManager NavigationManager
+@inject CommandHistoryService CommandHistory
 
  @*//DELCARATION OF AI USAGE
 //Gemini. (2026) . Setup of initial dashboard. Available at: 
@@ -332,7 +333,11 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
         .Where(truck => tyreFilter == "Any" || GetTyrePressureStatus(truck.TruckId) == tyreFilter)
         .ToList();
 
-    private void ShowFilteredTrucks() => showFilterResults = true;
+    private void ShowFilteredTrucks()
+    {
+        showFilterResults = true;
+        CommandHistory.Record($"Applied filters: fuel {fuelFilter}, oil {oilFilter}, tyre pressure {tyreFilter}", "/dashboard");
+    }
 
     private void CloseFilterResults() => showFilterResults = false;
 
@@ -341,6 +346,7 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
         fuelFilter = "Any";
         oilFilter = "Any";
         tyreFilter = "Any";
+        CommandHistory.Record("Cleared fleet health filters", "/dashboard");
     }
 
     private Task GoToTruckAsync(string truckId)

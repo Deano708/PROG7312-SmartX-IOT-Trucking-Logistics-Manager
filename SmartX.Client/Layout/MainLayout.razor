@@ -1,4 +1,8 @@
 ﻿@inherits LayoutComponentBase
+@implements IDisposable
+@inject NavigationManager NavigationManager
+@inject SmartX.Client.Services.CommandHistoryService CommandHistory
+
 <div class="page">
     <div class="sidebar">
         <NavMenu />
@@ -12,3 +16,37 @@
         </article>
     </main>
 </div>
+
+@code {
+    protected override void OnInitialized()
+    {
+        NavigationManager.LocationChanged += OnLocationChanged;
+        RecordLocation(NavigationManager.Uri);
+    }
+
+    private void OnLocationChanged(object? sender, LocationChangedEventArgs args) => RecordLocation(args.Location);
+
+    private void RecordLocation(string location)
+    {
+        var relativePath = NavigationManager.ToBaseRelativePath(location);
+        var path = "/" + relativePath.Split('?', '#')[0].Trim('/');
+        var command = GetCommandDescription(path);
+        CommandHistory.Record(command, path);
+    }
+
+    private static string GetCommandDescription(string path)
+    {
+        if (path == "/") return "Opened the gateway";
+        if (path == "/dashboard") return "Opened the live fleet dashboard";
+        if (path.StartsWith("/dashboard/", StringComparison.Ordinal))
+        {
+            return $"Viewed truck {Uri.UnescapeDataString(path[11..])}";
+        }
+        if (path is "/truck-sensors" or "/sensors") return "Opened truck sensor management";
+        if (path == "/leaderboard") return "Opened the leaderboard";
+        if (path == "/account") return "Opened account settings";
+        return $"Opened {path}";
+    }
+
+    public void Dispose() => NavigationManager.LocationChanged -= OnLocationChanged;
+}
