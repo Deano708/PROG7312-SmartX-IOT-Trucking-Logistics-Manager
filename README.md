@@ -3,6 +3,8 @@
 Youtube : https://youtu.be/dD5ClByrhNY
 <br />
 PLEASE NOTE: Last moment I realized that my application was missing a stack command history data structure. Once has been incorporated but the demonstration video does not reflect this change
+<br />
+<br />
 Smart X Trucks is a Dashboard management system revolving trucks and their respective sensor conditions. The dashboard allows users to view a live location and historical GPS data while keeping track of crucial truck conditions such as oil level, tire pressure, speed and fuel amount.
 
 ---
