@@ -11,11 +11,16 @@ public class TelemetryController : ControllerBase
 {
     private readonly TelemetryHistoryStore _historyStore;
     private readonly EmergencyAlertQueue _alertQueue;
+    private readonly HistoricalTelemetryIndex _historicalTelemetryIndex;
 
-    public TelemetryController(TelemetryHistoryStore historyStore, EmergencyAlertQueue alertQueue)
+    public TelemetryController(
+        TelemetryHistoryStore historyStore,
+        EmergencyAlertQueue alertQueue,
+        HistoricalTelemetryIndex historicalTelemetryIndex)
     {
         _historyStore = historyStore;
         _alertQueue = alertQueue;
+        _historicalTelemetryIndex = historicalTelemetryIndex;
     }
 
     [HttpPost("ingest")]
@@ -53,6 +58,7 @@ public class TelemetryController : ControllerBase
     private void ProcessPacket(TelemetryPacket<TruckTelemetry> packet)
     {
         _historyStore.Ingest(packet);
+        _historicalTelemetryIndex.AddReading(packet.DeviceMac, packet.Timestamp, packet.Payload);
         _alertQueue.ProcessTelemetry(packet);
     }
 
