@@ -1,6 +1,6 @@
 ﻿namespace SmartX.Shared.Models;
 
-public record MeshNode(
+public sealed record MeshNode(
     string NodeId,
     string TruckId,
     string SensorName,
@@ -8,13 +8,40 @@ public record MeshNode(
     double Longitude,
     bool IsGateway,
     bool IsOnline,
-    int BatteryLevelPercent
-);
+    int BatteryLevelPercent);
 
-public record MeshLink(
+public sealed record MeshLink(
     string SourceNodeId,
     string TargetNodeId,
-    double LinkCost,       // Composite metric: Energy (J/packet) + Latency (ms) + Packet Loss penalty
-    double RssiDbm,        // Signal strength (e.g., -68 dBm)
-    double PacketLossRate  // Percentage (0.0 to 1.0)
-);
+    double LinkCost,
+    double RssiDbm,
+    double PacketLossRate);
+
+public sealed record MeshTopologySnapshot(
+    IReadOnlyList<MeshNode> Nodes,
+    IReadOnlyList<MeshLink> Links);
+
+public sealed record MeshReachabilityResult(
+    string GatewayId,
+    IReadOnlyList<string> ReachableNodeIds,
+    IReadOnlyList<string> IsolatedOnlineNodeIds,
+    IReadOnlyList<string> OfflineNodeIds,
+    DateTime ScannedAtUtc);
+
+public sealed record MeshRouteResult(
+    string SourceNodeId,
+    string DestinationNodeId,
+    IReadOnlyList<MeshLink> Hops,
+    double TotalEnergyJoules,
+    bool IsReachable);
+
+public sealed record MeshBackboneResult(
+    string StartNodeId,
+    IReadOnlyList<MeshLink> Links,
+    IReadOnlyList<string> UnconnectedOnlineNodeIds,
+    double TotalEnergyJoules);
+
+public sealed record SensorTelemetryReading(
+    string SensorMac,
+    DateTime TimestampUtc,
+    TruckTelemetry Telemetry);
