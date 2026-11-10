@@ -1,71 +1,399 @@
 ﻿@page "/network-topology"
+@using System.Globalization
+@using System.Text.Encodings.Web
+@using SmartX.Client.Services
 @using SmartX.Shared.Models
 @using SmartX.Shared.Services
-@inject MeshRoutePlanner RoutePlanner
-@inject HistoricalTelemetryIndex HistoryIndex
+@inject SmartXApiClient ApiClient
+@inject TruckSensorStateService SensorService
+
+<PageTitle>IoT Mesh Topology</PageTitle>
 
 <div class="container-fluid py-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4">
         <div>
-            <h2 class="fw-bold mb-1"><i class="bi bi-hdd-network me-2"></i>IoT Mesh Network Topology & Backbone</h2>
-            <p class="text-muted mb-0">Visualize active ESP32 sensor mesh nodes, BFS subnet reachability, and Prim's Minimum Spanning Tree (MST).</p>
+            <h1 class="h2 fw-bold mb-1">IoT Mesh Topology & Routing</h1>
+            <p class="text-muted mb-0">Inspect the simulated ESP32 mesh by MAC address, gateway reachability, telemetry history, and energy-aware routes.</p>
         </div>
-        <span class="badge bg-success fs-6 px-3 py-2">Mesh Status: Optimal Backbone Active</span>
+        @if (topology is not null)
+        {
+            <span class="badge @(reachability?.OfflineNodeIds.Count > 0 ? "bg-warning text-dark" : "bg-success") fs-6 px-3 py-2">
+                @(reachability?.OfflineNodeIds.Count > 0 ? $"{reachability.OfflineNodeIds.Count} offline node(s)" : "Mesh online")
+            </span>
+        }
     </div>
 
-    <!-- MESH TOPOLOGY VISUALIZATION & CONTROLS -->
-    <div class="row g-4 mb-4">
-        <div class="col-md-8">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-header bg-dark text-white py-3">
-                    <h5 class="mb-0 fw-bold"><i class="bi bi-diagram-3-fill me-2"></i>Active Mesh Node Graph Map</h5>
-                </div>
-                <div class="card-body bg-light d-flex flex-column justify-content-center align-items-center" style="min-height: 380px;">
-                    <div class="text-center text-muted">
-                        <i class="bi bi-cpu fs-1 text-primary d-block mb-2"></i>
-                        <h5 class="fw-bold">ESP32 Gateway Subnet Active</h5>
-                        <p class="small">Nodes report via CAN-Bus 2.0B and 868MHz RF mesh transceivers.</p>
-                        <div class="d-flex gap-2 justify-content-center mt-3">
-                            <button class="btn btn-sm btn-primary" @onclick="RunBfsDiagnostics">Run BFS Subnet Scan</button>
-                            <button class="btn btn-sm btn-dark" @onclick="CalculateMstBackbone">Calculate Prim's MST Backbone</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-md-4">
-            <div class="card border-0 shadow-sm h-100">
-                <div class="card-header bg-primary text-white py-3">
-                    <h5 class="mb-0 fw-bold"><i class="bi bi-shield-check me-2"></i>Diagnostics & Traversal</h5>
-                </div>
-                <div class="card-body">
-                    <h6 class="fw-bold text-dark">BFS Reachability Status:</h6>
-                    <p class="small text-muted">@(string.IsNullOrEmpty(bfsResultSummary) ? "Click 'Run BFS Subnet Scan' to evaluate gateway connectivity." : bfsResultSummary)</p>
-                    
-                    <hr />
-                    <h6 class="fw-bold text-dark">Prim's MST Backbone Links:</h6>
-                    <p class="small text-muted">@(string.IsNullOrEmpty(mstResultSummary) ? "Compute Prim's MST to view the power-efficient routing tree." : mstResultSummary)</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-@code {
-    private string bfsResultSummary = string.Empty;
-    private string mstResultSummary = string.Empty;
-
-    private void RunBfsDiagnostics()
+    @if (!string.IsNullOrWhiteSpace(errorMessage))
     {
-        var (reachable, isolated) = RoutePlanner.PerformBfsReachability("GW-01");
-        bfsResultSummary = $"Reachable nodes: {reachable.Count}. Isolated/Down nodes: {isolated.Count}. Subnet verified via BFS.";
+        <div class="alert alert-danger" role="alert">@errorMessage</div>
+    }
+    @if (!string.IsNullOrWhiteSpace(historyMessage))
+    {
+        <div class="alert alert-info" role="status">@historyMessage</div>
     }
 
-    private void CalculateMstBackbone()
+    @if (isLoading)
     {
-        var mstLinks = RoutePlanner.CalculateMinimumSpanningTreePrims("GW-01");
-        double totalCost = mstLinks.Sum(l => l.LinkCost);
-        mstResultSummary = $"MST Generated with {mstLinks.Count} power-efficient hops. Total Cumulative Link Cost: {totalCost:F2} Joules/ms.";
+        <div class="card card-body text-muted" role="status">Loading mesh topology and sensor history...</div>
+    }
+    else if (topology is null)
+    {
+        <div class="alert alert-warning">The topology API did not return a mesh snapshot.</div>
+    }
+    else
+    {
+        <div class="row g-4 mb-4">
+            <div class="col-xl-8">
+                <section class="card border-0 shadow-sm h-100" aria-labelledby="graphTitle">
+                    <div class="card-header bg-dark text-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+                        <h2 class="h5 mb-0" id="graphTitle">Mesh graph (sample topology)</h2>
+                        <div class="small d-flex flex-wrap gap-3">
+                            <span><i class="mesh-legend mesh-legend-online"></i>Online</span>
+                            <span><i class="mesh-legend mesh-legend-offline"></i>Offline</span>
+                            <span><i class="mesh-legend mesh-legend-route"></i>Selected route</span>
+                            <span><i class="mesh-legend mesh-legend-mst"></i>MST link</span>
+                        </div>
+                    </div>
+                    <div class="card-body p-2">
+                        <p class="small text-muted mb-2">Node status and link costs are seeded demonstration values; telemetry history is populated through the ingestion API.</p>
+                        <div class="topology-scroll">
+                            <svg viewBox="0 0 900 440" role="img" aria-label="Mesh network graph showing the gateway and sensor links">
+                                @foreach (var link in topology.Links)
+                                {
+                                    var sourcePosition = GetNodePosition(link.SourceNodeId);
+                                    var targetPosition = GetNodePosition(link.TargetNodeId);
+                                    <line x1="@sourcePosition.X" y1="@sourcePosition.Y" x2="@targetPosition.X" y2="@targetPosition.Y"
+                                          class="@GetLinkClass(link)" />
+                                    @RenderSvgText((sourcePosition.X + targetPosition.X) / 2, (sourcePosition.Y + targetPosition.Y) / 2 - 7, "link-cost", $"{link.LinkCost:F1} J")
+                                }
+                                @foreach (var node in topology.Nodes)
+                                {
+                                    var position = GetNodePosition(node.NodeId);
+                                    <g class="mesh-node-group" @onclick="() => SelectNodeAsync(node.NodeId)" @onkeydown="args => SelectNodeOnKeyAsync(args, node.NodeId)" role="button" tabindex="0" aria-label="Select @node.SensorName, @node.NodeId">
+                                        <circle cx="@position.X" cy="@position.Y" r="@(node.IsGateway ? 24 : 19)" class="@GetNodeClass(node)" />
+                                        @RenderSvgText(position.X, position.Y + 4, "node-label", node.IsGateway ? "GW" : node.TruckId[^3..])
+                                        @RenderSvgText(position.X, position.Y + 39, "node-mac", node.IsGateway ? node.NodeId : ShortMac(node.NodeId))
+                                    </g>
+                                }
+                            </svg>
+                        </div>
+                        <p class="small text-muted mb-0 mt-2">Edge labels show link energy cost in joules per packet. Select a node in the list to inspect its route and history.</p>
+                    </div>
+                </section>
+            </div>
+            <div class="col-xl-4">
+                <section class="card border-0 shadow-sm mb-3" aria-labelledby="sensorTitle">
+                    <div class="card-header bg-primary text-white"><h2 class="h5 mb-0" id="sensorTitle">Sensor selection</h2></div>
+                    <div class="card-body">
+                        <label class="form-label fw-bold" for="sensorMac">Sensor MAC address</label>
+                        <select id="sensorMac" class="form-select" value="@selectedNodeId" @onchange="OnSensorChanged">
+                            @foreach (var node in SensorNodes)
+                            {
+                                <option value="@node.NodeId">@node.NodeId — @node.TruckId (@(node.IsOnline ? "online" : "offline"))</option>
+                            }
+                        </select>
+                        @if (SelectedNode is not null)
+                        {
+                            <dl class="row small mt-3 mb-0">
+                                <dt class="col-5">Sensor</dt><dd class="col-7">@SelectedNode.SensorName</dd>
+                                <dt class="col-5">Truck</dt><dd class="col-7">@SelectedNode.TruckId</dd>
+                                <dt class="col-5">Status</dt><dd class="col-7">@(SelectedNode.IsOnline ? "Online" : "Offline")</dd>
+                                <dt class="col-5">Battery</dt><dd class="col-7">@SelectedNode.BatteryLevelPercent%</dd>
+                            </dl>
+                        }
+                    </div>
+                </section>
+
+                <section class="card border-0 shadow-sm" aria-labelledby="diagnosticsTitle">
+                    <div class="card-header bg-primary text-white"><h2 class="h5 mb-0" id="diagnosticsTitle">Network diagnostics</h2></div>
+                    <div class="card-body">
+                        <button class="btn btn-outline-primary btn-sm me-2 mb-2" @onclick="RunBfsDiagnosticsAsync">Run gateway BFS</button>
+                        <button class="btn btn-outline-dark btn-sm mb-2" @onclick="CalculateMstAsync">Calculate Prim MST</button>
+                        @if (reachability is not null)
+                        {
+                            <p class="small mb-2"><strong>BFS:</strong> @reachability.ReachableNodeIds.Count reachable; @reachability.IsolatedOnlineNodeIds.Count online but disconnected; @reachability.OfflineNodeIds.Count offline.</p>
+                            @if (reachability.IsolatedOnlineNodeIds.Count > 0 || reachability.OfflineNodeIds.Count > 0)
+                            {
+                                <p class="small text-danger mb-0">Needs attention: @string.Join(", ", reachability.IsolatedOnlineNodeIds.Concat(reachability.OfflineNodeIds))</p>
+                            }
+                        }
+                        @if (backbone is not null)
+                        {
+                            <hr />
+                            <p class="small mb-1"><strong>Prim minimum spanning backbone:</strong> @backbone.Links.Count links, @backbone.TotalEnergyJoules.ToString("F2") J/packet total.</p>
+                            <p class="small text-muted mb-0">@(backbone.UnconnectedOnlineNodeIds.Count == 0 ? "All online nodes are in this backbone." : $"Online nodes outside this component: {string.Join(", ", backbone.UnconnectedOnlineNodeIds)}") It is a network backbone, not the least-energy route for every individual source.</p>
+                        }
+                        @if (selectedRoute is not null)
+                        {
+                            <hr />
+                            <p class="small mb-1"><strong>Selected sensor → gateway:</strong></p>
+                            @if (selectedRoute.IsReachable)
+                            {
+                                <p class="small mb-1">@selectedRoute.TotalEnergyJoules.ToString("F2") J/packet; @selectedRoute.Hops.Count hop(s).</p>
+                                <p class="small text-break mb-0">@selectedRoute.SourceNodeId → @string.Join(" → ", selectedRoute.Hops.Select(hop => hop.TargetNodeId))</p>
+                            }
+                            else
+                            {
+                                <p class="small text-danger mb-0">No online route to the gateway is currently available.</p>
+                            }
+                        }
+                    </div>
+                </section>
+            </div>
+        </div>
+
+        <section class="card border-0 shadow-sm" aria-labelledby="historyTitle">
+            <div class="card-header bg-dark text-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <h2 class="h5 mb-0" id="historyTitle">Historical telemetry — @selectedNodeId</h2>
+                <span class="small">AVL timestamp index · results ordered chronologically</span>
+            </div>
+            <div class="card-body">
+                <div class="row g-3 align-items-end mb-3">
+                    <div class="col-sm-5 col-lg-4">
+                        <label class="form-label" for="historyFrom">From (local time)</label>
+                        <input id="historyFrom" type="datetime-local" class="form-control" @bind="historyFrom" />
+                    </div>
+                    <div class="col-sm-5 col-lg-4">
+                        <label class="form-label" for="historyTo">To (local time)</label>
+                        <input id="historyTo" type="datetime-local" class="form-control" @bind="historyTo" />
+                    </div>
+                    <div class="col-sm-2"><button class="btn btn-primary w-100" @onclick="LoadHistoryAsync">Query range</button></div>
+                </div>
+                @if (historyReadings.Count == 0)
+                {
+                    <p class="text-muted mb-0">No history exists for this MAC address in the selected range.</p>
+                }
+                else
+                {
+                    <div class="table-responsive">
+                        <table class="table table-sm table-striped align-middle mb-0">
+                            <thead><tr><th>Timestamp</th><th>Truck</th><th>Speed</th><th>Fuel</th><th>Payload</th><th>Latitude</th><th>Longitude</th></tr></thead>
+                            <tbody>
+                                @foreach (var reading in historyReadings)
+                                {
+                                    <tr>
+                                        <td>@reading.TimestampUtc.ToLocalTime().ToString("g")</td>
+                                        <td>@reading.Telemetry.TruckId</td>
+                                        <td>@reading.Telemetry.SpeedKmh.ToString("F1") km/h</td>
+                                        <td>@reading.Telemetry.FuelLevelLiters.ToString("F1") L</td>
+                                        <td>@reading.Telemetry.PayloadWeightTons.ToString("F1") t</td>
+                                        <td>@reading.Telemetry.Latitude.ToString("F4")</td>
+                                        <td>@reading.Telemetry.Longitude.ToString("F4")</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                }
+            </div>
+        </section>
+    }
+</div>
+
+<style>
+    .topology-scroll { overflow-x: auto; }
+    .topology-scroll svg { min-width: 720px; width: 100%; height: auto; background: #f8fafc; border-radius: .5rem; }
+    .mesh-link { stroke: #adb5bd; stroke-width: 3; }
+    .mesh-link-mst { stroke: #198754; stroke-width: 5; }
+    .mesh-link-route { stroke: #0d6efd; stroke-width: 6; }
+    .link-cost { fill: #495057; font-size: 12px; text-anchor: middle; paint-order: stroke; stroke: #f8fafc; stroke-width: 4px; stroke-linejoin: round; }
+    .mesh-node-group { cursor: pointer; }
+    .mesh-node-online { fill: #198754; stroke: #fff; stroke-width: 4; }
+    .mesh-node-offline { fill: #dc3545; stroke: #fff; stroke-width: 4; }
+    .mesh-node-selected { stroke: #0d6efd; stroke-width: 6; }
+    .mesh-node-gateway { fill: #212529; stroke: #ffc107; stroke-width: 5; }
+    .node-label { fill: white; text-anchor: middle; font-weight: 700; font-size: 12px; pointer-events: none; }
+    .node-mac { fill: #212529; text-anchor: middle; font-size: 10px; pointer-events: none; }
+    .mesh-legend { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: .25rem; vertical-align: -1px; }
+    .mesh-legend-online { background: #198754; }
+    .mesh-legend-offline { background: #dc3545; }
+    .mesh-legend-route { background: #0d6efd; }
+    .mesh-legend-mst { background: #198754; border-radius: 0; }
+</style>
+
+@code {
+    private const string GatewayNodeId = "GW-01";
+    private MeshTopologySnapshot? topology;
+    private MeshReachabilityResult? reachability;
+    private MeshBackboneResult? backbone;
+    private MeshRouteResult? selectedRoute;
+    private List<SensorTelemetryReading> historyReadings = new();
+    private string selectedNodeId = string.Empty;
+    private DateTime historyFrom = DateTime.Now.AddHours(-12);
+    private DateTime historyTo = DateTime.Now;
+    private bool isLoading = true;
+    private string? errorMessage;
+    private string? historyMessage;
+
+    private IEnumerable<MeshNode> SensorNodes => topology?.Nodes.Where(node => !node.IsGateway).OrderBy(node => node.TruckId) ?? Enumerable.Empty<MeshNode>();
+    private MeshNode? SelectedNode => topology?.Nodes.FirstOrDefault(node => string.Equals(node.NodeId, selectedNodeId, StringComparison.OrdinalIgnoreCase));
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            topology = await ApiClient.GetTopologyAsync();
+            if (topology is null)
+                return;
+
+            selectedNodeId = SensorNodes.FirstOrDefault()?.NodeId ?? string.Empty;
+            await RunBfsDiagnosticsAsync();
+            await CalculateMstAsync();
+            await LoadSelectedRouteAsync();
+            await LoadHistoryAsync();
+        }
+        catch (HttpRequestException exception)
+        {
+            errorMessage = $"Could not load mesh data from the server: {exception.Message}";
+        }
+        finally
+        {
+            isLoading = false;
+        }
+    }
+
+    private async Task OnSensorChanged(ChangeEventArgs args)
+    {
+        selectedNodeId = args.Value?.ToString() ?? string.Empty;
+        await LoadSelectedRouteAsync();
+        await LoadHistoryAsync();
+    }
+
+    private async Task SelectNodeAsync(string nodeId)
+    {
+        if (topology?.Nodes.Any(node => node.NodeId == nodeId && !node.IsGateway) != true)
+            return;
+        selectedNodeId = nodeId;
+        await LoadSelectedRouteAsync();
+        await LoadHistoryAsync();
+    }
+
+    private async Task RunBfsDiagnosticsAsync()
+    {
+        try
+        {
+            reachability = await ApiClient.ScanMeshAsync(GatewayNodeId);
+            errorMessage = null;
+        }
+        catch (HttpRequestException exception)
+        {
+            errorMessage = $"Gateway reachability scan failed: {exception.Message}";
+        }
+    }
+
+    private async Task CalculateMstAsync()
+    {
+        try
+        {
+            backbone = await ApiClient.GetMeshBackboneAsync(GatewayNodeId);
+            errorMessage = null;
+        }
+        catch (HttpRequestException exception)
+        {
+            errorMessage = $"Minimum spanning backbone calculation failed: {exception.Message}";
+        }
+    }
+
+    private async Task LoadSelectedRouteAsync()
+    {
+        if (string.IsNullOrWhiteSpace(selectedNodeId))
+            return;
+        try
+        {
+            selectedRoute = await ApiClient.GetMeshRouteAsync(selectedNodeId, GatewayNodeId);
+            errorMessage = null;
+        }
+        catch (HttpRequestException exception)
+        {
+            errorMessage = $"Could not calculate the selected sensor route: {exception.Message}";
+        }
+    }
+
+    private async Task LoadHistoryAsync()
+    {
+        if (string.IsNullOrWhiteSpace(selectedNodeId))
+            return;
+        if (historyFrom > historyTo)
+        {
+            historyMessage = "The start of the history range must not be later than its end.";
+            historyReadings.Clear();
+            return;
+        }
+
+        historyMessage = null;
+        try
+        {
+            historyReadings = await ApiClient.GetHistoricalTelemetryRangeAsync(selectedNodeId, historyFrom.ToUniversalTime(), historyTo.ToUniversalTime()) ?? new();
+            if (historyReadings.Count == 0)
+            {
+                var samples = TruckRouteSimulator.GenerateHourlySamples(SensorService.Fleet);
+                if (samples.Count > 0 && await ApiClient.SendTelemetryBatchAsync(samples))
+                {
+                    historyReadings = await ApiClient.GetHistoricalTelemetryRangeAsync(selectedNodeId, historyFrom.ToUniversalTime(), historyTo.ToUniversalTime()) ?? new();
+                    historyMessage = historyReadings.Count > 0 ? "Generated the demonstration fleet history; readings are stored by sensor MAC." : null;
+                }
+                else
+                {
+                    historyMessage = "No readings were found, and the demonstration history could not be initialized through the telemetry API.";
+                }
+            }
+            else
+            {
+                historyMessage = null;
+            }
+            errorMessage = null;
+        }
+        catch (HttpRequestException exception)
+        {
+            errorMessage = $"Historical telemetry query failed: {exception.Message}";
+        }
+    }
+
+    private (double X, double Y) GetNodePosition(string nodeId)
+    {
+        if (topology is null)
+            return (0, 0);
+        if (string.Equals(nodeId, GatewayNodeId, StringComparison.OrdinalIgnoreCase))
+            return (450, 45);
+
+        var nodeIndex = SensorNodes.Select((node, index) => (node.NodeId, index))
+            .FirstOrDefault(item => string.Equals(item.NodeId, nodeId, StringComparison.OrdinalIgnoreCase)).index;
+        return (115 + nodeIndex % 4 * 220, 150 + nodeIndex / 4 * 125);
+    }
+
+    private string GetNodeClass(MeshNode node)
+    {
+        if (node.IsGateway)
+            return "mesh-node-gateway";
+        var status = node.IsOnline ? "mesh-node-online" : "mesh-node-offline";
+        return string.Equals(node.NodeId, selectedNodeId, StringComparison.OrdinalIgnoreCase) ? $"{status} mesh-node-selected" : status;
+    }
+
+    private string GetLinkClass(MeshLink link)
+    {
+        if (selectedRoute?.IsReachable == true && selectedRoute.Hops.Any(hop => SameEdge(hop, link)))
+            return "mesh-link mesh-link-route";
+        if (backbone?.Links.Any(edge => SameEdge(edge, link)) == true)
+            return "mesh-link mesh-link-mst";
+        return "mesh-link";
+    }
+
+    private static bool SameEdge(MeshLink first, MeshLink second) =>
+        (string.Equals(first.SourceNodeId, second.SourceNodeId, StringComparison.OrdinalIgnoreCase) && string.Equals(first.TargetNodeId, second.TargetNodeId, StringComparison.OrdinalIgnoreCase)) ||
+        (string.Equals(first.SourceNodeId, second.TargetNodeId, StringComparison.OrdinalIgnoreCase) && string.Equals(first.TargetNodeId, second.SourceNodeId, StringComparison.OrdinalIgnoreCase));
+
+    private async Task SelectNodeOnKeyAsync(KeyboardEventArgs args, string nodeId)
+    {
+        if (args.Key is "Enter" or " ")
+            await SelectNodeAsync(nodeId);
+    }
+
+    private static string ShortMac(string mac) => mac.Length >= 5 ? $"...{mac[^5..]}" : mac;
+
+    private static MarkupString RenderSvgText(double x, double y, string className, string value)
+    {
+        var encodedValue = HtmlEncoder.Default.Encode(value);
+        var markup = $"<text x=\"{x.ToString(CultureInfo.InvariantCulture)}\" y=\"{y.ToString(CultureInfo.InvariantCulture)}\" class=\"{className}\">{encodedValue}</text>";
+        return new MarkupString(markup);
     }
 }
