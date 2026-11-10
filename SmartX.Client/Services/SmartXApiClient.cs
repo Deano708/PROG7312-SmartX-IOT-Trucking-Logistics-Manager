@@ -55,4 +55,11 @@ public class SmartXApiClient
         var response = await _http.PostAsJsonAsync("api/account/register", new { CompanyName = company, Email = email, Password = password });
         return response.IsSuccessStatusCode;
     }
+
+    public async Task<List<TruckTelemetry>?> GetHistoricalTelemetryRangeAsync(DateTime fromUtc, DateTime toUtc)
+    {
+        var fromString = Uri.EscapeDataString(fromUtc.ToString("o"));
+        var toString = Uri.EscapeDataString(toUtc.ToString("o"));
+        return await _http.GetFromJsonAsync<List<TruckTelemetry>>($"api/topology/history/range?fromUtc={fromString}&toUtc={toString}");
+    }
 }
