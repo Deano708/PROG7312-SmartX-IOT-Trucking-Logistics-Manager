@@ -56,10 +56,23 @@ public class SmartXApiClient
         return response.IsSuccessStatusCode;
     }
 
-    public async Task<List<TruckTelemetry>?> GetHistoricalTelemetryRangeAsync(DateTime fromUtc, DateTime toUtc)
+    public Task<MeshTopologySnapshot?> GetTopologyAsync() =>
+        _http.GetFromJsonAsync<MeshTopologySnapshot>("api/topology");
+
+    public Task<MeshReachabilityResult?> ScanMeshAsync(string gatewayId) =>
+        _http.GetFromJsonAsync<MeshReachabilityResult>($"api/topology/bfs-scan/{Uri.EscapeDataString(gatewayId)}");
+
+    public Task<MeshBackboneResult?> GetMeshBackboneAsync(string startNodeId) =>
+        _http.GetFromJsonAsync<MeshBackboneResult>($"api/topology/mst-backbone/{Uri.EscapeDataString(startNodeId)}");
+
+    public Task<MeshRouteResult?> GetMeshRouteAsync(string sourceNodeId, string destinationNodeId) =>
+        _http.GetFromJsonAsync<MeshRouteResult>($"api/topology/route/{Uri.EscapeDataString(sourceNodeId)}/{Uri.EscapeDataString(destinationNodeId)}");
+
+    public Task<List<SensorTelemetryReading>?> GetHistoricalTelemetryRangeAsync(string sensorMac, DateTime fromUtc, DateTime toUtc)
     {
-        var fromString = Uri.EscapeDataString(fromUtc.ToString("o"));
-        var toString = Uri.EscapeDataString(toUtc.ToString("o"));
-        return await _http.GetFromJsonAsync<List<TruckTelemetry>>($"api/topology/history/range?fromUtc={fromString}&toUtc={toString}");
+        var sensor = Uri.EscapeDataString(sensorMac);
+        var fromString = Uri.EscapeDataString(fromUtc.ToUniversalTime().ToString("o"));
+        var toString = Uri.EscapeDataString(toUtc.ToUniversalTime().ToString("o"));
+        return _http.GetFromJsonAsync<List<SensorTelemetryReading>>($"api/topology/history/range?sensorMac={sensor}&fromUtc={fromString}&toUtc={toString}");
     }
 }
