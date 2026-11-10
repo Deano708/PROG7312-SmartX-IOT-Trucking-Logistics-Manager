@@ -1,0 +1,71 @@
+﻿@page "/network-topology"
+@using SmartX.Shared.Models
+@using SmartX.Shared.Services
+@inject MeshRoutePlanner RoutePlanner
+@inject HistoricalTelemetryIndex HistoryIndex
+
+<div class="container-fluid py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold mb-1"><i class="bi bi-hdd-network me-2"></i>IoT Mesh Network Topology & Backbone</h2>
+            <p class="text-muted mb-0">Visualize active ESP32 sensor mesh nodes, BFS subnet reachability, and Prim's Minimum Spanning Tree (MST).</p>
+        </div>
+        <span class="badge bg-success fs-6 px-3 py-2">Mesh Status: Optimal Backbone Active</span>
+    </div>
+
+    <!-- MESH TOPOLOGY VISUALIZATION & CONTROLS -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-dark text-white py-3">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-diagram-3-fill me-2"></i>Active Mesh Node Graph Map</h5>
+                </div>
+                <div class="card-body bg-light d-flex flex-column justify-content-center align-items-center" style="min-height: 380px;">
+                    <div class="text-center text-muted">
+                        <i class="bi bi-cpu fs-1 text-primary d-block mb-2"></i>
+                        <h5 class="fw-bold">ESP32 Gateway Subnet Active</h5>
+                        <p class="small">Nodes report via CAN-Bus 2.0B and 868MHz RF mesh transceivers.</p>
+                        <div class="d-flex gap-2 justify-content-center mt-3">
+                            <button class="btn btn-sm btn-primary" @onclick="RunBfsDiagnostics">Run BFS Subnet Scan</button>
+                            <button class="btn btn-sm btn-dark" @onclick="CalculateMstBackbone">Calculate Prim's MST Backbone</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm h-100">
+                <div class="card-header bg-primary text-white py-3">
+                    <h5 class="mb-0 fw-bold"><i class="bi bi-shield-check me-2"></i>Diagnostics & Traversal</h5>
+                </div>
+                <div class="card-body">
+                    <h6 class="fw-bold text-dark">BFS Reachability Status:</h6>
+                    <p class="small text-muted">@(string.IsNullOrEmpty(bfsResultSummary) ? "Click 'Run BFS Subnet Scan' to evaluate gateway connectivity." : bfsResultSummary)</p>
+                    
+                    <hr />
+                    <h6 class="fw-bold text-dark">Prim's MST Backbone Links:</h6>
+                    <p class="small text-muted">@(string.IsNullOrEmpty(mstResultSummary) ? "Compute Prim's MST to view the power-efficient routing tree." : mstResultSummary)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    private string bfsResultSummary = string.Empty;
+    private string mstResultSummary = string.Empty;
+
+    private void RunBfsDiagnostics()
+    {
+        var (reachable, isolated) = RoutePlanner.PerformBfsReachability("GW-01");
+        bfsResultSummary = $"Reachable nodes: {reachable.Count}. Isolated/Down nodes: {isolated.Count}. Subnet verified via BFS.";
+    }
+
+    private void CalculateMstBackbone()
+    {
+        var mstLinks = RoutePlanner.CalculateMinimumSpanningTreePrims("GW-01");
+        double totalCost = mstLinks.Sum(l => l.LinkCost);
+        mstResultSummary = $"MST Generated with {mstLinks.Count} power-efficient hops. Total Cumulative Link Cost: {totalCost:F2} Joules/ms.";
+    }
+}
