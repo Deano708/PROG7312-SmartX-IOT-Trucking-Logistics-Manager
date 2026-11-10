@@ -17,54 +17,50 @@ public class TopologyController : ControllerBase
         _historyIndex = historyIndex;
     }
 
-    /// <summary>
-    /// Performs a Breadth-First Search (BFS) reachability scan starting from the gateway node.
-    /// </summary>
+    [HttpGet]
+    public ActionResult<MeshTopologySnapshot> GetTopology() => Ok(_routePlanner.GetSnapshot());
+
     [HttpGet("bfs-scan/{gatewayId}")]
-    public IActionResult PerformBfsScan(string gatewayId)
+    public ActionResult<MeshReachabilityResult> PerformBfsScan(string gatewayId)
     {
-        var (reachableNodes, isolatedNodes) = _routePlanner.PerformBfsReachability(gatewayId);
-        return Ok(new
+        try
         {
-            GatewayId = gatewayId,
-            ReachableCount = reachableNodes.Count,
-            IsolatedCount = isolatedNodes.Count,
-            ReachableNodes = reachableNodes,
-            IsolatedNodes = isolatedNodes,
-            Timestamp = DateTime.UtcNow
-        });
-    }
-
-    /// <summary>
-    /// Calculates Prim's Minimum Spanning Tree (MST) to determine the power-efficient routing backbone.
-    /// </summary>
-    [HttpGet("mst-backbone/{startNodeId}")]
-    public IActionResult GetMinimumSpanningTree(string startNodeId)
-    {
-        var mstLinks = _routePlanner.CalculateMinimumSpanningTreePrims(startNodeId);
-        double totalCost = mstLinks.Sum(l => l.LinkCost);
-
-        return Ok(new
-        {
-            StartNodeId = startNodeId,
-            TotalHops = mstLinks.Count,
-            TotalCumulativeCost = Math.Round(totalCost, 2),
-            MstEdges = mstLinks
-        });
-    }
-
-    /// <summary>
-    /// Queries historical telemetry records within a UTC timestamp range using the Red-Black Tree index.
-    /// </summary>
-    [HttpGet("history/range")]
-    public IActionResult GetHistoricalTelemetryRange([FromQuery] DateTime fromUtc, [FromQuery] DateTime toUtc)
-    {
-        if (fromUtc >= toUtc)
-        {
-            return BadRequest("'fromUtc' timestamp must be strictly earlier than 'toUtc'.");
+            return Ok(_routePlanner.PerformBfsReachability(gatewayId));
         }
+        catch (KeyNotFoundException)
+        {
+            return NotFound($"Gateway '{gatewayId}' was not found.");
+        }
+    }
 
-        var records = _historyIndex.QueryRange(fromUtc, toUtc);
-        return Ok(records);
+    [HttpGet("mst-backbone/{startNodeId}")]
+    public ActionResult<MeshBackboneResult> GetMinimumSpanningTree(string startNodeId)
+    {
+        try
+        {
+            return Ok(_routePlanner.CalculateMinimumSpanningTreePrims(startNodeId));
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound($"Online mesh node '{startNodeId}' was not found.");
+        }
+    }
+
+    [HttpGet("route/{sourceNodeId}/{destinationNodeId}")]
+    public ActionResult<MeshRouteResult> GetLowestEnergyRoute(string sourceNodeId, string destinationNodeId) =>
+        Ok(_routePlanner.CalculateLowestEnergyRoute(sourceNodeId, destinationNodeId));
+
+    [HttpGet("history/range")]
+    public ActionResult<IReadOnlyList<SensorTelemetryReading>> GetHistoricalTelemetryRange(
+        [FromQuery] string sensorMac,
+        [FromQuery] DateTime fromUtc,
+        [FromQuery] DateTime toUtc)
+    {
+        if (string.IsNullOrWhiteSpace(sensorMac))
+            return BadRequest("'sensorMac' is required.");
+        if (fromUtc > toUtc)
+            return BadRequest("'fromUtc' must not be later than 'toUtc'.");
+
+        return Ok(_historyIndex.QueryRange(sensorMac, fromUtc, toUtc));
     }
 }
