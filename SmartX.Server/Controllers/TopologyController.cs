@@ -4,6 +4,11 @@ using Microsoft.AspNetCore.Mvc;
 using SmartX.Shared.Models;
 using SmartX.Shared.Services;
 
+//DELCARATION OF AI USAGE
+//Gemini. (2026) . Setup of topology controller creating methods for managing mesh topology and routing. Available at:
+//https://share.gemini.google/R0oOsJKGzWnJ (Accessed: 11/11/2026).
+
+
 [ApiController]
 [Route("api/[controller]")]
 public class TopologyController : ControllerBase

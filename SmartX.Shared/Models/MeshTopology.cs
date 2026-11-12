@@ -1,5 +1,9 @@
 ﻿namespace SmartX.Shared.Models;
 
+//DELCARATION OF AI USAGE
+//Gemini. (2026) . Setup of MeshTopology model for mesh nodes and links for graph. Available at: 
+//https://share.gemini.google/R0oOsJKGzWnJ (Accessed: 11/11/2026).
+
 public sealed record MeshNode(
     string NodeId,
     string TruckId,

@@ -2,6 +2,10 @@
 
 using SmartX.Shared.Models;
 
+//DELCARATION OF AI USAGE
+//Gemini. (2026) . Setup of MeshRoutePlanner for planning routes in the mesh network & calculating minimum spanning tree & lowest route cost. Available at: 
+//https://share.gemini.google/R0oOsJKGzWnJ (Accessed: 11/11/2026).
+
 public class MeshRoutePlanner
 {
     private readonly Dictionary<string, MeshNode> _nodes = new(StringComparer.OrdinalIgnoreCase);

@@ -2,6 +2,10 @@
 
 using SmartX.Shared.Models;
 
+//DELCARATION OF AI USAGE
+//Gemini. (2026) . Setup of HistoricalTelemetryIndex for managing historical telemetry data & query range. Available at: 
+//https://share.gemini.google/R0oOsJKGzWnJ (Accessed: 11/11/2026).
+
 public class HistoricalTelemetryIndex
 {
     private readonly Dictionary<string, AvlNode> _sensorRoots = new(StringComparer.OrdinalIgnoreCase);
