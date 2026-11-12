@@ -31,6 +31,16 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
+var historyIndex = app.Services.GetRequiredService<HistoricalTelemetryIndex>();
+var demoFleet = app.Services.GetRequiredService<KznDataSeeder>()
+    .FleetJourneys.Values
+    .Select(journey => journey[^1].Payload)
+    .ToArray();
+foreach (var sample in TruckRouteSimulator.GeneratePreviousMonthSamples(demoFleet))
+{
+    historyIndex.AddReading(sample.DeviceMac, sample.Timestamp, sample.Payload);
+}
+
 app.UseHttpsRedirection();
 app.UseCors("AllowAll"); // Must be before MapControllers
 app.UseAuthorization();

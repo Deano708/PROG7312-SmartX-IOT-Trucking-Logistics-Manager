@@ -45,7 +45,7 @@ public class MeshTopologyTests
     }
 
     [Fact]
-    public void AvlHistoryIndexReturnsInclusiveChronologicalSensorSpecificRangeAndKeepsDuplicateTimes()
+    public void AvlHistoryIndexUpsertsDuplicateSensorTimestampsAndReturnsChronologicalRange()
     {
         var index = new HistoricalTelemetryIndex();
         var start = new DateTime(2026, 6, 1, 0, 0, 0, DateTimeKind.Utc);
@@ -57,9 +57,30 @@ public class MeshTopologyTests
 
         var results = index.QueryRange("SENSOR-A", start, start.AddHours(2));
 
-        Assert.Equal(3, results.Count);
+        Assert.Equal(2, results.Count);
         Assert.All(results, reading => Assert.Equal("sensor-a", reading.SensorMac));
-        Assert.Equal(new[] { start, start.AddHours(2), start.AddHours(2) }, results.Select(reading => reading.TimestampUtc));
-        Assert.Equal(new[] { 0, 20, 30 }, results.Select(reading => (int)reading.Telemetry.SpeedKmh));
+        Assert.Equal(new[] { start, start.AddHours(2) }, results.Select(reading => reading.TimestampUtc));
+        Assert.Equal(new[] { 0, 30 }, results.Select(reading => (int)reading.Telemetry.SpeedKmh));
+    }
+
+    [Theory]
+    [InlineData(2026, 11, 31)]
+    [InlineData(2026, 3, 28)]
+    public void PreviousMonthSamplesCoverEveryDayForEveryTruck(int year, int month, int expectedDays)
+    {
+        var fleet = Enumerable.Range(1, 12)
+            .Select(number => new TruckTelemetry { TruckId = $"TRK-{number:000}" })
+            .ToArray();
+        var samples = TruckRouteSimulator.GeneratePreviousMonthSamples(
+            fleet,
+            new DateTime(year, month, 12, 12, 0, 0, DateTimeKind.Utc));
+
+        Assert.Equal(12 * expectedDays, samples.Count);
+        Assert.Equal(12, samples.Select(sample => sample.Payload.TruckId).Distinct().Count());
+        Assert.All(samples, sample => Assert.Equal("02:42:AC:11:00:" + sample.Payload.TruckId[^2..], sample.DeviceMac));
+        var currentMonthStart = new DateTime(year, month, 1, 0, 0, 0, DateTimeKind.Utc);
+        var previousMonthStart = currentMonthStart.AddMonths(-1);
+        Assert.All(samples, sample => Assert.InRange(sample.Timestamp, previousMonthStart, currentMonthStart.AddTicks(-1)));
+        Assert.Equal(expectedDays, samples.Select(sample => sample.Timestamp.Date).Distinct().Count());
     }
 }

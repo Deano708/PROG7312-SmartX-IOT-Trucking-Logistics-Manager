@@ -54,6 +54,39 @@ public static class TruckRouteSimulator
         return samples;
     }
 
+    public static List<TelemetryPacket<TruckTelemetry>> GeneratePreviousMonthSamples(
+        IEnumerable<TruckTelemetry> fleet,
+        DateTime? currentTime = null)
+    {
+        var nowUtc = (currentTime ?? DateTime.UtcNow).ToUniversalTime();
+        var currentMonthStart = new DateTime(nowUtc.Year, nowUtc.Month, 1, 0, 0, 0, DateTimeKind.Utc);
+        var previousMonthStart = currentMonthStart.AddMonths(-1);
+        var daysInPreviousMonth = DateTime.DaysInMonth(previousMonthStart.Year, previousMonthStart.Month);
+        var samples = new List<TelemetryPacket<TruckTelemetry>>();
+
+        foreach (var truck in fleet)
+        {
+            if (!Routes.TryGetValue(truck.TruckId, out var route))
+                continue;
+
+            var cumulativeDistances = GetCumulativeDistances(route);
+            for (var day = 0; day < daysInPreviousMonth; day++)
+            {
+                var fraction = daysInPreviousMonth == 1 ? 1 : (double)day / (daysInPreviousMonth - 1);
+                var position = GetPositionAtFraction(route, cumulativeDistances, fraction);
+                var telemetry = truck;
+                telemetry.Latitude = position.Latitude;
+                telemetry.Longitude = position.Longitude;
+                samples.Add(new TelemetryPacket<TruckTelemetry>(GetDeviceMac(truck.TruckId), telemetry)
+                {
+                    Timestamp = previousMonthStart.AddDays(day).AddHours(12)
+                });
+            }
+        }
+
+        return samples;
+    }
+
     private static double[] GetCumulativeDistances(IReadOnlyList<GeoPoint> route)
     {
         var distances = new double[route.Count];

@@ -5,7 +5,6 @@
 @using SmartX.Shared.Models
 @using SmartX.Shared.Services
 @inject SmartXApiClient ApiClient
-@inject TruckSensorStateService SensorService
 
 <PageTitle>IoT Mesh Topology</PageTitle>
 
@@ -219,8 +218,8 @@
     private MeshRouteResult? selectedRoute;
     private List<SensorTelemetryReading> historyReadings = new();
     private string selectedNodeId = string.Empty;
-    private DateTime historyFrom = DateTime.Now.AddHours(-12);
-    private DateTime historyTo = DateTime.Now;
+    private DateTime historyFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddMonths(-1);
+    private DateTime historyTo = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1).AddTicks(-1);
     private bool isLoading = true;
     private string? errorMessage;
     private string? historyMessage;
@@ -324,23 +323,9 @@
         try
         {
             historyReadings = await ApiClient.GetHistoricalTelemetryRangeAsync(selectedNodeId, historyFrom.ToUniversalTime(), historyTo.ToUniversalTime()) ?? new();
-            if (historyReadings.Count == 0)
-            {
-                var samples = TruckRouteSimulator.GenerateHourlySamples(SensorService.Fleet);
-                if (samples.Count > 0 && await ApiClient.SendTelemetryBatchAsync(samples))
-                {
-                    historyReadings = await ApiClient.GetHistoricalTelemetryRangeAsync(selectedNodeId, historyFrom.ToUniversalTime(), historyTo.ToUniversalTime()) ?? new();
-                    historyMessage = historyReadings.Count > 0 ? "Generated the demonstration fleet history; readings are stored by sensor MAC." : null;
-                }
-                else
-                {
-                    historyMessage = "No readings were found, and the demonstration history could not be initialized through the telemetry API.";
-                }
-            }
-            else
-            {
-                historyMessage = null;
-            }
+            historyMessage = historyReadings.Count == 0
+                ? "No records were found for this sensor in the selected date range."
+                : null;
             errorMessage = null;
         }
         catch (HttpRequestException exception)

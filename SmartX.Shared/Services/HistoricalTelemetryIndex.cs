@@ -49,7 +49,7 @@ public class HistoricalTelemetryIndex
         else if (reading.TimestampUtc > node.TimestampUtc)
             node.Right = Insert(node.Right, reading);
         else
-            node.Readings.Add(reading);
+            node.Reading = reading;
 
         UpdateHeight(node);
         var balance = Height(node.Left) - Height(node.Right);
@@ -75,7 +75,7 @@ public class HistoricalTelemetryIndex
         if (from < node.TimestampUtc)
             CollectRange(node.Left, sensorMac, from, to, results);
         if (node.TimestampUtc >= from && node.TimestampUtc <= to)
-            results.AddRange(node.Readings);
+            results.Add(node.Reading);
         if (to > node.TimestampUtc)
             CollectRange(node.Right, sensorMac, from, to, results);
     }
@@ -107,7 +107,7 @@ public class HistoricalTelemetryIndex
     private sealed class AvlNode(DateTime timestampUtc, SensorTelemetryReading reading)
     {
         public DateTime TimestampUtc { get; } = timestampUtc;
-        public List<SensorTelemetryReading> Readings { get; } = [reading];
+        public SensorTelemetryReading Reading { get; set; } = reading;
         public AvlNode? Left { get; set; }
         public AvlNode? Right { get; set; }
         public int Height { get; set; } = 1;
