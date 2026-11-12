@@ -11,7 +11,6 @@ public class HistoricalTelemetryIndex
     {
         if (string.IsNullOrWhiteSpace(sensorMac))
             throw new ArgumentException("A sensor MAC address is required.", nameof(sensorMac));
-        ArgumentNullException.ThrowIfNull(telemetry);
         var utcTime = timestamp.ToUniversalTime();
 
         lock (_sync)

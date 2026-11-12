@@ -156,7 +156,10 @@
                         <label class="form-label" for="historyTo">To (local time)</label>
                         <input id="historyTo" type="datetime-local" class="form-control" @bind="historyTo" />
                     </div>
-                    <div class="col-sm-2"><button class="btn btn-primary w-100" @onclick="LoadHistoryAsync">Query range</button></div>
+                    <div class="col-sm-2 d-flex gap-2">
+                        <button class="btn btn-primary flex-grow-1" @onclick="LoadHistoryAsync">Query range</button>
+                        <button class="btn btn-outline-secondary" @onclick="ResetHistoryRangeAsync">Reset</button>
+                    </div>
                 </div>
                 @if (historyReadings.Count == 0)
                 {
@@ -306,6 +309,14 @@
         {
             errorMessage = $"Could not calculate the selected sensor route: {exception.Message}";
         }
+    }
+
+    private async Task ResetHistoryRangeAsync()
+    {
+        var currentMonthStart = new DateTime(DateTime.Now.Year, DateTime.Now.Month, 1);
+        historyFrom = currentMonthStart.AddMonths(-1);
+        historyTo = currentMonthStart.AddTicks(-1);
+        await LoadHistoryAsync();
     }
 
     private async Task LoadHistoryAsync()
