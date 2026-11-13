@@ -115,6 +115,7 @@
                     <div class="card-body">
                         <button class="btn btn-outline-primary btn-sm me-2 mb-2" @onclick="RunBfsDiagnosticsAsync">Run gateway BFS</button>
                         <button class="btn btn-outline-dark btn-sm mb-2" @onclick="CalculateMstAsync">Calculate Prim MST</button>
+                        <p class="small text-muted">These buttons run the reachability scan and minimum-spanning-tree calculation against the current graph. The present graph uses fixed simulated nodes, status, and link costs, so repeated clicks may show the same results. With live sensor and link data, the results would reflect current connectivity and energy costs.</p>
                         @if (reachability is not null)
                         {
                             <p class="small mb-2"><strong>BFS:</strong> @reachability.ReachableNodeIds.Count reachable; @reachability.IsolatedOnlineNodeIds.Count online but disconnected; @reachability.OfflineNodeIds.Count offline.</p>
