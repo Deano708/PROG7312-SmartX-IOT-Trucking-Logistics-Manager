@@ -6,6 +6,22 @@ using SmartX.Shared.Models;
 //Gemini. (2026) . Setup of MeshRoutePlanner for planning routes in the mesh network & calculating minimum spanning tree & lowest route cost. Available at: 
 //https://share.gemini.google/R0oOsJKGzWnJ (Accessed: 11/11/2026).
 
+/*
+Title: Breadth-First Search in C#
+Author: Skilled.dev
+Date: 2026
+Date accessed: 10/11/2026
+Availability: https://skilled.dev/course/breadth-first-search/csharp
+*/
+
+/*
+Title: Prim’s Algorithm for Minimum Spanning Tree (MST)
+Author: geeksforgeeks
+Date: Nov 2026
+Date accessed: 10/11/2026
+Availability: https://www.geeksforgeeks.org/dsa/prims-minimum-spanning-tree-mst-greedy-algo-5/
+*/
+
 public class MeshRoutePlanner
 {
     private readonly Dictionary<string, MeshNode> _nodes = new(StringComparer.OrdinalIgnoreCase);
@@ -99,6 +115,8 @@ public class MeshRoutePlanner
             return new MeshTopologySnapshot(_nodes.Values.ToList(), links);
         }
     }
+
+
 
     public MeshReachabilityResult PerformBfsReachability(string gatewayNodeId)
     {
