@@ -1,4 +1,5 @@
 @page "/dashboard/{TruckId}"
+@using System.Text.Json
 @using SmartX.Client.Services
 @using SmartX.Shared.Models
 @using SmartX.Shared.Services
@@ -150,6 +151,10 @@
                 {
                     <div class="alert alert-warning" role="alert">@telemetryError</div>
                 }
+                @if (!string.IsNullOrEmpty(mapError))
+                {
+                    <div class="alert alert-warning" role="alert">@mapError</div>
+                }
                 <div id="truckDetailsMap" style="height: 420px; width: 100%; border-radius: 8px; z-index: 1;" class="border shadow-sm"></div>
             </div>
         </section>
@@ -165,6 +170,7 @@
     private double currentLng;
     private List<TelemetryPacket<TruckTelemetry>> telemetryHistory = new();
     private string? telemetryError;
+    private string? mapError;
     private FuelRangePrediction? fuelRangePrediction;
     private string? fuelPredictionError;
     private bool isPredictingFuelRange;
@@ -222,9 +228,9 @@
                 SetCurrentGpsLocation();
             }
         }
-        catch (HttpRequestException)
+        catch (Exception exception) when (exception is HttpRequestException or JsonException or TaskCanceledException)
         {
-            telemetryError = "Unable to retrieve GPS history from the telemetry API. Check that the server is running.";
+            telemetryError = $"Unable to retrieve GPS history from the telemetry API: {exception.Message}";
         }
     }
 
@@ -246,12 +252,12 @@
                 fuelPredictionError = "The API returned no fuel range prediction.";
             }
         }
-        catch (HttpRequestException)
+        catch (Exception exception) when (exception is HttpRequestException or JsonException or TaskCanceledException)
         {
             if (requestNumber == fuelPredictionRequestNumber)
             {
                 fuelRangePrediction = null;
-                fuelPredictionError = "Unable to get a fuel range prediction from the server.";
+                fuelPredictionError = $"Unable to get a fuel range prediction from the server: {exception.Message}";
             }
         }
         finally
@@ -297,15 +303,23 @@
             .OrderBy(packet => packet.Timestamp)
             .Select(packet => new[] { packet.Payload.Latitude, packet.Payload.Longitude })
             .ToArray();
-        await JSRuntime.InvokeVoidAsync(
-            "updateFleetMap",
-            "truckDetailsMap",
-            currentLat,
-            currentLng,
-            activeTruck.Value.TruckId,
-            activeTruck.Value.DriverName,
-            hoursAgo,
-            routeCoordinates);
+        try
+        {
+            await JSRuntime.InvokeVoidAsync(
+                "updateFleetMap",
+                "truckDetailsMap",
+                currentLat,
+                currentLng,
+                activeTruck.Value.TruckId,
+                activeTruck.Value.DriverName,
+                hoursAgo,
+                routeCoordinates);
+            mapError = null;
+        }
+        catch (Exception exception) when (exception is JSException or OperationCanceledException)
+        {
+            mapError = $"The route map could not be updated: {exception.Message}";
+        }
     }
 
     private string GetPlaybackLabel() => hoursAgo == 0 ? "Mode: Real-Time Stream" : $"Playback: -{hoursAgo:F1}h Historical Buffer";

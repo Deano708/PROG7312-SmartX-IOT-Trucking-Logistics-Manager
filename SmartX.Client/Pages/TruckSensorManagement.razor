@@ -57,6 +57,10 @@
                     <div class="mb-3">
                         <label class="form-label fw-bold">Attach Calibration / Specification File</label>
                         <InputFile OnChange="HandleFileSelected" class="form-control" accept=".pdf,.txt,.json,.csv,.png,.jpg" />
+                        @if (!string.IsNullOrEmpty(fileError))
+                        {
+                            <div class="small text-danger mt-1" role="alert">@fileError</div>
+                        }
                         @if (isUploading)
                         {
                             <div class="small text-primary mt-1">Processing file binary...</div>
@@ -119,6 +123,7 @@
 @code {
     private TruckSensorProfile sensorModel = new();
     private bool isUploading = false;
+    private string? fileError;
 
     protected override void OnInitialized()
     {
@@ -159,9 +164,9 @@
         if (file != null)
         {
             isUploading = true;
+            fileError = null;
             try
             {
-                // Max size set to 10MB
                 using var stream = file.OpenReadStream(maxAllowedSize: 10 * 1024 * 1024);
                 using var memoryStream = new MemoryStream();
                 await stream.CopyToAsync(memoryStream);
@@ -169,6 +174,13 @@
                 sensorModel.SpecSheetFileName = file.Name;
                 sensorModel.FileData = memoryStream.ToArray();
                 sensorModel.FileContentType = file.ContentType;
+            }
+            catch (Exception exception) when (exception is IOException or InvalidOperationException or JSException)
+            {
+                fileError = $"Could not read the selected file: {exception.Message}";
+                sensorModel.SpecSheetFileName = string.Empty;
+                sensorModel.FileData = null;
+                sensorModel.FileContentType = null;
             }
             finally
             {

@@ -11,11 +11,11 @@ namespace SmartX.Server.Controllers;
 public class MediaController : ControllerBase
 {
     private readonly string _uploadPath = Path.Combine(Directory.GetCurrentDirectory(), "UploadedReceipts");
+    private readonly ILogger<MediaController> _logger;
 
-    public MediaController()
+    public MediaController(ILogger<MediaController> logger)
     {
-        if (!Directory.Exists(_uploadPath))
-            Directory.CreateDirectory(_uploadPath);
+        _logger = logger;
     }
 
     [HttpPost("upload/{truckId}")]
@@ -27,12 +27,18 @@ public class MediaController : ControllerBase
         var fileName = $"{truckId}_{Guid.NewGuid()}{Path.GetExtension(file.FileName)}";
         var filePath = Path.Combine(_uploadPath, fileName);
 
-        using (var stream = new FileStream(filePath, FileMode.Create))
+        try
         {
-            await file.CopyToAsync(stream);
+            Directory.CreateDirectory(_uploadPath);
+            await using var stream = new FileStream(filePath, FileMode.Create);
+            await file.CopyToAsync(stream, HttpContext.RequestAborted);
+            return Ok(new { FileId = fileName, OriginalName = file.FileName, SizeBytes = file.Length });
         }
-
-        return Ok(new { FileId = fileName, OriginalName = file.FileName, SizeBytes = file.Length });
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
+        {
+            _logger.LogError(exception, "Unable to save receipt for truck {TruckId}.", truckId);
+            return Problem(statusCode: StatusCodes.Status500InternalServerError, title: "The receipt could not be saved.");
+        }
     }
 
     [HttpDelete("{fileName}")]
@@ -42,7 +48,15 @@ public class MediaController : ControllerBase
         if (!System.IO.File.Exists(filePath))
             return NotFound("File not found.");
 
-        System.IO.File.Delete(filePath);
-        return Ok(new { Message = "File deleted successfully." });
+        try
+        {
+            System.IO.File.Delete(filePath);
+            return Ok(new { Message = "File deleted successfully." });
+        }
+        catch (Exception exception) when (exception is IOException or UnauthorizedAccessException)
+        {
+            _logger.LogError(exception, "Unable to delete receipt {FileName}.", fileName);
+            return Problem(statusCode: StatusCodes.Status500InternalServerError, title: "The receipt could not be deleted.");
+        }
     }
 }
