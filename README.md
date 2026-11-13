@@ -1,42 +1,76 @@
 # Smart X Trucks - Logistical Management System
-<br />
-Youtube : https://youtu.be/dD5ClByrhNY
-<br />
-PLEASE NOTE: Last moment I realized that my application was missing a stack command history data structure. Once has been incorporated but the demonstration video does not reflect this change
-<br />
-<br />
-Smart X Trucks is a Dashboard management system revolving trucks and their respective sensor conditions. The dashboard allows users to view a live location and historical GPS data while keeping track of crucial truck conditions such as oil level, tire pressure, speed and fuel amount.
+
+Smart-X is a .NET fleet-management demonstration for truck telemetry, sensor status, emergency alerts, fuel-range prediction, historical routes, and IoT mesh topology. The repository contains a Blazor WebAssembly client, an ASP.NET Core API, shared models and services, and an xUnit test project.
+
+> **Demo:** ([Watch The Summative Demo](https://youtu.be/ZadKlynpFNI)) or the [Part 2 Demo](https://youtu.be/dD5ClByrhNY). 
+>
+> **Important:** This is a demonstration application. Fleet telemetry, mesh nodes, link costs, and ML training examples are simulated. The application does not connect to physical truck or ESP32 hardware.
 
 ---
 
 ## Table of Contents
 
-- [Set-up Instructions](#set-up-instructions)
+- [Requirements](#requirements)
+- [Build and run](#build-and-run)
 - [Features](#features)
-- [Part 2 Data Structures](#part-2-data-structures)
-- [Technical Language Requirements (Part 1)](#technical-language-requirements)
+- [Data structures](#data-structures)
+- [Prediction model](#prediction-model)
 - [References](#references)
 - [Declaration of AI](#declaration-of-ai)
 
+## Requirements
 
----
+- Windows, macOS, or Linux.
+- The **.NET 10 SDK**. Confirm with `dotnet --list-sdks`.
+- Internet access for the initial NuGet package restore.
+- For Visual Studio, open `SmartX.Client\SmartX.Client.slnx` and ensure the .NET development tools are installed.
 
-## Set-up Instructions
-Run:
-<br /> dotnet restore SmartX.sln to restore dependencies
-<br /> 
-<br /> 
-Run:
-<br /> dotnet build SmartX.sln to compile solution.
+The projects target `net10.0`. Installing only a .NET runtime is not sufficient to build them; install the .NET 10 SDK.
 
-<br /> 
+## Build and run
 
-### Startup
-Under configure startup projects, choose Multiple startup projects and choose SmartX.Server and SmartXClient to Start
-<br /> 
-<br />
+Run commands from the repository root (the directory containing this README).
+
+### Restore, build, and test
+```powershell
+dotnet restore .\SmartX.Client\SmartX.Client.slnx
+dotnet build .\SmartX.Client\SmartX.Client.slnx
+dotnet test .\SmartX.Tests\SmartX.Tests.csproj
+```
+
+The solution contains `SmartX.Client`, `SmartX.Server`, `SmartX.Shared`, and `SmartX.Tests`. Build and test must complete successfully before launching the app.
+
+### Run from Visual Studio
+
+1. Open `SmartX.Client\SmartX.Client.slnx`.
+2. In startup settings, choose **Multiple startup projects**.
+3. Set both `SmartX.Server` and `SmartX.Client` to **Start**.
+4. Select the **https** launch profile for each project and start debugging.
+5. If Visual Studio prompts about the local HTTPS development certificate, trust it.
+
+The client API is configured to contact the server at `https://localhost:7044/`. The matching HTTPS launch profiles are configured in each project's `Properties\launchSettings.json`.
+
+### Run from a terminal
+
+Open two terminals at the repository root. Start the server first:
+
+```powershell
+dotnet run --project .\SmartX.Server\SmartX.Server.csproj --launch-profile https
+```
+Then start the client in the second terminal:
+```powershell
+dotnet run --project .\SmartX.Client\SmartX.Client.csproj --launch-profile https
+```
+The client opens at `https://localhost:7041`. Keep both terminal processes running while using the app. If local HTTPS certificates are not trusted, run `dotnet dev-certs https --trust` and restart the applications.
 
 ## Features
+
+### Graphical Visualization of Nodes & Gateway
+<img width="1542" height="856" alt="image" src="https://github.com/user-attachments/assets/a8e04d36-4c6b-4eaa-96e4-11808e2c3022" />
+
+### Historical Data Querying
+<img width="1507" height="797" alt="image" src="https://github.com/user-attachments/assets/adbf7c36-7f64-4c1e-bb1c-b83387fb75ac" />
+
 
 ### Vehicle Sensor Configuration & Upload
 <img width="1876" height="896" alt="image" src="https://github.com/user-attachments/assets/e8ec02cd-62ea-45ac-9eed-982c81c2aa7b" />
@@ -55,13 +89,26 @@ Under configure startup projects, choose Multiple startup projects and choose Sm
 ### Environmental and Truck Sensor Dashboard
 <img width="1527" height="501" alt="image" src="https://github.com/user-attachments/assets/dc3b8de0-f43e-48ab-90c2-fdf3a24cf118" />
 
-## Part 2 Data Structures
+## Data Structures
 
-| Data Structure | Class | Description |
+
+| Data Structure | Project class/location | Role in the application |
 |---|---|---|
-| Priority Queue| EmergencyAlertQueue.cs | orders active dispatch alerts so critical risks appear before lower-severity alerts, with truck ID used to break ties. |
-|Dictionary | TruckSensorStateService.cs | maps a truck ID to its telemetry for direct lookups. |
-|HashSet | DisconnectedSensorTracker.cs | tracks unique disconnected sensor nodes and detected alert types, helping avoid duplicate alerts and identify recovered conditions. |
+| Dictionary and adjacency-list graph | `SmartX.Shared/Services/MeshRoutePlanner.cs` | Maps node IDs (sensor MACs or gateway ID) to node models and neighboring links. Provides efficient node lookup and graph traversal. |
+| Queue and HashSet for BFS | `MeshRoutePlanner.PerformBfsReachability` | A FIFO queue explores neighbors level by level; a HashSet tracks visited nodes so each online node is processed once. |
+| PriorityQueue and HashSet for Prim | `MeshRoutePlanner.CalculateMinimumSpanningTreePrims` | Prioritizes low-cost links and tracks nodes already added to the spanning backbone. |
+| AVL tree, indexed per sensor | `SmartX.Shared/Services/HistoricalTelemetryIndex.cs` | Stores readings by UTC timestamp for range queries. Inserting the same sensor MAC and timestamp replaces the existing reading. |
+| Concurrent dictionaries | `SmartX.Server/Services/TelemetryHistoryStore.cs` | Stores a bounded recent history per truck, keyed by timestamp, for safe concurrent access during ingestion. |
+| Priority queue and dictionary | `SmartX.Shared/Services/EmergencyAlertQueue.cs` | Orders active alerts by severity and truck ordering; a dictionary maps alert IDs to the current active alert. |
+| HashSet | `SmartX.Shared/Services/DisconnectedSensorTracker.cs` | Tracks unique disconnected sensor/truck pairs, preventing duplicate disconnect alerts and allowing recovery to clear the state. |
+| Dictionary | `SmartX.Client/Services/TruckSensorStateService.cs` | Provides direct lookup of a truck's current demo telemetry by truck ID. |
+| Stack | `SmartX.Client/Services/CommandHistoryService.cs` | Records recent workspace and filter actions in last-in, first-out order, with a 50-entry limit. It is navigation history, not undo/redo. |
+
+The topology API is implemented in `SmartX.Server/Controllers/TopologyController.cs`. Client HTTP calls are grouped in `SmartX.Client/Services/SmartXApiClient.cs`; the UI is in `SmartX.Client/Pages/NetworkTopology.razor`. Telemetry ingestion also inserts readings into the history AVL index through `SmartX.Server/Controllers/TelemetryController.cs`.
+
+## Prediction model
+
+`SmartX.Server/Services/FuelPredictionService.cs` trains an ML.NET **FastTree regression** model when the service is created. Its inputs are speed, current fuel, and payload weight; the output is an estimated remaining range in kilometres. The training examples and range labels are generated synthetically for demonstration purposes. Stationary trucks and trucks with no fuel are handled as 0 km before model prediction. This model is not a calibrated prediction for a particular real truck.
 
 ---
 
@@ -97,6 +144,13 @@ Microsoft Learn. N/A. Train and evaluate a model. [Online]. Available at: https:
 
 Ghori Ketan. 2025. Bringing AI to Your .NET Apps with ML.NET — Part 1: Predicting Customer Churn with FastTree. [Online]. https://medium.com/@ghoriketan33/bringing-ai-to-your-net-apps-with-ml-net-part-1-predicting-customer-churn-with-fasttree-312b13c498e6 [Accessed 14 October 2026].
 
+GeeksforGeeks (2026). Prim’s algorithm for minimum spanning tree (MST). [online] GeeksforGeeks. Available at: https://www.geeksforgeeks.org/dsa/prims-minimum-spanning-tree-mst-greedy-algo-5/ [Accessed 13 Nov. 2026].
+
+Skilled.dev (n.d.). Breadth-first search in C#. [online] Skilled.dev. Available at: https://skilled.dev/course/breadth-first-search/csharp [Accessed 13 Nov. 2026].
+
+Varsity Tutors (n.d.). Kruskal’s and prim’s algorithms (conceptual). [online] Varsity Tutors. Available at: https://www.varsitytutors.com/learner/subjects/discrete-math/lessons/kruskals-and-prims-algorithms [Accessed 13 Nov. 2026].
+
+
 
 
 
@@ -110,4 +164,7 @@ Ghori Ketan. 2025. Bringing AI to Your .NET Apps with ML.NET — Part 1: Predict
 ### https://share.gemini.google/QmMLMrJlXoZF
 <img width="922" height="821" alt="image" src="https://github.com/user-attachments/assets/c260b318-7f5f-4c50-8e40-ed571f7ea6ab" />
 
+### Part 3
+### https://share.gemini.google/R0oOsJKGzWnJ
+<img width="692" height="710" alt="image" src="https://github.com/user-attachments/assets/f1cb92bd-ea4d-4948-8376-a3a969971efe" />
 
