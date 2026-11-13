@@ -1,5 +1,6 @@
 ﻿@page "/dashboard"
 @implements IAsyncDisposable
+@using System.Text.Json
 @using SmartX.Shared.Models
 @using SmartX.Client.Services
 @using SmartX.Shared.Services
@@ -252,9 +253,9 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
                 telemetryInitializationError = "The telemetry API did not accept the simulated fleet data. Emergency alerts may be incomplete.";
             }
         }
-        catch (HttpRequestException)
+        catch (Exception exception) when (exception is HttpRequestException or TaskCanceledException)
         {
-            telemetryInitializationError = "Unable to send simulated fleet telemetry. Emergency alerts may be incomplete until the telemetry API is available.";
+            telemetryInitializationError = $"Unable to send simulated fleet telemetry: {exception.Message} Emergency alerts may be incomplete until the telemetry API is available.";
         }
     }
 
@@ -284,9 +285,11 @@ STILL UNDER DEVELOPMENT AND ONLY SHOWING DUMMY DATA *@
                 .ToDictionary(group => group.Key, group => group.Count(), StringComparer.Ordinal);
             alertFeedError = null;
         }
-        catch (HttpRequestException)
+        catch (Exception exception) when (
+            exception is HttpRequestException or JsonException ||
+            exception is TaskCanceledException && !cancellationToken.IsCancellationRequested)
         {
-            alertFeedError = "Unable to refresh emergency alerts from the telemetry API.";
+            alertFeedError = $"Unable to refresh emergency alerts from the telemetry API: {exception.Message}";
         }
     }
 
